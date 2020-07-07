@@ -23,12 +23,7 @@ document.addEventListener('keydown', function (event) {
     if (key == "Enter") {
         if (document.getElementById('search').value.toString().toLowerCase() != "") {
             search();
-        } else if (document.getElementById('popupsignin').style.display != "none") {
-            signIn();
-        } else if (document.getElementById('signup').style.display != "none") {
-            handleSignUp();
-        } else if (document.getElementById('pwreset').style.display != "none") {
-            sendPasswordReset();
+        } sswordReset();
         }
     }
 });
