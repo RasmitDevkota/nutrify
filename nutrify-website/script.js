@@ -61,8 +61,8 @@ function pageLoad(u) {
 
         if (window.location.href.includes("search.html")) {
             var urlParams = new URLSearchParams(window.location.search);
-            var query = urlParams.get('query');
-            results(query.toLowerCase());
+                var query = urlParams.get('query');
+                results(query.toLowerCase());
         }
     } else {
         window.user = null;
