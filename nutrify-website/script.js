@@ -1,13 +1,14 @@
-firebase.initializeApp({
-    apiKey: "AIzaSyBVT22t-x2H76119AHG8SgPU0_A0U-N1uA",
-    authDomain: "my-scrap-project.firebaseapp.com",
-    databaseURL: "https://my-scrap-project.firebaseio.com",
-    projectId: "my-scrap-project",
-    storageBucket: "my-scrap-project.appspot.com",
-    messagingSenderId: "334998588870",
-    appId: "1:334998588870:web:6b218e9655ade3a6c536c7",
-    measurementId: "G-66W8QQ9W35"
-});
+var firebaseConfig = {
+    apiKey: "AIzaSyBa7fz4J9CqmJlM8WQNbWv-8EvMvriI9n8",
+    authDomain: "nutrify-ai.firebaseapp.com",
+    databaseURL: "https://nutrify-ai.firebaseio.com",
+    projectId: "nutrify-ai",
+    storageBucket: "nutrify-ai.appspot.com",
+    messagingSenderId: "235517598565",
+    appId: "1:235517598565:web:c917a7848d40a6b482df8c"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
 db.enablePersistence();
