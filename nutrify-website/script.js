@@ -23,7 +23,6 @@ document.addEventListener('keydown', function (event) {
     if (key == "Enter") {
         if (document.getElementById('search').value.toString().toLowerCase() != "") {
             search();
-        } sswordReset();
         }
     }
 });
