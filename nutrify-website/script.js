@@ -77,16 +77,7 @@ function pageLoad(u) {
     } else {
         window.user = null;
 
-        if (window.location.href.includes("products.html")) {
-            var urlParams = new URLSearchParams(window.location.search);
-            var query = urlParams.get('query');
-            results(query.toString());
-        } else if (window.location.href.includes("cart.html")) {
-            document.getElementById("cartItems").innerHTML = "<h1 style='text-align: center'>Not signed in! Sign in to use cart.<h1>";
-            document.getElementById("totalPrice").innerHTML = "Total Price: $0.00";
-        } else if (window.location.href.includes("c2c.html")) {
-            c2cStart();
-        }
+        
     }
 };
 
