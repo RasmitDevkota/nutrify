@@ -107,7 +107,7 @@ function search() {
 
     if (search != "") {
         var text = search;
-        window.location = "products.html?query=" + text.toString();
+        window.location = "search.html?query=" + text.toString();
     } else {
         display('search');
     }
