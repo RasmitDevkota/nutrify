@@ -59,7 +59,7 @@ function pageLoad(u) {
         window.emailsUser = emails.doc(user.displayName);
         window.userCart = ShoppingCart.doc(user.displayName).collection(user.displayName);
 
-        if (window.location.href.includes("products.html")) {
+        if (window.location.href.includes("search.html")) {
             var urlParams = new URLSearchParams(window.location.search);
             var query = urlParams.get('query');
             results(query.toLowerCase());
