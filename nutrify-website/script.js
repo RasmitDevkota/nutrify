@@ -1,4 +1,4 @@
-var firebaseConfig = {
+firebase.initializeApp({
     apiKey: "AIzaSyBa7fz4J9CqmJlM8WQNbWv-8EvMvriI9n8",
     authDomain: "nutrify-ai.firebaseapp.com",
     databaseURL: "https://nutrify-ai.firebaseio.com",
