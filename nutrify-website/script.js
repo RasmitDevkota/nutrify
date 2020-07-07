@@ -21,7 +21,7 @@ var Orders = db.collection("orders");
 document.addEventListener('keydown', function (event) {
     const key = event.key;
     if (key == "Enter") {
-        if (document.getElementById('search').value.toString().toLowerCase() != "" && document.getElementById('search').style.visibility != this.hidden) {
+        if (document.getElementById('search').value.toString().toLowerCase() != "" && document.getElementById('search').style.visibility != hidden) {
             search();
         }
     }
