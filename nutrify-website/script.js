@@ -6,7 +6,7 @@ firebase.initializeApp({
     storageBucket: "nutrify-ai.appspot.com",
     messagingSenderId: "235517598565",
     appId: "1:235517598565:web:c917a7848d40a6b482df8c"
-};
+});
 
 var db = firebase.firestore();
 db.enablePersistence();
