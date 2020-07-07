@@ -63,21 +63,11 @@ function pageLoad(u) {
             var urlParams = new URLSearchParams(window.location.search);
             var query = urlParams.get('query');
             results(query.toLowerCase());
-        } else if (window.location.href.includes("productsPage.html")) {
-            var urlParams = new URLSearchParams(window.location.search);
-            var query = urlParams.get('query');
-            product(query.toLowerCase());
-        } else if (window.location.href.includes("cart.html")) {
-            showCart();
-        } else if (window.location.href.includes("c2c.html")) {
-            c2cStart();
-        } else {
-            console.log("info page?");
         }
     } else {
         window.user = null;
 
-        
+
     }
 };
 
