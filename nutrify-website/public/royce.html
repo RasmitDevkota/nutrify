@@ -21,8 +21,8 @@
     });
 
     setTimeout(function() {
-        db.collection('temporaryCollection').doc('temporaryDocument').get().then(function(doc) {
-            
+        db.collection('temporaryCollection').doc('temporaryDocument').get().then(function(doc) { // returns a promise which you have to .then(function)
+
         })
     }, 5000)
 </script>
