@@ -103,7 +103,7 @@ function trueA() {
             }).catch(err => console.error(err));
     }
 }
-function hey(out) {
+function hey (out) {
     var total;
     if (out.foods.length != 0) {
         document.getElementById("list").innerHTML = "";
