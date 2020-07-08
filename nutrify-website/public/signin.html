@@ -19,11 +19,49 @@
             style="margin-left: 2%; background-color: transparent; border: 3px solid green;">About</button>
         <button class="button" onclick="location.href = 'signin.html';">Sign Up / Sign In</button>
     </nav>
-    <section class="signupsectionwrap">
-        <section class="signupsection">
+    <div class="signupsection">
 
-<<<<<<< HEAD
-    <main>
+        <div class="formbox">
+            <div class="buttonbox">
+                <div id="btn"></div>
+                <button type="button" class="togglebtn" onclick="loginButton()">Login</button>
+                <button type="button" class="togglebtn" onclick="registerButton()">Register</button>
+            </div>
+            <div class="socialicons">
+                <button onclick="gToggleSignIn()">Place google image here</button>
+            </div>
+            <form id="login" class="inputgroup">
+                <input id="emailemail" type="text" class="inputfield" placeholder="Email" required>
+                <input id="password" type="text" class="inputfield" placeholder="Password" required>
+                <button onclick="eToggleSignIn()" class="submitbtn">Sign In</button>
+            </form>
+            <form id="register" class="inputgroup">
+                <input id="suusername" type="text" class="inputfield" placeholder="Username" >
+                <input id="suemail" type="text" class="inputfield" placeholder="Email" >
+                <input id="supassword" type="text" class="inputfield" placeholder="Password" >
+                <button onclick="eToggleSignIn()" class="submitbtn">Sign Up</button>
+            </form>
+
+        </div>
+    <div class="signupsection">
+        <script>
+            var x = document.getElementById("login");
+            var y = document.getElementById("register");
+            var z = document.getElementById("btn");
+
+            function registerButton(){
+                x.style.left = "-400px";
+                y.style.left = "50px";
+                z.style.left = "110px";
+
+            }
+            function loginButton(){
+                x.style.left = "50px";
+                y.style.left = "450px";
+                z.style.left = "0px";
+
+            }
+        </script>
 
         <!--Initial signup inputs for email-->
         <input id="suusername">
@@ -31,19 +69,19 @@
         <input id="supassword">
 
         <!--Initial signup button-->
-        <button onclick="handleSignUp()"></button>
+        <button onclick="handleSignUp()">Sign Up</button>
         <!--This button is only for email users who are signing UP, see google below and signin below-->
 
         <!--Signin inputs for email, if you want to use username instead to signin lmk i need to change the backend first-->
-        <input id="suemail">
-        <input id="supassword">
+        <input id="emailemail">
+        <input id="password">
 
         <!--Signin button-->
-        <button onclick="eToggleSignIn()"></button>
+        <button onclick="eToggleSignIn()">Sign In</button>
         <!--This button is only for email users who are signing IN, see google below and signup above-->
 
         <!--If google, you only need this button, for signup AND signin-->
-        <button onclick="gToggleSignIn()"></button>
+        <button onclick="gToggleSignIn()">Place google image here</button>
 
         <!--Then input health survey stuff-->
         <!--You can see which ones to put required on in the research doc-->
@@ -64,23 +102,95 @@
 
         <!--Once you're done with the health survey, do this button-->
         <button onclick="getUserInput()"></button>
-
-    </main>
-=======
-        </section>
-    </section>
-
-    
->>>>>>> dd458d2b81d9e0422ba3587bb00dc86690170f03
 </body>
 
 <style>
-
-
+    
+    .signupsection{
+        height: 100%;
+        width: 100%;
+    }
+    #login{
+        left: 50px;
+    }
+    #register{
+        left: 450px;
+    }
+    .formbox{
+        width: 380px;
+        height: 480px;
+        position: relative;
+        margin: 6% auto;
+        background-color: white;
+        padding: 5px;
+        overflow: hidden;
+    }
     * {
         font-family: 'Overpass', sans-serif;
     }
-
+    .buttonbox{
+        width: 220px;
+        margin: 35px auto;
+        position: relative;
+        border-radius: 30px;
+        border: 1px solid gray;
+    }
+    .togglebtn{
+        padding: 10px 30px;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        outline: none;
+        position: relative;
+    }
+    #btn{
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 110px;
+        height: 100%;
+        background-color: green;
+        border-radius: 30px;
+        transition: 0.5s;
+    }
+    .socialicons{
+        margin: 30px auto;
+        text-align: center;
+    }
+    .socialicons img{
+        width: 30px;
+        margin: 0 12px;
+        box-shadow: 0 0 20px 0 gray;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+    .inputgroup{
+        top: 180px;
+        position: absolute;
+        width: 280px;
+        transition: 0.5s;
+    }
+    .inputfield{
+        width: 100%;
+        padding: 10px 0;
+        margin: 5px 0;
+        border-left: 0;
+        border-top: 0;
+        border-right: 0;
+        border-bottom: 1px solid gray;
+        outline: none;
+        background: transparent;
+    }
+    .submitbtn{
+        width: 85%;
+        padding: 10px 30px;
+        display: block;
+        margin: auto;
+        background-color: green;
+        border: 0;
+        outline: none;
+        border-radius: 30px;
+    }
     nav {
         padding: 1%;
     }
