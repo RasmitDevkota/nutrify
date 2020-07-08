@@ -174,6 +174,10 @@ function handleSignUp() {
 
 // User Health Survey Start
 function getUserInput() {
+    if (!user) {
+        return console.log("")
+    }
+
     function inputText(id) {
         return document.getElementById(id).value;
     }
