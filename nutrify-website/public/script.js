@@ -133,7 +133,7 @@ let constant;
 let happy = true;
 let limit;
 
-async function app() {
+async function app () {
     net = await mobilenet.load();
     const webcamConfig = { facingMode: 'environment' };
     const webcam = await tf.data.webcam(webcamElement, webcamConfig);
