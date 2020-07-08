@@ -12,7 +12,7 @@
     var test = db.collection('temporaryCollection').doc('temporaryDocument');
 
     test.set({
-        testField1: "Hello world1!"
+        testField: ['hello', 'world'];
     }).then(function() {
         console.log("Success!");
     }).catch(function(e) {
@@ -28,8 +28,8 @@
         }).catch(function (e) {
             alert("Error occurred.");
             console.log(e);
-        });
-    }, 5000);
+        })
+    }, 5000)
 </script>
 
 </html>
