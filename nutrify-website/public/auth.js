@@ -172,7 +172,7 @@ function handleSignUp() {
 };
 // Signup End
 
-// User Health Data Start
+// User Health Survey Start
 function getUserInput() {
 
 }
