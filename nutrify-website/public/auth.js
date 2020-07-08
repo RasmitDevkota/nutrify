@@ -197,7 +197,7 @@ function getUserInput() {
         name: name,
         dietPlan: dietPlan,
         prohibitedFood,
-        weight: weight,
+        weight: weight
     });
 }
 // User Health Survey End
