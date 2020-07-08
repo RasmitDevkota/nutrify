@@ -172,6 +172,10 @@ function handleSignUp() {
 };
 // Signup End
 
+function getUserInput() {
+    
+}
+
 // Password Reset
 function sendPasswordReset() {
     var email = document.getElementById('premail').value;
