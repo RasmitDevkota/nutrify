@@ -25,7 +25,7 @@
     </div>
 
     <div style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
-      <img src='logo.png' style="width: 45%">
+      <img class="logoimage" src='logo.png' style="width: 45%">
 
       <div style="display: flex; flex-direction: column; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
 
@@ -46,6 +46,20 @@
 </body>
 
 <style>
+  .logoimage{
+    position:relative;
+    animation-name: moveup;
+    animation-duration:2s;
+  }
+  @keyframes moveup{
+    0%{
+      width:20%;
+    }
+    100%{
+      width:100%;
+    }
+
+  }
   * {
     font-family: 'Overpass', sans-serif;
   }
