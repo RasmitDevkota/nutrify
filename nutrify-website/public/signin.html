@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <title>Nutrify</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@600&display=swap" rel="stylesheet">
+
+    <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
+
+    <link rel="stylesheet" type="text/css" src="index.css">
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+</head>
+
+<body style="background-color:#002236">
+    <nav style="display: flex; flex-direction: row-reverse; margin-right: 3.5%">
+        <button class="button"
+            style="margin-left: 2%; background-color: transparent; border: 3px solid green;">About</button>
+        <button class="button">Sign Up</button>
+    </nav>
+
+    <main style="display: flex; flex-direction: column; justify-content: center;">
+        <div style="display: flex; flex-direction: row; justify-content: center;">
+            <h1 style="font-size: 60px; margin-bottom: 0px; color:white">Nutrify, where the <i>real</i> future of health
+                lies</h1>
+        </div>
+
+        <div
+            style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
+            <img class="logoimage" src='logo.png' style="width: 45%">
+
+            <div
+                style="display: flex; flex-direction: column; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
+
+                <h1 style="font-size: 25px; color:white">Take your nutritional goals to the next level with Nutrify,
+                    the global leader in nutritional tips and goal-setting. Did we mention it's free?</h1>
+
+                <div
+                    style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%; margin-top: 20px;">
+                    <button class="button" style="width: 50%;">I'm in, sign me up!</button>
+                </div>
+                <br><br>
+                <div
+                    style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
+                    <button class="button" style="width: 50%;">Not convinced? Learn more!</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</body>
+
+<style>
+    .logoimage {
+        position: relative;
+        animation-name: moveup;
+        animation-duration: 2s;
+    }
+
+    @keyframes moveup {
+        0% {
+            width: 20%;
+        }
+
+        100% {
+            width: 100%;
+        }
+
+    }
+
+    * {
+        font-family: 'Overpass', sans-serif;
+    }
+
+    nav {
+        padding: 1%;
+    }
+
+
+    .button {
+        cursor: pointer;
+        border-radius: 8px;
+        /* background-color: transparent;  */
+        background-color: green;
+        border: none;
+        padding: 1%;
+        color: white;
+        font-size: 1em;
+        white-space: nowrap;
+    }
+</style>
+
+</html>
