@@ -190,7 +190,7 @@ function getUserInput() {
     var dietPlan = inputText("diet-plan"); // comma or space separated values, default should be "None"
     var prohibitedFood = inputText("prohibited-food"); // comma or space separated values, default should be "None"
 
-    userDoc.update({
+    return userDoc.update({
         age: age,
         healthIssues: healthIssues,
         allergies: allergies,
