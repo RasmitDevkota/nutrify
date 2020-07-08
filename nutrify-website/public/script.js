@@ -50,8 +50,6 @@ function pageLoad(u) {
         }
     } else {
         window.user = null;
-
-
     }
 };
 
