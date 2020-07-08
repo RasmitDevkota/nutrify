@@ -172,7 +172,7 @@ function handleSignUp() {
 };
 // Signup End
 
-// Get User's 
+// Get User's Information at Sign
 function getUserInput() {
 
 }
