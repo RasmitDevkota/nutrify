@@ -181,7 +181,7 @@ function getUserInput() {
     var age = inputText("age");
     var healthIssues = inputText("healthIssues").replace(/ /g, ",").replace(/,,/g, ",").split(",");
     var allergies = inputText("allergies").replace(/ /g, ",").replace(/,,/g, ",").split(",");
-    var name = inputText("age");
+    var name = inputText("name");
     var age = inputText("age");
 }
 // User Health Survey End
