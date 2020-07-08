@@ -196,7 +196,8 @@ function getUserInput() {
         allergies: allergies,
         name: name,
         dietPlan: dietPlan,
-        prohibitedFood
+        prohibitedFood,
+        weight: weight,
     });
 }
 // User Health Survey End
