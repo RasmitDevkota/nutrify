@@ -84,7 +84,6 @@ function display(elem) {
     $('#' + elem).toggle();
 };
 
-
 function trueA() {
     var valInput = document.getElementById("food").value;
     if (typeof valInput !== "undefined") {
@@ -103,6 +102,7 @@ function trueA() {
             }).catch(err => console.error(err));
     }
 }
+
 function hey (out) {
     var total;
     if (out.foods.length != 0) {
