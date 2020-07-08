@@ -175,7 +175,7 @@ function handleSignUp() {
 // User Health Survey Start
 function getUserInput() {
     if (!user) {
-        return console.log("no user found for ")
+        return console.log("no user found for user health survey")
     }
 
     function inputText(id) {
