@@ -176,7 +176,7 @@ function handleSignUp() {
 function getUserInput() {
 
 }
-// U
+// User Health Survey End
 
 // Password Reset
 function sendPasswordReset() {
