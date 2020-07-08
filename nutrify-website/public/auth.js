@@ -183,7 +183,6 @@ function getUserInput() {
     var allergies = inputText("allergies").replace(/ /g, ",").replace(/,,/g, ",").split(",");
     var name = inputText("name");
     var dietPlan = inputText("diet-plan");
-    var dietPlan = inputText("diet-plan");
 }
 // User Health Survey End
 
