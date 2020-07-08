@@ -178,7 +178,7 @@ function getUserInput() {
         return document.getElementById(id).value;
     }
 
-    var text = 
+    var age = inputText("age");
 }
 // User Health Survey End
 
