@@ -183,7 +183,7 @@ function getUserInput() {
     var allergies = inputText("allergies").replace(/ /g, ",").replace(/,,/g, ",").split(","); // comma or space separated values
     var name = inputText("name");
     var dietPlan = inputText("diet-plan"); // comma or space separated values, default should be "None"
-    var prohibitedFood = inputText("prohibited-food"); // default should be "None"
+    var prohibitedFood = inputText("prohibited-food"); // comma or space separated values, default should be "None"
 
     var 
 }
