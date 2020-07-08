@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <title>Nutrify</title>
+
+    <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
+
+    <script src="script.js"></script>
+</head>
+
+<script>
+    var test = db.collection('temporaryCollection').doc('temporaryDocument');
+
+    test.set({
+        testField: "Hello world!"
+    }).then(function() {
+        console.log("Success!");
+    }).catch(function(e) {
+        alert("Error occurred.");
+        console.log(e);
+    });
+</script>
+
+</html>
