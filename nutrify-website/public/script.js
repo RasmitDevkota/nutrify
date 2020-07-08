@@ -64,17 +64,17 @@ function pageLoad(u) {
     }
 };
 
-// function xhttp(source, tag) {
-//     var xhttp = new XMLHttpRequest();
-//     xhttp.onreadystatechange = function () {
-//         if (this.readyState == 4 && this.status == 200) {
-//             document.getElementById(tag).innerHTML += this.responseText;
-//         }
-//     };
+function xhttp(source, tag) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(tag).innerHTML += this.responseText;
+        }
+    };
 
-//     xhttp.open("GET", `${source}.html`, true);
-//     xhttp.send();
-// }
+    xhttp.open("GET", `${source}.html`, true);
+    xhttp.send();
+}
 
 function search() {
     var search = document.getElementById("search").value;
