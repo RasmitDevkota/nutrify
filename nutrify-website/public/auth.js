@@ -175,7 +175,7 @@ function handleSignUp() {
 // User Health Survey Start
 function getUserInput() {
     if (!user) {
-        alert("Sorry, an error has occurred. This Please try again later.")
+        alert("Sorry, an error has occurred. This error is not your fault and will be fixed by the developers soon. Please try again later.")
         return console.log("No user found for user health survey");
     }
 
