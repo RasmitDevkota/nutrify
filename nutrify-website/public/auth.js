@@ -183,7 +183,7 @@ function getUserInput() {
     var allergies = inputText("allergies").replace(/ /g, ",").replace(/,,/g, ",").split(","); // comma or space separated values
     var name = inputText("name");
     var dietPlan = inputText("diet-plan");
-
+    
 
 }
 // User Health Survey End
