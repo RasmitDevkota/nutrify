@@ -179,6 +179,10 @@ function getUserInput() {
     }
 
     var age = inputText("age");
+    var age = inputText("age");
+    var age = inputText("age");
+    var age = inputText("age");
+    var age = inputText("age");
 }
 // User Health Survey End
 
