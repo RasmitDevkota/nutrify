@@ -21,7 +21,7 @@
     });
 
     setTimeout(function() {
-        db.collection('temporaryCollection').doc('temporaryDocument').get().then(function(doc) { // returns a promise which you have to .then(function)
+        db.collection('temporaryCollection').doc('temporaryDocument').get().then(function(doc) { // returns a promise which you have to .then(function (doc))
 
         })
     }, 5000)
