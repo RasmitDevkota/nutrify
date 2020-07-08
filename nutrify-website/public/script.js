@@ -170,7 +170,7 @@ async function app() {
             }).catch(err => console.error(err));
         img.dispose();
         setTimeout(function () {
-            //pause := (???????) don't make messy for client
+            //pause := (??????? go) don't make messy for client
         }, 2000);
         await tf.nextFrame();
     }
