@@ -174,8 +174,8 @@ function handleSignUp() {
 
 // User Health Survey Start
 function getUserInput() {
-    function userInput() {
-        
+    function element() {
+
     }
 }
 // User Health Survey End
