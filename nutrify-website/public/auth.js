@@ -179,12 +179,12 @@ function getUserInput() {
     }
 
     var age = inputText("age");
-    var healthIssues = inputText("healthIssues").replace(/ /g, ",").replace(/,,/g, ",").split(",");
+    var healthIssues = inputText("healthIssues").replace(/ /g, ",").replace(/,,/g, ",").split(","); // csv 
     var allergies = inputText("allergies").replace(/ /g, ",").replace(/,,/g, ",").split(",");
     var name = inputText("name");
     var dietPlan = inputText("diet-plan");
 
-    
+
 }
 // User Health Survey End
 
