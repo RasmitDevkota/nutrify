@@ -175,7 +175,7 @@ function handleSignUp() {
 // User Health Survey Start
 function getUserInput() {
     function inputText(id) {
-        return document.getElementById(id)
+        return document.getElementById(id).value;
     }
 }
 // User Health Survey End
