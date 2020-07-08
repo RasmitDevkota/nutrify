@@ -22,7 +22,7 @@
 
     setTimeout(function() {
         db.collection('temporaryCollection').doc('temporaryDocument').get().then(function(doc) { // returns a promise which you have to .then(function (doc))
-
+            console.log(doc.data())
         })
     }, 5000)
 </script>
