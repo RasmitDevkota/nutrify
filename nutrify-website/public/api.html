@@ -10,6 +10,43 @@
 	
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+
+	<style>
+		#list {
+			width: 40%;
+			position: relative;
+			height: 300px;
+			background-color: lightgrey;
+			overflow: scroll;
+		}
+	
+		#array {
+			width: 40%;
+			position: relative;
+			height: 300px;
+			background-color: green;
+			overflow: scroll;
+			display: none;
+		}
+	
+		.inner {
+			width: 100%;
+			position: relative;
+			height: 20%;
+			background-color: white;
+		}
+	
+		#ml {
+			position: fixed;
+			top: 20%;
+			left: 20%;
+			width: 60%;
+			height: 60%;
+			display: none;
+			background-color: white;
+			border: 3px solid red;
+		}
+	</style>
 	
   </head>
   <body>
