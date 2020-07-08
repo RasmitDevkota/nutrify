@@ -188,7 +188,6 @@ function getUserInput() {
     var weight = inputText("weight");
     var healthIssues = inputText("healthIssues").replace(/ /g, ",").replace(/,,/g, ",").split(","); // comma or space separated values
     var allergies = inputText("allergies").replace(/ /g, ",").replace(/,,/g, ",").split(","); // comma or space separated values
-    var name = inputText("name");
     var dietPlan = inputText("diet-plan"); // comma or space separated values, default should be "None"
     var prohibitedFood = inputText("prohibited-food"); // comma or space separated values, default should be "None"
 
@@ -196,7 +195,6 @@ function getUserInput() {
         age: age,
         healthIssues: healthIssues,
         allergies: allergies,
-        name: name,
         dietPlan: dietPlan,
         prohibitedFood,
         weight: weight

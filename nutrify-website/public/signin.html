@@ -20,34 +20,48 @@
         <button class="button">Sign Up</button>
     </nav>
 
-    <main style="display: flex; flex-direction: column; justify-content: center;">
-        <div style="display: flex; flex-direction: row; justify-content: center;">
-            <h1 style="font-size: 60px; margin-bottom: 0px; color:white">Nutrify, where the <i>real</i> future of health
-                lies</h1>
-        </div>
+    <main>
 
-        <div
-            style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
-            <img class="logoimage" src='logo.png' style="width: 45%">
+        <!--Initial signup inputs for email-->
+        <input id="suusername">
+        <input id="suemail">
+        <input id="supassword">
 
-            <div
-                style="display: flex; flex-direction: column; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
+        <!--Initial signup button-->
+        <button onclick="handleSignUp()"></button>
+        <!--This button is only for email users who are signing UP, see google below and signin below-->
 
-                <h1 style="font-size: 25px; color:white">Take your nutritional goals to the next level with Nutrify,
-                    the global leader in nutritional tips and goal-setting. Did we mention it's free?</h1>
+        <!--Signin inputs for email, if you want to use username instead to signin lmk i need to change the backend first-->
+        <input id="suemail">
+        <input id="supassword">
 
-                <div
-                    style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%; margin-top: 20px;">
-                    <button class="button" style="width: 50%;">I'm in, sign me up!</button>
-                </div>
-                <br><br>
-                <div
-                    style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
-                    <button class="button" style="width: 50%;">Not convinced? Learn more!</button>
-                </div>
+        <!--Signin button-->
+        <button onclick="eToggleSignIn()"></button>
+        <!--This button is only for email users who are signing IN, see google below and signup above-->
 
-            </div>
-        </div>
+        <!--If google, you only need this button, for signup AND signin-->
+        <button onclick="gToggleSignIn()"></button>
+
+        <!--Then input health survey stuff-->
+        <!--You can see which ones to put required on in the research doc-->
+        <input id="age">
+        <input id="gender">
+        <input id="weight">
+        <input id="healthIssues">
+        <input id="allergies">
+        <select multiple id="dietPlan">
+            <option selected>Open this select menu</option>
+            <option value="None">None</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+        <input id="prohibitedFood"> <!--I would prefer comma or space selected, my code has regex so it can take anything-->
+        <!--Example input for prohibited food: beef, chicken,eggs,milk fish rice,, bread-->
+        <!--As you can see it's very forgiving, but please tell them to try to be normal lmao-->
+
+        <!--Once you're done with the health survey, do this button-->
+        <button onclick="getUserInput()"></button>
+
     </main>
 </body>
 
