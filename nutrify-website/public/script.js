@@ -13,10 +13,6 @@ db.enablePersistence();
 
 var users = db.collection("users");
 var emails = db.collection("emails");
-var Products = db.collection("products");
-var ShoppingCart = db.collection("cart");
-var Orders = db.collection("orders");
-
 document.addEventListener('keydown', function (event) {
     const key = event.key;
     if (key == "Enter") {
@@ -35,14 +31,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 function pageLoad(u) {
-    // if (window.location.href.includes("index.html") || !window.location.href.includes(".html")) {
-    //     xhttp("indexNavbar", "navbarHeader");
-    // } else {
-    //     xhttp("navbar", "navbarHeader");
-    // }
-
-    // xhttp("auth", "authDiv");
-
     if (u == true) {
         document.getElementById("signin").innerHTML = "Sign Out";
 
@@ -58,8 +46,6 @@ function pageLoad(u) {
         }
     } else {
         window.user = null;
-
-
     }
 };
 
@@ -93,3 +79,125 @@ function redirect(pagePath) {
 function display(elem) {
     $('#' + elem).toggle();
 };
+
+function trueA() {
+    var valInput = document.getElementById("food").value;
+    if (typeof valInput !== "undefined") {
+        var entity = "";
+        for (let j = 0; j < valInput.length; j++) {
+            if (valInput[j] == " ") {
+                entity += "%20";
+            } else {
+                entity += valInput[j];
+            }
+        }
+        fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=3gxUJxixMLQ0VcnleWLIzaXbkjU3a7CgwbU34cvM&query=' + entity)
+            .then(res => res.json())
+            .then((out) => {
+                hey(out);
+            }).catch(err => console.error(err));
+    }
+}
+
+function hey (out) {
+    var total;
+    if (out.foods.length != 0) {
+        document.getElementById("list").innerHTML = "";
+    }
+    for (let i = 0; i <= out.foods.length; i++) {
+        var owner = out.foods[i].brandOwner;
+        if (typeof owner === "undefined") {
+            owner = "";
+        } else {
+            owner = " | " + out.foods[i].brandOwner;
+        }
+        var button = document.createElement("button");
+        button.innerHTML = out.foods[i].description + owner;
+        button.className = "inner";
+        total = out.foods[i].description + owner;
+        button.onclick = function () {
+            console.log(out.foods[i]);
+        };
+        var list = document.getElementById("list");
+        list.appendChild(button);
+    }
+}
+
+const webcamElement = document.getElementById('webcam');
+let net;
+let constant;
+let happy = true;
+let limit;
+
+async function app () {
+    net = await mobilenet.load();
+    const webcamConfig = { facingMode: 'environment' };
+    const webcam = await tf.data.webcam(webcamElement, webcamConfig);
+    let time = 0;
+    var complete;
+    while (happy) {
+        time++;
+        const img = await webcam.capture();
+        const result = await net.classify(img);
+
+        fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=3gxUJxixMLQ0VcnleWLIzaXbkjU3a7CgwbU34cvM&query=' + `${result[0].className}`)
+            .then(res => res.json())
+            .then((ses) => {
+                limit = ses;
+                if (`${result[0].probability}` > 0.4) { //check distinct probability
+                    for (let m = 0; m < ses.foods.length; m++) {
+                        if (ses.foods[m].description.includes(`${result[0].className}`) == true) {
+                            happy = false;
+                            document.getElementById("ml").style.display = "block";
+                            vowels = ["a", "e", "i", "o", "u"];
+                            for (let a = 0; a < 5; a++) {
+                                if (`${result[0].className}`[0] == vowels[a]) {
+                                    complete = "an ";
+                                }
+                            }
+                            if (typeof complete === "undefined") {
+                                complete = "a ";
+                            }
+                            document.getElementById("name").innerHTML = complete + `${result[0].className}`;
+                        }
+                    }
+                }
+
+            }).catch(err => console.error(err));
+        img.dispose();
+        setTimeout(function () {
+            //pause := (???????go?????????) don't make messy for client
+        }, 2000);
+        await tf.nextFrame();
+    }
+}
+
+app();
+
+function assemble () {
+    document.getElementById("top").innerHTML = "Select Correct Item:";
+    document.getElementById("entOp").style.display = "none";
+    document.getElementById("array").style.display = "block";
+
+    var totalIt;
+    if (limit.foods.length != 0) {
+        document.getElementById("list").innerHTML = "";
+    }
+    for (let i = 0; i <= limit.foods.length; i++) {
+        var ownerB = limit.foods[i].brandOwner;
+        if (typeof ownerB === "undefined") {
+            ownerB = "";
+        } else {
+            ownerB = " | " + limit.foods[i].brandOwner;
+        }
+        var buttonB = document.createElement("button");
+        buttonB.innerHTML = limit.foods[i].description + ownerB;
+        buttonB.className = "inner";
+        totalIt = limit.foods[i].description + ownerB;
+        buttonB.onclick = function () {
+            console.log(limit.foods[i]);
+        };
+        var array = document.getElementById("array");
+        array.appendChild(buttonB);
+    }
+}
