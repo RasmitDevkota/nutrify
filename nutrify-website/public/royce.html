@@ -12,7 +12,7 @@
     var test = db.collection('temporaryCollection').doc('temporaryDocument');
 
     test.set({
-        testField: ['hello', 'world'];
+        testField: ['hello', 'world']
     }).then(function() {
         console.log("Success!");
     }).catch(function(e) {
