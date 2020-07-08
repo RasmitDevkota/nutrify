@@ -195,6 +195,7 @@ function getUserInput() {
         age: age,
         healthIssues: healthIssues,
         allergies: allergies,
+        name: name,
         dietPlan: dietPlan,
         prohibitedFood,
         weight: weight
