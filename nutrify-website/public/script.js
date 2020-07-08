@@ -178,7 +178,7 @@ async function app() {
 
 app();
 
-function assemble() {
+function assemble () {
     document.getElementById("top").innerHTML = "Select Correct Item:";
     document.getElementById("entOp").style.display = "none";
     document.getElementById("array").style.display = "block";
