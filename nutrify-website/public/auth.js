@@ -174,7 +174,7 @@ function handleSignUp() {
 
 // User Health Survey Start
 function getUserInput() {
-    var age = $("age").
+    function userInput() {}
 }
 // User Health Survey End
 
