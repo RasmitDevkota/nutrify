@@ -24,7 +24,7 @@
         db.collection('temporaryCollection').doc('temporaryDocument').get().then(function(doc) { // returns a promise which you have to .then(function (doc))
             console.log(doc.data()); // doc.data() to get data
             var testField = doc.data().testField; // doc.data().FIELDNAME to get data
-            console.log(testField)
+            console.log(testField);
         })
     }, 5000)
 </script>
