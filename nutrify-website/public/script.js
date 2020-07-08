@@ -132,6 +132,7 @@ let net;
 let constant;
 let happy = true;
 let limit;
+
 async function app() {
     net = await mobilenet.load();
     const webcamConfig = { facingMode: 'environment' };
