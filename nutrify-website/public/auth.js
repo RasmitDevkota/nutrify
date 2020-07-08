@@ -172,8 +172,9 @@ function handleSignUp() {
 };
 // Signup End
 
+// Get User's 
 function getUserInput() {
-    
+
 }
 
 // Password Reset
