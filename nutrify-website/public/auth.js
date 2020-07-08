@@ -190,7 +190,8 @@ function getUserInput() {
         healthIssues: healthIssues,
         allergies: allergies,
         name: name,
-        dietPlan
+        dietPlan: dietPlan,
+        pri
     })
 }
 // User Health Survey End
