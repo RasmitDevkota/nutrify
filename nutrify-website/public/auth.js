@@ -179,7 +179,7 @@ function getUserInput() {
     }
 
     var age = inputText("age");
-    var healthIssues = inputText("healthIssues");
+    var healthIssues = inputText("healthIssues").split(",");
     var age = inputText("age");
     var age = inputText("age");
     var age = inputText("age");
