@@ -184,6 +184,8 @@ function getUserInput() {
     var name = inputText("name");
     var dietPlan = inputText("diet-plan");
     var prohibitedFood = inputText("prohibited-food");
+
+    var 
 }
 // User Health Survey End
 
