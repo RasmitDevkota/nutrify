@@ -1,0 +1,455 @@
+<html>
+
+<head>
+  <title>Nutrify</title>
+
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://kit.fontawesome.com/c54efb68d5.js" SameSite="none" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="fontawesome/css/all.css">
+  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@600&display=swap" rel="stylesheet">
+
+  <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
+
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+</head>
+
+<body style="background-color:#002236;">
+  <main style="display: flex; flex-direction: row; height: 100%;">
+    <div id="menu" style="position: absolute; z-index: 2; display: none; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4); width: 100%; height: 100%;">
+      <div style="background-color: #f1f1f1; padding: 1.5%; width: 17%; height: 100%;">
+        <p style="cursor: pointer; color: rgb(0, 8, 29); font-size: 2em;" onclick="closeMenu()">&#10006;</p>
+      </div>
+    </div>
+  
+    <div id="main" style="display: flex; flex-direction: column; padding: 0.5%; width: 100%;">
+      <nav style="display: flex; flex-direction: row; align-items: center; background-color: #003655; width: 100%; box-shadow: 0px 4px 7px #7972727a;">
+        <a id="openMenuButton" style="cursor: pointer; color: #009c68; font-size: 2em; margin-left: 1%;" onclick="openMenu()">&#9776;</a>
+
+        <img id="profileIcon" src="favicon.ico" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer;" onclick="">
+      </nav>
+
+      <div style="display: flex; flex-direction: column;">
+
+        <div style="display: flex; flex-direction: row; justify-content: space-around; height: 15%; margin-top: 1%;">
+          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68;">
+            <span class="mdl-chip__text">Add Meal</span>
+            <a href="#" class="mdl-chip__action"><i class="material-icons" style="font-size: 25px">restaurant</i></a>
+          </span>
+          &nbsp;
+          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68;">
+            <span class="mdl-chip__text">View Goals</span>
+            <a href="#" class="mdl-chip__action"><i class="far fa-bullseye-arrow" style="font-size: 25px"></i></a>
+          </span>
+          &nbsp;
+          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68;">
+            <span class="mdl-chip__text">Diet</span>
+            <a href="#" class="mdl-chip__action"><i class="material-icons" style="font-size: 25px">no_food</i></a>
+          </span>
+          &nbsp;
+          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68;">
+            <span class="mdl-chip__text">Log Fitness Hours</span>
+            <a href="#" class="mdl-chip__action"><i class="material-icons" style="font-size: 25px">fitness_center</i></a>
+          </span>
+        </div>
+
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 1%;">
+          <div class="card" style="width: 18rem;">
+            <h5 class="card-title" style="color: black">Card title</h5>
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <script>
+              var ctx = document.getElementById('myChart').getContext('2d');
+              var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }
+              });
+            </script>
+            <div class="card-body">
+              <p class="card-text" style="color: black">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem;">
+            <h5 class="card-title" style="color: black">Card title</h5>
+            <canvas id="myChart1" width="400" height="400"></canvas>
+            <script>
+              var ctx = document.getElementById('myChart1').getContext('2d');
+              var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }
+              });
+            </script>
+            <div class="card-body">
+              <p class="card-text" style="color: black">Some quick example text to build on the card title and make up the bulk of
+                the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem;">
+            <h5 class="card-title" style="color: black">Card title</h5>
+            <canvas id="myChart2" width="400" height="400"></canvas>
+            <script>
+              var ctx = document.getElementById('myChart2').getContext('2d');
+              var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }
+              });
+            </script>
+            <div class="card-body">
+              <p class="card-text" style="color: black">Some quick example text to build on the card title and make up the bulk of
+                the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem;">
+            <h5 class="card-title" style="color: black">Card title</h5>
+            <canvas id="myChart3" width="400" height="400"></canvas>
+            <script>
+              var ctx = document.getElementById('myChart3').getContext('2d');
+              var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                  datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero: true
+                      }
+                    }]
+                  }
+                }
+              });
+            </script>
+            <div class="card-body">
+              <p class="card-text" style="color: black">Some quick example text to build on the card title and make up the bulk of
+                the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="display: flex; flex-direction: row; margin-bottom: 2%; margin-top: 3%;">
+          <div class="card text-center" style="width: 50%; margin-left: 15%;">
+            <div class="card-header">
+              <ul class="nav nav-pills card-header-pills" style="display: flex; flex-direction: row; justify-content: space-evenly;">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#" style="width: 100px;">Goals</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#" style="width: 100px;">Diet</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#" style="width: 100px;">Fitness</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title" style="color: black">Special title treatment</h5>
+              <canvas id="myChart4" width="600px" height="300px"></canvas>
+              <p class="card-text" style="color: black">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+
+              <script>
+                var ctx = document.getElementById('myChart4').getContext('2d');
+                var myChart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                      label: '# of Votes',
+                      data: [12, 19, 3, 5, 2, 3],
+                      backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                      ],
+                      borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      yAxes: [{
+                        ticks: {
+                          beginAtZero: true
+                        }
+                      }]
+                    }
+                  }
+                });
+              </script>
+        
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-left: 10%;">
+            <div class="card" style="width: 18rem;">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+            
+            <div class="card" style="width: 18rem;">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            var url = 'http://newsapi.org/v2/top-headlines?' +
+                'q=Apple&' +
+                'from=2020-07-09&' +
+                'sortBy=popularity&' +
+                'apiKey=e55f2d04dbae45d4bc5c253924f6d3ed';
+
+              var req = new Request(url);
+
+              fetch(req)
+                .then(function (response) {
+                  console.log(response.json());
+                })
+          </script>
+        </div>
+
+      </div>
+    </div>
+  
+    <script>
+      function openMenu() {
+        display("menu");
+      }
+
+      function closeMenu() {
+        display("menu");
+      }
+    </script>
+  </main>
+</body>
+
+<style>
+  * {
+    font-family: 'Overpass-SB', sans-serif;
+    color: azure;
+  }
+
+  @font-face {
+    font-family: 'Overpass-R';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Overpass Regular'), local('Overpass-Regular'), url(https://fonts.gstatic.com/s/overpass/v4/qFdH35WCmI96Ajtm81GrU9vyww.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  
+  @font-face {
+    font-family: 'Overpass-R';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Overpass Regular'), local('Overpass-Regular'), url(https://fonts.gstatic.com/s/overpass/v4/qFdH35WCmI96Ajtm81GlU9s.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  @font-face {
+    font-family: 'Overpass-SB';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: local('Overpass SemiBold'), local('Overpass-SemiBold'), url(https://fonts.gstatic.com/s/overpass/v4/qFdA35WCmI96Ajtm81l6d87D4howig.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
+  @font-face {
+    font-family: 'Overpass-SB';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: local('Overpass SemiBold'), local('Overpass-SemiBold'), url(https://fonts.gstatic.com/s/overpass/v4/qFdA35WCmI96Ajtm81l6d87N4ho.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  .button { 
+    cursor: pointer; 
+    border-radius: 8px;
+    background-color: green;
+    border: none;
+    padding: 1%;
+    color: white;
+    font-size: 1.5em; 
+    white-space: nowrap;
+    text-transform: none;
+    word-wrap: normal;
+    white-space: normal !important;
+  } 
+</style>
+
+</html>

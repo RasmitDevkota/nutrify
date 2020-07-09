@@ -22,8 +22,9 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-function pageLoad(u) {
+window.newsApiKey = "e55f2d04dbae45d4bc5c253924f6d3ed";
 
+function pageLoad(u) {
     if (mq.matches) {
         xhttp('index-landscape', 'main-content');
     }
