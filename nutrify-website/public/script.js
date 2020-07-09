@@ -31,6 +31,11 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 function pageLoad(u) {
+
+    if (mq.matches) {
+        xhttp('index-landscape', 'main-content');
+    }
+
     if (u == true) {
         document.getElementById("signin").innerHTML = "Sign Out";
 
@@ -49,11 +54,28 @@ function pageLoad(u) {
     }
 };
 
+if (matchMedia) {
+    const mq = window.matchMedia("(orientation: landscape)");
+    mq.addListener(orientationChange);
+    orientationChange(mq);
+}
+
+function orientationChange(mq) {
+    if (mq.matches) {
+        console.log("hello");
+        xhttp('index-landscape', 'main-content');
+    } else {
+        console.log("hi");
+        xhttp('index-portrait', 'main-content');
+    }
+    console.log("world");
+}
+
 function xhttp(source, tag) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById(tag).innerHTML += this.responseText;
+            document.getElementById(tag).innerHTML = this.responseText;
         }
     };
 
