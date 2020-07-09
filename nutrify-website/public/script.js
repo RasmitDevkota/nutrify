@@ -16,13 +16,14 @@ var emails = db.collection("emails");
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
+        if (!window.location.href.includes("index.html") && window.location.href.includes(".html")) {
+            return redirect('dashboard');
+        }
         pageLoad(true);
     } else {
         pageLoad(false);
     }
 });
-
-window.newsApiKey = "e55f2d04dbae45d4bc5c253924f6d3ed";
 
 function pageLoad(u) {
     if (u == true) {
@@ -32,12 +33,6 @@ function pageLoad(u) {
         window.usersUser = users.doc(user.uid);
         window.emailsUser = emails.doc(user.displayName);
         window.userCart = ShoppingCart.doc(user.displayName).collection(user.displayName);
-
-        if (window.location.href.includes("search.html")) {
-            var urlParams = new URLSearchParams(window.location.search);
-                var query = urlParams.get('query');
-                results(query.toLowerCase());
-        }
     } else {
         window.user = null;
     }
@@ -49,8 +44,10 @@ if (matchMedia && window.location.href.includes('index.html') || !window.locatio
     orientationChange(mq);
 }
 
-if (mq.matches) {
-    xhttp('index-landscape', 'main-content');
+if (window.location.href.includes('index.html') || !window.location.href.includes('.html')) {
+    if (mq.matches) {
+        xhttp('index-landscape', 'main-content');
+    }
 }
 
 function orientationChange(mq) {
@@ -59,6 +56,10 @@ function orientationChange(mq) {
     } else {
         xhttp('index-portrait', 'main-content');
     }
+}
+
+if (window.location.href.includes("dashboard.html")) {
+    xhttp('overview-graphs', 'overview-graphs');
 }
 
 function xhttp(source, tag) {

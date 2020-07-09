@@ -21,6 +21,7 @@
 
   <script src="script.js"></script>
   <script src="auth.js"></script>
+  <script src="data.js"></script>
 </head>
 
 <body style="background-color:#002236;">
@@ -62,205 +63,13 @@
           </span>
         </div>
 
-        <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 1%;">
-          <div class="card" style="width: 18rem;">
-            <h5 class="card-title" style="color: black">Card title</h5>
-            <canvas id="myChart" width="400" height="400"></canvas>
-            <script>
-              var ctx = document.getElementById('myChart').getContext('2d');
-              var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                  }]
-                },
-                options: {
-                  scales: {
-                    yAxes: [{
-                      ticks: {
-                        beginAtZero: true
-                      }
-                    }]
-                  }
-                }
-              });
-            </script>
-            <div class="card-body">
-              <p class="card-text" style="color: black">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <h5 class="card-title" style="color: black">Card title</h5>
-            <canvas id="myChart1" width="400" height="400"></canvas>
-            <script>
-              var ctx = document.getElementById('myChart1').getContext('2d');
-              var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                  }]
-                },
-                options: {
-                  scales: {
-                    yAxes: [{
-                      ticks: {
-                        beginAtZero: true
-                      }
-                    }]
-                  }
-                }
-              });
-            </script>
-            <div class="card-body">
-              <p class="card-text" style="color: black">Some quick example text to build on the card title and make up the bulk of
-                the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <h5 class="card-title" style="color: black">Card title</h5>
-            <canvas id="myChart2" width="400" height="400"></canvas>
-            <script>
-              var ctx = document.getElementById('myChart2').getContext('2d');
-              var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                  }]
-                },
-                options: {
-                  scales: {
-                    yAxes: [{
-                      ticks: {
-                        beginAtZero: true
-                      }
-                    }]
-                  }
-                }
-              });
-            </script>
-            <div class="card-body">
-              <p class="card-text" style="color: black">Some quick example text to build on the card title and make up the bulk of
-                the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <h5 class="card-title" style="color: black">Card title</h5>
-            <canvas id="myChart3" width="400" height="400"></canvas>
-            <script>
-              var ctx = document.getElementById('myChart3').getContext('2d');
-              var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                  datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                  }]
-                },
-                options: {
-                  scales: {
-                    yAxes: [{
-                      ticks: {
-                        beginAtZero: true
-                      }
-                    }]
-                  }
-                }
-              });
-            </script>
-            <div class="card-body">
-              <p class="card-text" style="color: black">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
+        <div id="overview-graphs" style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 1%;">
 
         </div>
 
         <div style="display: flex; flex-direction: row; margin-bottom: 2%; margin-top: 3%;">
-          <div class="card text-center" style="width: 50%; margin-left: 15%;">
+
+          <div class="card text-center" style="width: 60%; margin-left: 10%;">
             <div class="card-header">
               <ul class="nav nav-pills card-header-pills" style="display: flex; flex-direction: row; justify-content: space-evenly;">
                 <li class="nav-item">
@@ -280,53 +89,12 @@
               <canvas id="myChart4" width="600px" height="300px"></canvas>
               <p class="card-text" style="color: black">With supporting text below as a natural lead-in to additional content.</p>
               <a href="#" class="btn btn-primary">Go somewhere</a>
-
-              <script>
-                var ctx = document.getElementById('myChart4').getContext('2d');
-                var myChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                    datasets: [{
-                      label: '# of Votes',
-                      data: [12, 19, 3, 5, 2, 3],
-                      backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                      ],
-                      borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                      ],
-                      borderWidth: 1
-                    }]
-                  },
-                  options: {
-                    scales: {
-                      yAxes: [{
-                        ticks: {
-                          beginAtZero: true
-                        }
-                      }]
-                    }
-                  }
-                });
-              </script>
-        
             </div>
           </div>
 
-          <div style="display: flex; flex-direction: column; margin-left: 10%;">
-            <div class="card" style="width: 18rem;">
-              <img src="..." class="card-img-top" alt="...">
+          <div style="display: flex; flex-direction: column; margin-left: 6%;">
+            <div class="card" style="width: 18rem; margin-bottom: 3%;">
+              <img src="favicon.ico" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
@@ -335,8 +103,8 @@
               </div>
             </div>
 
-            <div class="card" style="width: 18rem;">
-              <img src="..." class="card-img-top" alt="...">
+            <div class="card" style="width: 18rem; margin-bottom: 3%;">
+              <img src="favicon.ico" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
@@ -345,8 +113,8 @@
               </div>
             </div>
 
-            <div class="card" style="width: 18rem;">
-              <img src="..." class="card-img-top" alt="...">
+            <div class="card" style="width: 18rem; margin-bottom: 3%;">
+              <img src="favicon.ico" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -354,8 +122,8 @@
               </div>
             </div>
 
-            <div class="card" style="width: 18rem;">
-              <img src="..." class="card-img-top" alt="...">
+            <div class="card" style="width: 18rem; margin-bottom: 3%;">
+              <img src="favicon.ico" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
