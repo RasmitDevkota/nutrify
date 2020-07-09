@@ -21,8 +21,8 @@ function eToggleSignIn() {
 
     firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
         firebase.auth().onAuthStateChanged(function (user) {
-            display("email");
-            pageLoad(true);
+            // redirect("dashboard");
+            // pageLoad(true);
         });
     }).catch(function (error) {
         var errorCode = error.code;
@@ -83,9 +83,8 @@ function gToggleSignIn() {
                             });
                         });
                     });
-
-                    togglepsi();
-                    pageLoad(true);
+                    // redirect('dashboard');
+                    // pageLoad(true);
                 };
             });
         }).catch(function (error) {
@@ -153,8 +152,8 @@ function handleSignUp() {
                 console.log(error);
                 console.log(user.displayName);
             });
-            display('signup');
-            pageLoad(true);
+            // redirect('dashboard');
+            // pageLoad(true);
         });
     }).catch(function (error) {
         var errorCode = error.code;

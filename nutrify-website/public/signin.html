@@ -32,19 +32,19 @@
                 <button onclick="gToggleSignIn()" class="googlebutton"><img src="googlelogo.jpg"></button>
             </div>
 
-            <form id="loginSection" class="inputgroup">
+            <div id="loginSection" class="inputgroup">
                 <input id="emailemail" type="text" class="inputfield" placeholder="Email" required>
                 <input id="password" type="password" class="inputfield" placeholder="Password" required>
                 <a style="font-size: smaller;">Forgot password?</a>
                 <button onclick="eToggleSignIn()" class="submitbtn">Sign In</button>
-            </form>
+            </div>
 
-            <form id="registerSection" class="inputgroup">
+            <div id="registerSection" class="inputgroup">
                 <input id="suusername" type="text" class="inputfield" placeholder="Username" >
                 <input id="suemail" type="text" class="inputfield" placeholder="Email" >
                 <input id="supassword" type="password" class="inputfield" placeholder="Password" >
                 <button onclick="handleSignUp()" class="submitbtn">Sign Up</button>
-            </form>
+            </div>
 
             <script>
                 var loginSection = document.getElementById("loginSection");
@@ -172,6 +172,7 @@
         border: 0;
         outline: none;
         border-radius: 30px;
+        cursor: pointer;
     }
     nav {
         padding: 1%;
