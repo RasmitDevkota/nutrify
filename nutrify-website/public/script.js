@@ -13,6 +13,7 @@ db.enablePersistence();
 
 var users = db.collection("users");
 var emails = db.collection("emails");
+
 document.addEventListener('keydown', function (event) {
     const key = event.key;
     if (key == "Enter") {

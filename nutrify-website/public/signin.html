@@ -15,111 +15,74 @@
 
 <body style="background-color:#002236">
     <nav style="display: flex; flex-direction: row-reverse; margin-right: 3.5%">
-        <button class="button"
-            style="margin-left: 2%; background-color: transparent; border: 3px solid green;">About</button>
+        <button class="button" style="margin-left: 2%; background-color: transparent; border: 3px solid green;">About</button>
         <button class="button" id="signin" onclick="signIn()">Sign Up</button>
     </nav>
+
     <div class="signupsection">
         <div class="formbox">
             
             <div class="buttonbox">
-                <div id="btn"></div>
-                <button id="logintogglebutton" type="button" class="togglebtn" onclick="loginButton()">Login</button>
-                <button id="registertogglebutton" type="button" class="togglebtn" onclick="registerButton()">Register</button>
+                <div id="sliderButton"></div>
+                <button id="loginToggleButton" type="button" class="togglebtn" onclick="loginButton()">Login</button>
+                <button id="registerToggleButton" type="button" class="togglebtn" onclick="registerButton()">Register</button>
             </div>
+
             <div class="socialicons">
                 <button onclick="gToggleSignIn()" class="googlebutton"><img src="googlelogo.jpg"></button>
             </div>
-            <form id="login" class="inputgroup">
+
+            <form id="loginSection" class="inputgroup">
                 <input id="emailemail" type="text" class="inputfield" placeholder="Email" required>
-                <input id="password" type="text" class="inputfield" placeholder="Password" required>
+                <input id="password" type="password" class="inputfield" placeholder="Password" required>
+                <a style="font-size: smaller;">Forgot password?</a>
                 <button onclick="eToggleSignIn()" class="submitbtn">Sign In</button>
             </form>
-            <form id="register" class="inputgroup">
+
+            <form id="registerSection" class="inputgroup">
                 <input id="suusername" type="text" class="inputfield" placeholder="Username" >
                 <input id="suemail" type="text" class="inputfield" placeholder="Email" >
-                <input id="supassword" type="text" class="inputfield" placeholder="Password" >
-                <button onclick="eToggleSignIn()" class="submitbtn">Sign Up</button>
+                <input id="supassword" type="password" class="inputfield" placeholder="Password" >
+                <button onclick="handleSignUp()" class="submitbtn">Sign Up</button>
             </form>
 
+            <script>
+                var loginSection = document.getElementById("loginSection");
+                var registerSection = document.getElementById("registerSection");
+                var sliderButton = document.getElementById("sliderButton");
+                var loginToggleButton = document.getElementById("loginToggleButton");
+                var registerToggleButton = document.getElementById("registerToggleButton");
+
+                function registerButton() {
+                    loginSection.style.left = "-400px";
+                    loginToggleButton.style.color = "black";
+                    registerSection.style.left = "50px";
+                    registerToggleButton.style.color = "white";
+                    sliderButton.style.left = "110px";
+                }
+
+                function loginButton() {
+                    loginSection.style.left = "50px";
+                    loginToggleButton.style.color = "white";
+                    registerSection.style.left = "450px";
+                    registerToggleButton.style.color = "black";
+                    sliderButton.style.left = "0px";
+                }
+            </script>
+
         </div>
-    <div class="signupsection">
-        <script>
-            var x = document.getElementById("login");
-            var y = document.getElementById("register");
-            var z = document.getElementById("btn");
-            var loginbutton = document.getElementById("logintogglebutton");
-            var registerbutton = document.getElementById("registertogglebutton");
-
-            function registerButton(){
-                x.style.left = "-400px";
-                loginbutton.style.color = "black";
-                y.style.left = "50px";
-                registerbutton.style.color = "white";
-                z.style.left = "110px";
-
-            }
-            function loginButton(){
-                x.style.left = "50px";
-                loginbutton.style.color = "white";
-                y.style.left = "450px";
-                registerbutton.style.color = "black";
-                z.style.left = "0px";
-
-            }
-        </script>
-
-        <!--Initial signup inputs for email-->
-        <input id="suusername">
-        <input id="suemail">
-        <input id="supassword">
-
-        <!--Initial signup button-->
-        <button onclick="handleSignUp()">Sign Up</button>
-        <!--This button is only for email users who are signing UP, see google below and signin below-->
-
-        <!--Signin inputs for email, if you want to use username instead to signin lmk i need to change the backend first-->
-        <input id="emailemail">
-        <input id="password">
-
-        <!--Signin button-->
-        <button onclick="eToggleSignIn()">Sign In</button>
-        <!--This button is only for email users who are signing IN, see google below and signup above-->
-
-        <!--If google, you only need this button, for signup AND signin-->
-        <button onclick="gToggleSignIn()" class="googlebuttonimage">Place google image here</button>
-
-        <!--Then input health survey stuff-->
-        <!--You can see which ones to put required on in the research doc-->
-        <input id="age">
-        <input id="gender">
-        <input id="weight">
-        <input id="healthIssues">
-        <input id="allergies">
-        <select multiple id="dietPlan">
-            <option selected>Open this select menu</option>
-            <option value="None">None</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-        <input id="prohibitedFood"> <!--I would prefer comma or space selected, my code has regex so it can take anything-->
-        <!--Example input for prohibited food: beef, chicken,eggs,milk fish rice,, bread-->
-        <!--As you can see it's very forgiving, but please tell them to try to be normal lmao-->
-
-        <!--Once you're done with the health survey, do this button-->
-        <button onclick="getUserInput()"></button>
+    </div>
 </body>
 
 <style>
-    
     .signupsection{
         height: 100%;
         width: 100%;
     }
-    #login{
+    #loginSection{
         left: 50px;
     }
-    #register{
+    #registerSection{
         left: 450px;
     }
     .formbox{
@@ -131,7 +94,6 @@
         border-radius: 30px;
         padding: 5px;
         overflow: hidden;
-
     }
     * {
         font-family: 'Overpass', sans-serif;
@@ -141,7 +103,6 @@
         margin: 35px auto;
         position: relative;
         border-radius: 30px;
-
     }
     .togglebtn{
         padding: 10px 30px;
@@ -151,17 +112,17 @@
         outline: none;
         position: relative;
     }
-    #registertogglebutton{
+    #registerToggleButton{
         color:black;
     }
-    #logintogglebutton{
+    #loginToggleButton{
         color: white;
     }
     .googlebutton{
         border:0;
         background: transparent;
     }
-    #btn{
+    #sliderButton{
         top: 0;
         left: 0;
         position: absolute;
@@ -205,6 +166,7 @@
         padding: 10px 30px;
         display: block;
         margin: auto;
+        margin-top: 5%;
         background: linear-gradient(to right, #15C335, #096A1A);
         color: white;
         border: 0;
@@ -214,8 +176,6 @@
     nav {
         padding: 1%;
     }
-
-
     .button {
         cursor: pointer;
         border-radius: 8px;
