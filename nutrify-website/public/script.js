@@ -25,10 +25,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 window.newsApiKey = "e55f2d04dbae45d4bc5c253924f6d3ed";
 
 function pageLoad(u) {
-    if (mq.matches) {
-        xhttp('index-landscape', 'main-content');
-    }
-
     if (u == true) {
         document.getElementById("signin").innerHTML = "Sign Out";
 
@@ -51,6 +47,10 @@ if (matchMedia && window.location.href.includes('index.html') || !window.locatio
     const mq = window.matchMedia("(orientation: landscape)");
     mq.addListener(orientationChange);
     orientationChange(mq);
+}
+
+if (mq.matches) {
+    xhttp('index-landscape', 'main-content');
 }
 
 function orientationChange(mq) {
