@@ -126,20 +126,17 @@ function addentFlow(out, i) {
                 }
 
                 //update data in the database
-
-                return db.runTransaction(function(transaction) {
-                    return transaction.get(test).then(function(cxt) {
-                        var finalNutrientValue = cxt.data().calendar[indArray].nutrientsArray[z] + nutrientVal;
-                        alert(finalNutrientValue);
-                       // transaction.update(test, { population: newPopulation });
-                    });
+                test.update({
+                   //find a way to update the nutrientsArray
                 })
+            }
         }
     }
-}
         //add food name to database
        //TBD function
 }
+
+
 const webcamElement = document.getElementById('webcam');
 let net;
 let constant;
