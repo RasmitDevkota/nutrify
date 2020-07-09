@@ -125,10 +125,29 @@ function addentFlow(out, i) {
                     nutrientVal = out.foods[i].foodNutrients[t].value / 4.184;
                 }
 
-                //update data in the database
-                test.update({
-                   //find a way to update the nutrientsArray
-                })
+                var food = "cookie";
+                var date = "07/09/2020"
+
+                // update food data in the database DO IT LIKE THIS
+                eval("test.update({'dailyData." + date + ".food': firebase.firestore.FieldValue.arrayUnion('" + food + "')});");
+                // YOU HAVE TO USE DOT NOTATION (dailyData.{date}.food) OR IT WILL OVERRIDE THE ENTIRE MAP
+
+                // DONT DO THIS (this code is fake and doesn't work but you get the point, no bracket notation)
+                // eval(`
+                // test.update({
+                //    "dailyData: {
+                //        ${date}: {
+                //            food: firebase.firestore.FieldValue.arrayUnion(food)
+                //        }
+                //    }
+                // });
+                // `)
+                // THIS WILL OVERRIDE THE MAP!!!!
+
+                var nutrientIWantToUpdate = "Carbohydrates"; // are those even nutrients lmao
+                var incrementValue = 10;
+
+                eval("test.update({'dailyData." + date + ".nutrients." + nutrientIWantToUpdate + "': firebase.firestore.FieldValue.increment(" + incrementValue + ")});");
             }
         }
     }
