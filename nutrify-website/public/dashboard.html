@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="fontawesome/css/all.css">
-  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@600&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="dashboard.css">
 
   <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
@@ -26,17 +26,28 @@
 
 <body style="background-color:#002236;">
   <main style="display: flex; flex-direction: row; height: 100%;">
-    <div id="menu" style="position: absolute; z-index: 2; display: none; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4); width: 100%; height: 100%;">
+
+    <div id="menu" style="position: absolute; z-index: 2; display:block; width: 100%; height: 100%;">
       <div style="background-color: #f1f1f1; padding: 1.5%; width: 17%; height: 100%;">
-        <p style="cursor: pointer; color: rgb(0, 8, 29); font-size: 2em;">&#10006;</p>
+        <p style="cursor: pointer; color: rgb(0, 8, 29); font-size: 2em;" onclick="sideMenuClose()">&#10006;</p>
+      </div>
+      <div id="blackscreen" style="width: 100%; height: 100%; background-color: black; opacity: 0.5;">
+
       </div>
     </div>
-  
+    <script>
+      function sideMenuOpen(){
+        
+      }
+      function sideMenuClose(){
+
+      }
+    </script>
     <div id="main" style="display: flex; flex-direction: column; padding: 0.5%; width: 100%;">
-      <nav style="display: flex; flex-direction: row; align-items: center; background-color: #003655; width: 100%; box-shadow: 0px 4px 7px #7972727a;">
+      <nav style="display: flex; flex-direction: row; align-items: center; background-color: #002236; width: 100%;">
         <a id="openMenuButton" style="cursor: pointer; color: #009c68; font-size: 2em; margin-left: 1%;">&#9776;</a>
 
-        <img id="profileIcon" src="favicon.ico" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer;" onclick="">
+        <img id="profileIcon" src="favicon.ico" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer;" onclick="sideMenuOpen()">
       </nav>
 
       <div style="display: flex; flex-direction: column;">
@@ -83,7 +94,7 @@
                 </li>
               </ul>
             </div>
-
+            
             <div class="card-body">
               <h5 class="card-title" style="color: black">Special title treatment</h5>
               <canvas id="largeChart" width="600px" height="300px"></canvas>
@@ -92,7 +103,7 @@
             </div>
           </div>
 
-          <div style="display: flex; flex-direction: column; margin-left: 6%;">
+          <div id="news-cards" style="display: flex; flex-direction: column; margin-left: 6%;">
             
           </div>
         </div>

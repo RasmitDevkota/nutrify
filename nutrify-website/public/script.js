@@ -59,7 +59,38 @@ function orientationChange(mq) {
 }
 
 if (window.location.href.includes("dashboard.html")) {
+    // Load Graph Data
     xhttp('overview-graphs', 'overview-graphs');
+
+    // Load News Cards API
+    xhttp('news-cards', 'news-cards');
+
+    var url = 'http://newsapi.org/v2/top-headlines?' +
+        'country=US&' + 'category=health&' +
+        'sortBy=popularity&' +
+        'apiKey=e55f2d04dbae45d4bc5c253924f6d3ed';
+
+    var xhttp = new XMLHttpRequest();
+    var articles = [];
+    xhttp.onreadystatechange =  function () {
+        if (this.readyState == 4 && this.status == 200) {
+            articles = JSON.parse(this.responseText).articles;
+            console.log(articles);
+
+            for (i = 0; i < 4; i++) {
+                var dateArray = new Date(new Date(articles[0]["publishedAt"]) - new Date().getTimezoneOffset()).toString().split(' ')
+                var date = dateArray[1] + " " + dateArray[2] + " " + dateArray[3];
+
+                document.getElementById('newsImage' + i).src = articles[i]["urlToImage"];
+                document.getElementById('newsTitle' + i).innerHTML = articles[i]["title"];
+                document.getElementById('newsButton' + i).href = articles[i]["url"];
+                document.getElementById('newsInfo' + i).innerHTML = articles[i]["source"]["name"] + " | " + date;
+            }
+        }
+    };
+
+    xhttp.open("GET", url, true);
+    xhttp.send();
 }
 
 function xhttp(source, tag) {
