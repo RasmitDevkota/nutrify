@@ -26,30 +26,74 @@
 
 <body style="background-color:#002236;">
   <main style="display: flex; flex-direction: row; height: 100%;">
+    <style>
+      .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        background-color: #F1F1F1;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+      
+      .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: black;
+        display: block;
+        transition: 0.3s;
+        white-space:nowrap;
+      }
+      
+      .sidenav a:hover {
+        color: #646464;
+      }
+      
+      .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+      
 
-    <div id="menu" style="position: absolute; z-index: 2; display:block; width: 100%; height: 100%;">
-      <div style="background-color: #f1f1f1; padding: 1.5%; width: 17%; height: 100%;">
-        <p style="cursor: pointer; color: rgb(0, 8, 29); font-size: 2em;" onclick="sideMenuClose()">&#10006;</p>
-      </div>
-      <div id="blackscreen" style="width: 100%; height: 100%; background-color: black; opacity: 0.5;">
-
-      </div>
+      </style>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="#">Something</a>
+      <a href="#">Signout</a>
+      <a href="#">Another</a>
+      <a href="#">Something Else</a>
     </div>
-    <script>
-      function sideMenuOpen(){
-        
-      }
-      function sideMenuClose(){
 
-      }
-    </script>
+
+      
+
+    
     <div id="main" style="display: flex; flex-direction: column; padding: 0.5%; width: 100%;">
+      <div id="blackscreen" style="width: 100%; display:none; z-index: 1; height: 100%; position:fixed; top:0px; left:0px; background-color: black; opacity: 0.5;" onclick="closeNav()"></div>
       <nav style="display: flex; flex-direction: row; align-items: center; background-color: #002236; width: 100%;">
-        <a id="openMenuButton" style="cursor: pointer; color: #009c68; font-size: 2em; margin-left: 1%;">&#9776;</a>
+        <a id="openMenuButton" style="cursor: pointer; color: #009c68; font-size: 2em; margin-left: 1%;" onclick="openNav()">&#9776;</a>
 
-        <img id="profileIcon" src="favicon.ico" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer;" onclick="sideMenuOpen()">
+        <img id="profileIcon" src="favicon.ico" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer;">
       </nav>
-
+      <script>
+        function openNav() {
+          document.getElementById('blackscreen').style.display = "block";
+          document.getElementById("mySidenav").style.width = "250px";
+        }
+        
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+          document.getElementById('blackscreen').style.display = "none";
+        }
+        </script>
       <div style="display: flex; flex-direction: column;">
 
         <div style="display: flex; flex-direction: row; justify-content: space-around; height: 15%; margin-top: 1%;">
