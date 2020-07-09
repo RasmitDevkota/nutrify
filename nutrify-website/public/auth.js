@@ -1,14 +1,11 @@
-// function signIn() {
-//     if (firebase.auth().currentUser == null) {
-//         console.log(firebase.auth().currentUser);
-//         togglepsi();
-//     } else {
-//         firebase.auth().signOut();
-//         $('#signin').text("Sign In");
-//         console.log(document.getElementById("signin").innerHTML);
-//         console.log(firebase.auth().currentUser);
-//     }
-// };
+function signIn() {
+    if (firebase.auth().currentUser == null) {
+        redirect('signin.html');
+    } else {
+        firebase.auth().signOut();
+        $('#signin').text("Sign In");
+    }
+};
 
 function eToggleSignIn() {
     var password = document.getElementById('password').value;
