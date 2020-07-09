@@ -5,7 +5,7 @@
 .button { 
     cursor: pointer; 
     border-radius: 8px;
-    background-color: green;
+    background: linear-gradient(to right, #15C335, #096A1A);
     border: none;
     padding: 1%;
     color: white;
