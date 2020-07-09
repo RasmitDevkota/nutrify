@@ -1,5 +1,5 @@
 setTimeout(function () {
-    var ctx0 = document.getElementById('myChart0').getContext('2d');
+    var ctx0 = document.getElementById('overviewChart0').getContext('2d');
     var myChart0 = new Chart(ctx0, {
         type: 'bar',
         data: {
@@ -37,7 +37,7 @@ setTimeout(function () {
         }
     });
 
-    var ctx1 = document.getElementById('myChart1').getContext('2d');
+    var ctx1 = document.getElementById('overviewChart1').getContext('2d');
     var myChart1 = new Chart(ctx1, {
         type: 'bar',
         data: {
@@ -75,7 +75,7 @@ setTimeout(function () {
         }
     });
 
-    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    var ctx2 = document.getElementById('overviewChart2').getContext('2d');
     var myChart2 = new Chart(ctx2, {
         type: 'bar',
         data: {
@@ -113,7 +113,7 @@ setTimeout(function () {
         }
     });
 
-    var ctx3 = document.getElementById('myChart3').getContext('2d');
+    var ctx3 = document.getElementById('overviewChart3').getContext('2d');
     var myChart3 = new Chart(ctx3, {
         type: 'bar',
         data: {
@@ -152,7 +152,7 @@ setTimeout(function () {
     });
 
 
-    var ctx4 = document.getElementById('myChart4').getContext('2d');
+    var ctx4 = document.getElementById('largeChart').getContext('2d');
     var myChart4 = new Chart(ctx4, {
         type: 'bar',
         data: {
@@ -190,6 +190,19 @@ setTimeout(function () {
         }
     });
 }, 100);
+
+function newsAPI(q) {
+    var url = 'http://newsapi.org/v2/top-headlines?' +
+        'q=' + q + '&' +
+        'from=2020-07-09&' +
+        'sortBy=popularity&' +
+        'apiKey=e55f2d04dbae45d4bc5c253924f6d3ed';
+
+    fetch(new Request(url)).then(function (response) {
+        console.log(response.json());
+    });
+};
+
 var test = db.collection('temporaryCollection').doc('temporaryDocument');
 var nutrientIds = [1005, 1293, 1003, 1258, 1079, 2000, 1062, 1087, 1099, 1089, 1090, 1101, 1091, 1092, 1103, 1093, 1095, 1120, 1123, 1122, 1180, 1177, 1167, 1170, 1166, 1104, 1175, 1178, 1162, 1110, 1109, 1185, 1057, 1253, 1104, 1213];
 var nutrientUnits = ["G", "G", "G", "G", "G", "G", "KCAL", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "IU", "G", "G", "G", "IU", "G", "G", "G", "G", "G", "G"];

@@ -28,13 +28,13 @@
   <main style="display: flex; flex-direction: row; height: 100%;">
     <div id="menu" style="position: absolute; z-index: 2; display: none; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4); width: 100%; height: 100%;">
       <div style="background-color: #f1f1f1; padding: 1.5%; width: 17%; height: 100%;">
-        <p style="cursor: pointer; color: rgb(0, 8, 29); font-size: 2em;" onclick="closeMenu()">&#10006;</p>
+        <p style="cursor: pointer; color: rgb(0, 8, 29); font-size: 2em;">&#10006;</p>
       </div>
     </div>
   
     <div id="main" style="display: flex; flex-direction: column; padding: 0.5%; width: 100%;">
       <nav style="display: flex; flex-direction: row; align-items: center; background-color: #003655; width: 100%; box-shadow: 0px 4px 7px #7972727a;">
-        <a id="openMenuButton" style="cursor: pointer; color: #009c68; font-size: 2em; margin-left: 1%;" onclick="openMenu()">&#9776;</a>
+        <a id="openMenuButton" style="cursor: pointer; color: #009c68; font-size: 2em; margin-left: 1%;">&#9776;</a>
 
         <img id="profileIcon" src="favicon.ico" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer;" onclick="">
       </nav>
@@ -86,81 +86,19 @@
 
             <div class="card-body">
               <h5 class="card-title" style="color: black">Special title treatment</h5>
-              <canvas id="myChart4" width="600px" height="300px"></canvas>
+              <canvas id="largeChart" width="600px" height="300px"></canvas>
               <p class="card-text" style="color: black">With supporting text below as a natural lead-in to additional content.</p>
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
 
           <div style="display: flex; flex-direction: column; margin-left: 6%;">
-            <div class="card" style="width: 18rem; margin-bottom: 3%;">
-              <img src="favicon.ico" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
-                </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-
-            <div class="card" style="width: 18rem; margin-bottom: 3%;">
-              <img src="favicon.ico" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
-                </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-
-            <div class="card" style="width: 18rem; margin-bottom: 3%;">
-              <img src="favicon.ico" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-
-            <div class="card" style="width: 18rem; margin-bottom: 3%;">
-              <img src="favicon.ico" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
-                </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
+            
           </div>
-
-          <script>
-            var url = 'http://newsapi.org/v2/top-headlines?' +
-                'q=Apple&' +
-                'from=2020-07-09&' +
-                'sortBy=popularity&' +
-                'apiKey=e55f2d04dbae45d4bc5c253924f6d3ed';
-
-              var req = new Request(url);
-
-              fetch(req)
-                .then(function (response) {
-                  console.log(response.json());
-                })
-          </script>
         </div>
 
       </div>
     </div>
-  
-    <script>
-      function openMenu() {
-        display("menu");
-      }
-
-      function closeMenu() {
-        display("menu");
-      }
-    </script>
   </main>
 </body>
 
