@@ -20,15 +20,15 @@
         <button class="button" onclick="location.href = 'signin.html';">Sign Up / Sign In</button>
     </nav>
     <div class="signupsection">
-
         <div class="formbox">
+            
             <div class="buttonbox">
                 <div id="btn"></div>
                 <button type="button" class="togglebtn" onclick="loginButton()">Login</button>
                 <button type="button" class="togglebtn" onclick="registerButton()">Register</button>
             </div>
             <div class="socialicons">
-                <button onclick="gToggleSignIn()">Place google image here</button>
+                <button onclick="gToggleSignIn()" class="googlebutton"><img src="googlelogo.jpg"></button>
             </div>
             <form id="login" class="inputgroup">
                 <input id="emailemail" type="text" class="inputfield" placeholder="Email" required>
@@ -81,7 +81,7 @@
         <!--This button is only for email users who are signing IN, see google below and signup above-->
 
         <!--If google, you only need this button, for signup AND signin-->
-        <button onclick="gToggleSignIn()">Place google image here</button>
+        <button onclick="gToggleSignIn()" class="googlebuttonimage">Place google image here</button>
 
         <!--Then input health survey stuff-->
         <!--You can see which ones to put required on in the research doc-->
@@ -122,8 +122,10 @@
         position: relative;
         margin: 6% auto;
         background-color: white;
+        border-radius: 30px;
         padding: 5px;
         overflow: hidden;
+
     }
     * {
         font-family: 'Overpass', sans-serif;
@@ -143,19 +145,24 @@
         outline: none;
         position: relative;
     }
+    .googlebutton{
+        border:0;
+        background: transparent;
+    }
     #btn{
         top: 0;
         left: 0;
         position: absolute;
         width: 110px;
         height: 100%;
-        background-color: green;
+        background: linear-gradient(to right, #15C335, #096A1A);
         border-radius: 30px;
         transition: 0.5s;
     }
     .socialicons{
         margin: 30px auto;
         text-align: center;
+        border: none;
     }
     .socialicons img{
         width: 30px;
@@ -186,7 +193,7 @@
         padding: 10px 30px;
         display: block;
         margin: auto;
-        background-color: green;
+        background: linear-gradient(to right, #15C335, #096A1A);
         border: 0;
         outline: none;
         border-radius: 30px;
