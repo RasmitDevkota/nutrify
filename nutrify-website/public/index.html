@@ -18,16 +18,20 @@
     <button class="button" style="margin-left: 2%; background-color: transparent; border: 3px solid green;">About</button>
     <button class="button" onclick="location.href = 'signin.html';">Sign Up / Sign In</button>
   </nav>
+  <!--Bubbles-->
+  <div class="bubble bubble1"></div>
+  <div class="bubble bubble2"></div>
+  <div class="bubble bubble3"></div>
 
   <main style="display: flex; flex-direction: column; justify-content: center;">
     <div style="display: flex; flex-direction: row; justify-content: center;">
-      <h1 style="font-size: 60px; margin-bottom: 0px; color:white">Nutrify, where the <i>real</i> future of health lies</h1>
+      <h1 class="mainpage" style="font-size: 60px; margin-bottom: 0px; color:white">Nutrify, where the <i>real</i> future of health lies</h1>
     </div>
 
     <div style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
       <img class="logoimage" src='logo.png' style="width: 45%">
 
-      <div style="display: flex; flex-direction: column; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
+      <div class="mainpage" style="display: flex; flex-direction: column; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
 
         <h1 style="font-size: 25px; color:white">Take your nutritional goals to the next level with Nutrify,
           the global leader in nutritional tips and goal-setting. Did we mention it's free?</h1>
@@ -46,18 +50,109 @@
 </body>
 
 <style>
-  .logoimage{
-    position:relative;
-    animation-name: moveup;
-    animation-duration:2s;
+  .mainpage{
+    z-index: 1;
   }
-  @keyframes moveup{
+  .bubble{
+    border-radius: 50%;
+    position: absolute;
+    animation-timing-function: linear;
+    z-index: 0;
+  }
+  .bubble1{
+    background-color:#FFC300 ;
+    width: 500px;
+    height: 500px;
+    animation-name: bubble1animation;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+
+    
+  }
+  .bubble2{
+    background-color: #FF5733;
+    width: 400px;
+    height: 400px;
+    animation-name: bubble2animation;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+  }
+  .bubble3{
+    background-color: #900C3F ;
+    width: 450px;
+    height: 450px;
+    animation-name: bubble3animation;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+  }
+  @keyframes bubble1animation{
     0%{
-      width:20%;
+      top: 500px;
+      left: 1500px;
+    }
+    25%{
+      top: 450px;
+      left: 1250px;
+    }
+    50%{
+      top: 510px;
+      left: 1200px;
+    }
+    75%{
+      top: 550px;
+      left: 1500px;
     }
     100%{
-      width:100%;
+      top:500px;
+      left: 1500px;
     }
+  }
+  @keyframes bubble2animation{
+    0%{
+      top: 500px;
+      left: 500px;
+    }
+    25%{
+      top: 450px;
+      left: 450px;
+    }
+    50%{
+      top: 510px;
+      left: 400px;
+    }
+    75%{
+      top: 550px;
+      left: 500px;
+    }
+    100%{
+      top:500px;
+      left: 500px;
+    }
+  }
+  @keyframes bubble3animation{
+    0%{
+      top: 200px;
+      left: 1500px;
+    }
+    25%{
+      top: 300px;
+      left: 1400px;
+    }
+    50%{
+      top: 250x;
+      left: 1600px;
+    }
+    75%{
+      top: 400px;
+      left: 1500px;
+    }
+    100%{
+      top:200px;
+      left: 1500px;
+    }
+  }
+  .logoimage{
+    position:relative;
 
   }
   * {
