@@ -4,32 +4,53 @@
     <title>Nutrify</title>
 
     <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
-
     <script src="script.js"></script>
 </head>
 
 <script>
     var test = db.collection('temporaryCollection').doc('temporaryDocument');
 
-    test.set({
-        testField: ['hello', 'world']
-    }).then(function() {
-        console.log("Success!");
-    }).catch(function(e) {
-        alert("Error occurred.");
-        console.log(e);
-    });
-
-    setTimeout(function() {
-        db.collection('temporaryCollection').doc('temporaryDocument').get().then(function(doc) { // returns a promise which you have to .then(function (doc))
-            console.log(doc.data()); // doc.data() to get data
-            var testField = doc.data().testField; // doc.data().FIELDNAME to get data
-            console.log(testField);
-        }).catch(function (e) {
+    function setBasic() {
+        var mop = new Date();
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let today = mop.getDate() + "/" + months[mop.getMonth()] + "/" + mop.getFullYear();
+        test.set({
+            calendar: [{
+                dayName: today,
+                foodArray: [],
+                nutrientsArray: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            }]
+        }, { merge: true }).then(function() {
+            console.log("Success!");
+        }).catch(function(e) {
             alert("Error occurred.");
             console.log(e);
+        });
+    }
+
+    window.onload = function() {
+        db.collection('temporaryCollection').doc('temporaryDocument').get().then(function(doc) { 
+            var mop1 = new Date();
+            var months1 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let today1 = mop1.getDate() + "/" + months1[mop1.getMonth()] + "/" + mop1.getFullYear();
+            let cure = true;
+            for(let c=0; c<doc.data().calendar.length; c++) {
+                if(doc.data().calendar[c].dayName == today1) {
+                    cure = false;
+                    alert(today1);
+                } else {
+                    alert(doc.data().calendar[c].dayName);
+                }
+            }
+            if(cure == true) {
+                setBasic();
+            }
+        }).catch(function (e) {
+            console.log("Error Occurred!");
+            setBasic();
+            console.log(e);
         })
-    }, 5000)
+    }
 </script>
 
 </html>
