@@ -16,7 +16,7 @@
 <body style="background-color:#002236">
   <nav style="display: flex; flex-direction: row-reverse; margin-right: 3.5%">
     <button class="button" style="margin-left: 2%; background-color: transparent; border: 3px solid green;">About</button>
-    <button class="button" id="signin" onclick="signIn()">Sign Up</button>
+    <button class="button" id="signin" style="padding: 1%;" onclick="signIn()">Sign Up</button>
   </nav>
 
   <main style="display: flex; flex-direction: column; justify-content: center;">
@@ -29,15 +29,15 @@
 
       <div style="display: flex; flex-direction: column; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
 
-        <h1 style="font-size: 25px; color:white; font-family: 'Overpass-R', sans-serif;">Take your nutritional goals to the next level with Nutrify,
+        <h1 style="font-size: 25px; color:white; font-family: 'Overpass-R', sans-serif; font-size: 2em">Take your nutritional goals to the next level with Nutrify,
           the global leader in nutritional tips and goal-setting. Did we mention it's free?</h1>
 
         <div style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%; margin-top: 20px;">
-          <button class="button" style="font-size: 2em;" >I'm in, sign me up!</button>
+          <button class="button" style="width: 53%; font-size: 1.7em;" >I'm in, sign me up!</button>
         </div>
         <br><br>
         <div style="display: flex; flex-direction: row; justify-content: center; text-align: center; margin-left: 7%; margin-right: 7%;">
-          <button class="button" style="font-size: 2em;" >Not convinced? Learn more!</button>
+          <button class="button" style="width: 53%; font-size: 1.7em;" >Not convinced? Learn more!</button>
         </div>
 
       </div>
@@ -90,17 +90,18 @@
     padding: 1%;
   }
 
-
   .button { 
     cursor: pointer; 
     border-radius: 8px;
-    /* background-color: transparent;  */
     background-color: green;
     border: none;
     padding: 1%;
     color: white;
     font-size: 1.5em; 
-    white-space:nowrap;
+    white-space: nowrap;
+    text-transform: none;
+    word-wrap: normal;
+    white-space: normal !important;
   } 
 </style>
 
