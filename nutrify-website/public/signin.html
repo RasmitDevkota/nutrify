@@ -24,8 +24,8 @@
             
             <div class="buttonbox">
                 <div id="btn"></div>
-                <button type="button" class="togglebtn" onclick="loginButton()">Login</button>
-                <button type="button" class="togglebtn" onclick="registerButton()">Register</button>
+                <button id="logintogglebutton" type="button" class="togglebtn" onclick="loginButton()">Login</button>
+                <button id="registertogglebutton" type="button" class="togglebtn" onclick="registerButton()">Register</button>
             </div>
             <div class="socialicons">
                 <button onclick="gToggleSignIn()" class="googlebutton"><img src="googlelogo.jpg"></button>
@@ -48,16 +48,22 @@
             var x = document.getElementById("login");
             var y = document.getElementById("register");
             var z = document.getElementById("btn");
+            var loginbutton = document.getElementById("logintogglebutton");
+            var registerbutton = document.getElementById("registertogglebutton");
 
             function registerButton(){
                 x.style.left = "-400px";
+                loginbutton.style.color = "black";
                 y.style.left = "50px";
+                registerbutton.style.color = "white";
                 z.style.left = "110px";
 
             }
             function loginButton(){
                 x.style.left = "50px";
+                loginbutton.style.color = "white";
                 y.style.left = "450px";
+                registerbutton.style.color = "black";
                 z.style.left = "0px";
 
             }
@@ -118,7 +124,7 @@
     }
     .formbox{
         width: 380px;
-        height: 480px;
+        height: 400px;
         position: relative;
         margin: 6% auto;
         background-color: white;
@@ -135,7 +141,7 @@
         margin: 35px auto;
         position: relative;
         border-radius: 30px;
-        border: 1px solid gray;
+
     }
     .togglebtn{
         padding: 10px 30px;
@@ -144,6 +150,12 @@
         border: 0;
         outline: none;
         position: relative;
+    }
+    #registertogglebutton{
+        color:black;
+    }
+    #logintogglebutton{
+        color: white;
     }
     .googlebutton{
         border:0;
@@ -194,6 +206,7 @@
         display: block;
         margin: auto;
         background: linear-gradient(to right, #15C335, #096A1A);
+        color: white;
         border: 0;
         outline: none;
         border-radius: 30px;
