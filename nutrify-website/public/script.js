@@ -62,13 +62,10 @@ if (matchMedia) {
 
 function orientationChange(mq) {
     if (mq.matches) {
-        console.log("hello");
         xhttp('index-landscape', 'main-content');
     } else {
-        console.log("hi");
         xhttp('index-portrait', 'main-content');
     }
-    console.log("world");
 }
 
 function xhttp(source, tag) {
