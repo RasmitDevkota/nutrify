@@ -3,8 +3,17 @@ setTimeout(function () {
     graph('overviewChart1', 'Nutrition');
     graph('overviewChart2', 'Fitness');
     graph('overviewChart3', 'Goals');
-    graph('largeChart0', 'Meals');
-}, 1000);
+
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var largeChart0Graph = urlParams.get('largeChart0');
+
+    if (largeChart0Graph) {
+        graph('largeChart0', largeChart0Graph);
+    } else {
+        graph('largeChart0', 'Meals');
+    }
+}, 800);
 
 function graph(elementID, dataID) {
     var context = document.getElementById(elementID).getContext('2d');
@@ -13,7 +22,7 @@ function graph(elementID, dataID) {
         usersUser.get().then(function (doc) {
             console.log(doc.data());
         });
-    }, 900);
+    }, 500);
     
     switch (dataID) {
         case "Meals":
@@ -171,6 +180,10 @@ function graph(elementID, dataID) {
                     }
                 }
             });
+            
+            if (elementID.includes("largeChart")) {
+                xhttp('goal-form', elementID.substr(0, elementID.length - 1) + 'Input' + elementID[elementID.length - 1]);
+            }
             break;
     }
 
@@ -187,7 +200,20 @@ function addMeal() {
     let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
 
     eval("usersUser.update({'dailyData." + today + ".meals." + meal + "': foods });");
-}
+};
+
+function addGoal() {
+    var action = inputText('goalAction');
+    var amount = inputText('goalAmount');
+    var units = inputText('goalUnits');
+
+    // GOAL VALIDATION LMAO
+
+    var goal = action + " " + amount + " " + units;
+    usersUser.update({
+        goal: goal
+    });
+};
 
 function xhttp(source, tag) {
     var xhttp = new XMLHttpRequest();
@@ -199,7 +225,7 @@ function xhttp(source, tag) {
 
     xhttp.open("GET", `${source}.html`, true);
     xhttp.send();
-}
+};
 
 var test = db.collection('temporaryCollection').doc('temporaryDocument');
 var nutrientIds = [1005, 1293, 1003, 1258, 1079, 2000, 1062, 1087, 1099, 1089, 1090, 1101, 1091, 1092, 1103, 1093, 1095, 1120, 1123, 1122, 1180, 1177, 1167, 1170, 1166, 1104, 1175, 1178, 1162, 1110, 1109, 1185, 1057, 1253, 1104, 1213];
