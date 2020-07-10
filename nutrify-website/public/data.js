@@ -204,8 +204,7 @@ function addMeal() {
 
 var goalTemplates = new Map([
     ["Eat", [ // Solid Foods
-        "meals per day",
-        "vegetables per meal"
+        "meals per day"
     ]],
     ["Consume", [ // Nutrients
         "calories per meal",
@@ -244,6 +243,23 @@ var goalTemplates = new Map([
         "hours per week"
     ]]
 ]);
+// hi
+function goalActionChange() {
+    var action = inputText("goalAction");
+
+    var units = document.getElementById("goalUnits");
+    var options = goalTemplates.get(action);
+
+    units.innerHTML = "<option selected>Choose...</option>";
+    for (var i = 0; i < options.length; i++) {
+        var option = options[i];
+        var elem = document.createElement("option");
+        elem.textContent = option;
+        elem.value = option;
+        units.appendChild(elem);
+    }
+}
+        
 
 function addGoal() {
     var action = inputText('goalAction');
