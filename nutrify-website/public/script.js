@@ -25,16 +25,12 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-pageLoad(firebase.auth().currentUser);
-
 function pageLoad(u) {
-    if (u == true) {
-        if (window.location.href.includes("index.html") || !window.location.href.includes(".html"))
-        document.getElementById("signin").innerHTML = "Sign Out";
-
-        window.user = firebase.auth().currentUser;
-        window.usersUser = users.doc(user.uid);
-        window.emailsUser = emails.doc(user.displayName);
+    if (u) {
+            window.user = firebase.auth().currentUser;
+            window.userIcon = (user.photoURL) ? user.photoURL : "nouser.png";
+            window.usersUser = users.doc(user.uid);
+            window.emailsUser = emails.doc(user.displayName);
     } else {
         window.user = null;
     }
@@ -61,6 +57,12 @@ function orientationChange(mq) {
 }
 
 if (window.location.href.includes("dashboard.html")) {
+    setTimeout(function () {
+        document.getElementById("toastUsername").innerHTML = user.displayName;
+        document.getElementById("toastIcon").src = userIcon;
+        document.getElementById("profileIcon").src = userIcon;
+    }, 500);
+
     // Load Graph Data
     xhttp('overview-graphs', 'overview-graphs');
 
