@@ -61,28 +61,25 @@
         font-size: 36px;
         margin-left: 50px;
       }
-      
+    </style>
 
-      </style>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <a href="#">Something</a>
-      <a href="#">Signout</a>
+      <a href="#"></a>
       <a href="#">Another</a>
-      <a href="#">Something Else</a>
+      <a style="cursor: pointer;" onclick="signIn()">Signout</a>
     </div>
 
-
-      
-
-    
     <div id="main" style="display: flex; flex-direction: column; padding: 0.5%; width: 100%;">
       <div id="blackscreen" style="width: 100%; display:none; z-index: 1; height: 100%; position:fixed; top:0px; left:0px; background-color: black; opacity: 0.5;" onclick="closeNav()"></div>
+
       <nav style="display: flex; flex-direction: row; align-items: center; background-color: #002236; width: 100%;">
         <a id="openMenuButton" style="cursor: pointer; color: #009c68; font-size: 2em; margin-left: 1%;" onclick="openNav()">&#9776;</a>
 
         <img id="profileIcon" src="favicon.ico" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer;">
       </nav>
+
       <script>
         function openNav() {
           document.getElementById('blackscreen').style.display = "block";
@@ -93,7 +90,8 @@
           document.getElementById("mySidenav").style.width = "0";
           document.getElementById('blackscreen').style.display = "none";
         }
-        </script>
+      </script>
+
       <div style="display: flex; flex-direction: column;">
 
         <div style="display: flex; flex-direction: row; justify-content: space-around; height: 15%; margin-top: 1%;">
@@ -123,28 +121,32 @@
         </div>
 
         <div style="display: flex; flex-direction: row; margin-bottom: 2%; margin-top: 3%;">
-
           <div class="card text-center" style="width: 60%; margin-left: 10%;">
+
             <div class="card-header">
               <ul class="nav nav-pills card-header-pills" style="display: flex; flex-direction: row; justify-content: space-evenly;">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#" style="width: 100px;">Goals</a>
+                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart', 'Meals')">Meals</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="#" style="width: 100px;">Diet</a>
+                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart', 'Nutrition')">Nutrition</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="#" style="width: 100px;">Fitness</a>
+                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart', 'Fitness')">Fitness</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart', 'Goals')">Goals</a>
                 </li>
               </ul>
             </div>
             
             <div class="card-body">
-              <h5 class="card-title" style="color: black">Special title treatment</h5>
-              <canvas id="largeChart" width="600px" height="300px"></canvas>
+              <h5 id="largeChartTitle0" class="card-title" style="color: black">Special title treatment</h5>
+              <canvas id="largeChart0" width="600px" height="300px"></canvas>
               <p class="card-text" style="color: black">With supporting text below as a natural lead-in to additional content.</p>
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
+
           </div>
 
           <div id="news-cards" style="display: flex; flex-direction: column; margin-left: 6%;">

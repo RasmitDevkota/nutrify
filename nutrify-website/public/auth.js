@@ -3,7 +3,6 @@ function signIn() {
         redirect('signin.html');
     } else {
         firebase.auth().signOut();
-        $('#signin').text("Sign In");
     }
 };
 

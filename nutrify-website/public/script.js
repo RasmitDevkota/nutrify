@@ -16,8 +16,8 @@ var emails = db.collection("emails");
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        if (!window.location.href.includes("index.html") && window.location.href.includes(".html")) {
-            return redirect('dashboard');
+        if (!window.location.href.includes("index.html") && window.location.href.includes(".html") && !window.location.href.includes("dashboard.html")) {
+            return redirect('dashboard.html');
         }
         pageLoad(true);
     } else {
@@ -27,12 +27,12 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 function pageLoad(u) {
     if (u == true) {
+        if (window.location.href.includes("index.html") || !window.location.href.includes(".html"))
         document.getElementById("signin").innerHTML = "Sign Out";
 
         window.user = firebase.auth().currentUser;
         window.usersUser = users.doc(user.uid);
         window.emailsUser = emails.doc(user.displayName);
-        window.userCart = ShoppingCart.doc(user.displayName).collection(user.displayName);
     } else {
         window.user = null;
     }
