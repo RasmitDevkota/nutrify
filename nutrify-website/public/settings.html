@@ -16,19 +16,24 @@
                 if (doc.exists) {
                   nutritionalSync(doc);  
                 } else {
-                    //function saying that no foods were added in order to compute nutritional confidence significance
+                    // function saying that no foods were added in order to compute nutritional confidence significance
                 }
             }).catch(function(error) {
                 console.log("Error getting document:", error);
             });
             var mop = new Date();
             var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            let today = mop.getDate()  + months[mop.getMonth()]  + mop.getFullYear();
+            let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
 
             function nutritionalSync(doc) {
-                console.log("hey", 'doc.data() + ".dailyData."" + today');
+                console.log("hey", doc.id + ".dailyData." + today);
             
-               // alert(doc.Data() + ".dailyData." + today + ".food");
+               alert(doc.id + ".dailyData." + today + ".food");
+
+               var nutrients = doc.data().nutrients; // you now have a normal js map you can do .get or .set or .has or .foreach or whatever you want
+               var food = doc.data().food; // same thing
+
+               console.log (nutrients + "\n" + food)
             }
         </script>
     </body>
