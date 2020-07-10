@@ -11,7 +11,7 @@
     <body>
         <script>
             var test = db.collection("temporaryCollection").doc("temporaryDocument");
-            window.onload = nutritonalSync("10July2020"); //can be changed later
+            window.onload = nutritionalSync("10July2020"); //can be changed later
             var RegularDiet = ["150=350", "2.2=7.7"];
             function nutritionalSync(enp) {
                 //defining the variables//
@@ -22,9 +22,10 @@
 
                 test.get().then(function(doc) {
                     eval("var nutrients = doc.data().dailyData['" + enp + "'].nutrients;"); 
-                    for(let i=0; i<2; i++) { //change i<36 later
+                    for(let i=0; i<1; i++) { //change i<36 later
                         var force = RegularDiet[i];
                         var classArray = [];
+                        var comp;
                         for(let l=0; l<force.length; l++) {
                             if(force[l] == "😃" || l+1 == force.length) {
                                 if(l+1 == force.length) {
@@ -36,7 +37,7 @@
                                 comp += force[l]
                             }
                         }
-                        var finalAge = "", finalWeight="", finalGender="", finalValue="", prop="", countUp;
+                        var finalAge = "", finalWeight="", finalGender="", finalValue="", prop="", countUp=0;
                         for(let m=0; m<classArray.length; m++) {
                             if(classArray[m] == ";" || m+1 == classArray.length) {
                                 if(m+1 == classArray.length) {
@@ -56,6 +57,7 @@
                                 prop += classArray[m];
                             }
                         }
+                        alert(finalValue);
 						if(finalAge != "") {
 							countUp++;
 						}
@@ -65,7 +67,6 @@
 						if(finalWeight != "") {
 							countUp++;
 						}
-						alert(countUp);
 						if(countUp == 0) {
 							//check value
 						} else if(countUp == 1) {
@@ -74,7 +75,7 @@
 
 						} else {
 
-						}
+                        }
                     }
                 })
             }
