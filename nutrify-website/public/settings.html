@@ -22,7 +22,7 @@
 
                 test.get().then(function(doc) {
                     eval("var nutrients = doc.data().dailyData['" + enp + "'].nutrients;"); 
-                    for(let i=0; i<1; i++) { //change i<36 later
+                    for(let i=0; i<2; i++) { //change i<36 later
                         var force = RegularDiet[i];
                         var classArray = [];
                         var comp ="";
@@ -66,51 +66,55 @@
 						if(finalWeight != "") {
 							countUp++;
 						}
-                        var yay = true;
-						//while(yay == true) {
-							if(countUp == 0) {
-                                predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
-                                yay=false;
-                                if(calc == 1) {
-                                    alert("We are all good!");
-                                    yay = false;
-                                }
-							} else if(countUp == 1) {
-                                predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
-                                if(calc == 2) {
-                                    alert("We are all good!");
-                                    yay = false;
-                                }
-
-							} else if(countUp == 2) {
-                                predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
-                                if(calc == 3) {
-                                    alert("We are all good!");
-                                    yay = false;
-                                }
-							} else if(countUp == 3) {
-                                predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
-                                if(calc == 4) {
-                                    alert("We are all good!");
-                                    yay = false;
-                                }
+						if(countUp == 0) {
+							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+							if(calc == 1) {
+								alert("You are doing well on Nutrient" + i);
 							}
-                     //   }
-                        alert(calc);
+						} else if(countUp == 1) {
+							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+							if(calc == 2) {
+								alert("You are doing well on Nutrient" + i);
+							}
+
+						} else if(countUp == 2) {
+							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+							if(calc == 3) {
+								alert("You are doing well on Nutrient" + i);
+							}
+						} else if(countUp == 3) {
+							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+							if(calc == 4) {
+								alert("You are doing well on Nutrient" + i);
+							}
+						}
+                        calc = 0; //reinitialize variable for the next loop
                     }
                 })
             }
 
             function predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients) {
                 if(finalValue != "") {
-                    systemValue(finalValue, nutrients);
+                    system(finalValue, nutrients, "=");
+                }
+				if(finalAge != "") {
+                    system(finalAge, age, "-");
+                }
+				if(finalWeight != "") {
+                    system(finalWeight, weight, "~");
+                }
+				if(finalGender != "") {
+                    if(finalGender == gender) {
+						calc++;
+					}
                 }
 
             }
-			function systemValue(compute, initital) {
+
+			function system(compute, initital, boy) {
                 var startVal = "", endVal = "", cat = "";
                 for(let k=0; k<compute.length; k++) {
-                    if(compute[k] == "=" || k+1 == compute.length) {
+                    if(compute[k] == boy || k+1 == compute.length) {
                         if(k+1 == compute.length) {
                             cat += compute[k];
                             endVal = parseInt(cat, 10)
@@ -126,6 +130,8 @@
                     calc++;
                 }
 			}
+
+
         </script>
     </body>
     </html>
