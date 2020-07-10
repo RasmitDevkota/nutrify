@@ -22,10 +22,10 @@
 
                 test.get().then(function(doc) {
                     eval("var nutrients = doc.data().dailyData['" + enp + "'].nutrients;"); 
-                    for(let i=0; i<1; i++) { //change i<36 later
+                    for(let i=0; i<2; i++) { //change i<36 later
                         var force = RegularDiet[i];
                         var classArray = [];
-                        var comp;
+                        var comp ="";
                         for(let l=0; l<force.length; l++) {
                             if(force[l] == "😃" || l+1 == force.length) {
                                 if(l+1 == force.length) {
@@ -34,7 +34,7 @@
                                 classArray.push(comp);
                                 comp = "";
                             } else {
-                                comp += force[l]
+                                comp += force[l];
                             }
                         }
                         var finalAge = "", finalWeight="", finalGender="", finalValue="", prop="", countUp=0;
