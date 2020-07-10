@@ -185,12 +185,12 @@ function getUserInput() {
 
     return userDoc.update({
         age: age,
+        gender: gender,
+        weight: weight,
         healthIssues: healthIssues,
         allergies: allergies,
-        name: name,
         dietPlan: dietPlan,
-        prohibitedFood,
-        weight: weight
+        prohibitedFood: prohibitedFood,
     });
 }
 // User Health Survey End

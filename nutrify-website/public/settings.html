@@ -1,0 +1,31 @@
+
+<html>
+
+    <head>
+        <title>Formulas</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+        <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <script>
+            var test = db.collection('temporaryCollection').doc('temporaryDocument');
+            test.get().then(function(doc) {
+                var mop = new Date();
+                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
+                
+                eval("var food = doc.data().dailyData['" + today + "'].food;"); // you now have a normal js map you can do .get or .set or .has or .foreach or whatever you want
+                eval("var nutrients = doc.data().dailyData['" + today + "'].nutrients;"); // same thing
+
+                console.log(nutrients + "\n" + food);
+            });
+
+            function nutritionalSync(doc) {
+                
+            }
+        </script>
+    </body>
+    </html>

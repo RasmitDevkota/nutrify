@@ -3,6 +3,13 @@
 <head>
   <title>Nutrify</title>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <script src="https://kit.fontawesome.com/c54efb68d5.js" SameSite="none" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -65,20 +72,45 @@
 
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="#">Something</a>
-      <a href="#"></a>
-      <a href="#">Another</a>
+      <a href="#">Meals</a>
+      <a href="#">Nutrition</a>
+      <a href="#">Fitness</a>
       <a style="cursor: pointer;" onclick="signIn()">Signout</a>
     </div>
 
     <div id="main" style="display: flex; flex-direction: column; padding: 0.5%; width: 100%;">
-      <div id="blackscreen" style="width: 100%; display:none; z-index: 1; height: 100%; position:fixed; top:0px; left:0px; background-color: black; opacity: 0.5;" onclick="closeNav()"></div>
+      <div id="blackscreen" style="width: 100%; display: none; z-index: 1; height: 100%; position: fixed; top: 0px; left: 0px; background-color: black; opacity: 0.5;" onclick="closeNav()"></div>
 
       <nav style="display: flex; flex-direction: row; align-items: center; background-color: #002236; width: 100%;">
         <a id="openMenuButton" style="cursor: pointer; color: #009c68; font-size: 2em; margin-left: 1%;" onclick="openNav()">&#9776;</a>
 
-        <img id="profileIcon" src="favicon.ico" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer;">
+        <img id="profileIcon" src="nouser.png" style="width: 64px; height: 64px; margin-left: 93%; cursor: pointer; border-radius: 50%; border: 3px solid #009c68" onclick="profileOverlay()">
+        <script>
+            function profileOverlay() {
+              console.log(profileIcon);
+              var date = new Date();
+              var hours = (date.getHours() <= 12) ? date.getHours() : (date.getHours() - 12);
+              var minutes = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+              document.getElementById("popupTime").innerHTML = hours.toString() + ":" + minutes.toString();
+              $('#toast').toggle();
+            }
+        </script>
       </nav>
+
+      <div id="toast" class="toast" style="position: absolute; z-index: 2; margin-top: 3%; margin-right: 0px;">
+        <div class="toast-header">
+          <img src="nouser.png"></i>
+          <strong class="mr-auto">&nbsp;&nbsp;Username</strong>
+          <small id="popupTime"></small>
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+          <a id="notifClick" onclick="redirect('bot.html')">Click here!</a>
+          <a id="notifClick" onclick="redirect('bot.html')">Click here!</a>
+        </div>
+      </div>
 
       <script>
         function openNav() {
@@ -94,23 +126,23 @@
 
       <div style="display: flex; flex-direction: column;">
 
-        <div style="display: flex; flex-direction: row; justify-content: space-around; height: 15%; margin-top: 1%;">
-          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68;">
+        <div style="display: flex; flex-direction: row; justify-content: space-around; margin-left: 10%; margin-right: 10%; width: 80%; border-radius: 200px; background-color: #003d61;">
+          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68; width: 7%; text-align: center;">
             <span class="mdl-chip__text">Add Meal</span>
             <a href="#" class="mdl-chip__action"><i class="material-icons" style="font-size: 25px">restaurant</i></a>
           </span>
           &nbsp;
-          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68;">
+          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68; width: 8%; text-align: center;">
             <span class="mdl-chip__text">View Goals</span>
             <a href="#" class="mdl-chip__action"><i class="far fa-bullseye-arrow" style="font-size: 25px"></i></a>
           </span>
           &nbsp;
-          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68;">
+          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68; width: 5%; text-align: center;">
             <span class="mdl-chip__text">Diet</span>
             <a href="#" class="mdl-chip__action"><i class="material-icons" style="font-size: 25px">no_food</i></a>
           </span>
           &nbsp;
-          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68;">
+          <span class="mdl-chip mdl-chip--contact mdl-chip--deletable" style="background-color: #009c68; width: 11%; text-align: center;">
             <span class="mdl-chip__text">Log Fitness Hours</span>
             <a href="#" class="mdl-chip__action"><i class="material-icons" style="font-size: 25px">fitness_center</i></a>
           </span>
@@ -126,25 +158,25 @@
             <div class="card-header">
               <ul class="nav nav-pills card-header-pills" style="display: flex; flex-direction: row; justify-content: space-evenly;">
                 <li class="nav-item">
-                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart', 'Meals')">Meals</a>
+                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart0', 'Meals')">Meals</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart', 'Nutrition')">Nutrition</a>
+                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart0', 'Nutrition')">Nutrition</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart', 'Fitness')">Fitness</a>
+                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart0', 'Fitness')">Fitness</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart', 'Goals')">Goals</a>
+                  <a class="nav-link active" style="width: 100px; cursor: pointer;" onclick="graph('largeChart0', 'Goals')">Goals</a>
                 </li>
               </ul>
             </div>
             
             <div class="card-body">
-              <h5 id="largeChartTitle0" class="card-title" style="color: black">Special title treatment</h5>
+              <h2 id="largeChartTitle0" class="card-title" style="color: black">Special title treatment</h2>
               <canvas id="largeChart0" width="600px" height="300px"></canvas>
               <p class="card-text" style="color: black">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <a href="#" class="btn btn-primary">More info</a>
             </div>
 
           </div>

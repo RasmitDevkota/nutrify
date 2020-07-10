@@ -25,6 +25,8 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
+pageLoad(firebase.auth().currentUser);
+
 function pageLoad(u) {
     if (u == true) {
         if (window.location.href.includes("index.html") || !window.location.href.includes(".html"))
@@ -75,7 +77,6 @@ if (window.location.href.includes("dashboard.html")) {
     xhttp.onreadystatechange =  function () {
         if (this.readyState == 4 && this.status == 200) {
             articles = JSON.parse(this.responseText).articles;
-            console.log(articles);
 
             for (i = 0; i < 4; i++) {
                 var dateArray = new Date(new Date(articles[0]["publishedAt"]) - new Date().getTimezoneOffset()).toString().split(' ')
@@ -104,17 +105,6 @@ function xhttp(source, tag) {
     xhttp.open("GET", `${source}.html`, true);
     xhttp.send();
 }
-
-function search() {
-    var search = document.getElementById("search").value;
-
-    if (search != "") {
-        var text = search;
-        window.location = "search.html?query=" + text.toString();
-    } else {
-        display('search');
-    }
-};
 
 function redirect(pagePath) {
     window.location.replace(pagePath);
