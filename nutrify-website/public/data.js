@@ -203,15 +203,15 @@ function addMeal() {
 };
 
 var goalTemplates = new Map([
-    ["Eat", [ // Solid Foods
+    ["Eat", [
         "meals per day"
     ]],
-    ["(Nutrients) Consume", [ // Nutrients
+    ["(Nutrients) Consume", [
         "calories per meal",
         "calories per day",
         "calories per week"
     ]],
-    ["Drink", [ // Liquids
+    ["Drink", [
         "cups of water per day",
         "cups of juice per day"
     ]],
@@ -259,14 +259,19 @@ function goalActionChange() {
         units.appendChild(elem);
     }
 }
-        
 
 function addGoal() {
     var action = inputText('goalAction');
     var amount = inputText('goalAmount');
     var units = inputText('goalUnits');
 
+    if (action == "Choose...") {
 
+    } else if {
+        
+    } else if (units == "Choose...") {
+
+    }
 
     var goal = action + " " + amount + " " + units;
     usersUser.update({
