@@ -1,4 +1,3 @@
-
 <html>
 
     <head>
@@ -20,7 +19,7 @@
                 eval("var food = doc.data().dailyData['" + today + "'].food;"); // you now have a normal js map you can do .get or .set or .has or .foreach or whatever you want
                 eval("var nutrients = doc.data().dailyData['" + today + "'].nutrients;"); // same thing
 
-                console.log(nutrients + "\n" + food);
+                console.log(nutrients[0] + "\n" + food);
             });
 
             function nutritionalSync(doc) {
