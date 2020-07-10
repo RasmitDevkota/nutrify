@@ -10,21 +10,76 @@
     </head>
     <body>
         <script>
-            var test = db.collection('temporaryCollection').doc('temporaryDocument');
-            test.get().then(function(doc) {
-                var mop = new Date();
-                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
-                
-                eval("var food = doc.data().dailyData['" + today + "'].food;"); // you now have a normal js map you can do .get or .set or .has or .foreach or whatever you want
-                eval("var nutrients = doc.data().dailyData['" + today + "'].nutrients;"); // same thing
+            var test = db.collection("temporaryCollection").doc("temporaryDocument");
+            window.onload = nutritonalSync("10July2020"); //can be changed later
+            var RegularDiet = ["150=350", "2.2=7.7"];
+            function nutritionalSync(enp) {
+                //defining the variables//
+                var age = "13";
+                var weight = "100";
+                var gender = "M"; //F for female
+                //defining the variables//
 
-                console.log(nutrients[0] + "\n" + food);
-            });
+                test.get().then(function(doc) {
+                    eval("var nutrients = doc.data().dailyData['" + enp + "'].nutrients;"); 
+                    for(let i=0; i<2; i++) { //change i<36 later
+                        var force = RegularDiet[i];
+                        var classArray = [];
+                        for(let l=0; l<force.length; l++) {
+                            if(force[l] == "😃" || l+1 == force.length) {
+                                if(l+1 == force.length) {
+                                    comp += force[l];
+                                }
+                                classArray.push(comp);
+                                comp = "";
+                            } else {
+                                comp += force[l]
+                            }
+                        }
+                        var finalAge = "", finalWeight="", finalGender="", finalValue="", prop="", countUp;
+                        for(let m=0; m<classArray.length; m++) {
+                            if(classArray[m] == ";" || m+1 == classArray.length) {
+                                if(m+1 == classArray.length) {
+                                    prop += classArray[m];
+                                }
+                                if(prop == "M" || prop == "F") {
+                                    finalGender = prop; 
+                                } else if(prop.includes("-") == true) {
+                                    finalAge = prop;
+                                } else if(prop.includes("~") == true) {
+									finalWeight = prop;
+								} else if(prop.includes("=") == true) {
+									finalValue = prop;
+								}
+								prop = "";
+                            } else {
+                                prop += classArray[m];
+                            }
+                        }
+						if(finalAge != "") {
+							countUp++;
+						}
+						if(finalGender != "") {
+							countUp++;
+						}
+						if(finalWeight != "") {
+							countUp++;
+						}
+						alert(countUp);
+						if(countUp == 0) {
+							//check value
+						} else if(countUp == 1) {
+							//
+						} else if(countUp == 2) {
 
-            function nutritionalSync(doc) {
-                
+						} else {
+
+						}
+                    }
+                })
             }
+
+
         </script>
     </body>
     </html>
