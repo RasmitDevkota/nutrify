@@ -36,4 +36,9 @@
 
 * {
     font-family: 'Overpass-SB', sans-serif;
+    color: black;
+}
+
+button {
+    color: white;
 }

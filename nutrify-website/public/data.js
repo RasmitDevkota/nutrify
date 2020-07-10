@@ -3,8 +3,17 @@ setTimeout(function () {
     graph('overviewChart1', 'Nutrition');
     graph('overviewChart2', 'Fitness');
     graph('overviewChart3', 'Goals');
-    graph('largeChart0', 'Meals');
-}, 100);
+
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var largeChart0Graph = urlParams.get('largeChart0');
+
+    if (largeChart0Graph) {
+        graph('largeChart0', largeChart0Graph);
+    } else {
+        graph('largeChart0', 'Meals');
+    }
+}, 800);
 
 function graph(elementID, dataID) {
     var context = document.getElementById(elementID).getContext('2d');
@@ -13,7 +22,7 @@ function graph(elementID, dataID) {
         usersUser.get().then(function (doc) {
             console.log(doc.data());
         });
-    }, 6000)
+    }, 500);
     
     switch (dataID) {
         case "Meals":
@@ -53,6 +62,10 @@ function graph(elementID, dataID) {
                     }
                 }
             });
+
+            if (elementID.includes("largeChart")) {
+                xhttp('meal-form', elementID.substr(0, elementID.length - 1) + 'Input' + elementID[elementID.length - 1]);
+            }
             break;
         case "Nutrition":
             var chart = new Chart(context, {
@@ -167,11 +180,116 @@ function graph(elementID, dataID) {
                     }
                 }
             });
+            
+            if (elementID.includes("largeChart")) {
+                xhttp('goal-form', elementID.substr(0, elementID.length - 1) + 'Input' + elementID[elementID.length - 1]);
+            }
             break;
     }
 
     document.getElementById(elementID.substr(0, elementID.length-1) + 'Title' + elementID[elementID.length-1]).innerHTML = dataID;
+};
+
+function addMeal() {
+    var meal = inputText('meal');
+    var foods = inputText('food').replace(/, /g, ",").replace(/ ,/g, ",").split(",");
+    foods = foods.filter(a => a !== "");
+
+    var mop = new Date();
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
+
+    eval("usersUser.update({'dailyData." + today + ".meals." + meal + "': foods });");
+};
+
+var goalTemplates = new Map([
+    ["Eat", [
+        "meals per day"
+    ]],
+    ["(Nutrients) Consume", [
+        "calories per meal",
+        "calories per day",
+        "calories per week"
+    ]],
+    ["Drink", [
+        "cups of water per day",
+        "cups of juice per day"
+    ]],
+    ["(Exercise) Do", [ // Miscellaneous Activities (without a standard verb like Run or Job)
+        "pushups per day",
+        "situps per day",
+    ]],
+    ["Run", [
+        "miles per hour",
+        "miles per day",
+        "miles per week",
+        "hours per day"
+    ]],
+    ["Walk", [
+        "miles per hour",
+        "miles per day",
+        "miles per week",
+        "hours per day"
+    ]],
+    ["Jog", [
+        "miles per hour",
+        "miles per day",
+        "miles per week",
+        "hours per day"
+    ]],
+    ["Weightlift", [
+        "pounds",
+        "hours per day",
+        "hours per week"
+    ]]
+]);
+
+function goalActionChange() {
+    var action = inputText("goalAction");
+
+    var units = document.getElementById("goalUnits");
+    var options = goalTemplates.get(action);
+
+    units.innerHTML = "<option selected>Choose...</option>";
+    for (var i = 0; i < options.length; i++) {
+        var option = options[i];
+        var elem = document.createElement("option");
+        elem.textContent = option;
+        elem.value = option;
+        units.appendChild(elem);
+    }
 }
+
+function addGoal() {
+    var action = inputText('goalAction');
+    var amount = inputText('goalAmount');
+    var units = inputText('goalUnits');
+
+    if (action == "Choose...") {
+
+    } else if {
+        
+    } else if (units == "Choose...") {
+
+    }
+
+    var goal = action + " " + amount + " " + units;
+    usersUser.update({
+        goal: goal
+    });
+};
+
+function xhttp(source, tag) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(tag).innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", `${source}.html`, true);
+    xhttp.send();
+};
 
 var test = db.collection('temporaryCollection').doc('temporaryDocument');
 var nutrientIds = [1005, 1293, 1003, 1258, 1079, 2000, 1062, 1087, 1099, 1089, 1090, 1101, 1091, 1092, 1103, 1093, 1095, 1120, 1123, 1122, 1180, 1177, 1167, 1170, 1166, 1104, 1175, 1178, 1162, 1110, 1109, 1185, 1057, 1253, 1104, 1213];
@@ -228,7 +346,17 @@ function addentFlow(out, i) {
     var mop = new Date();
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
-    var food = out.foods[i].description;
+
+    var curHr = mop.getHours()
+    if (curHr < 12) {
+        dur = "BR"; //Breakfast
+    } else if (curHr < 18) {
+        dur = "LU";  //Lunch
+    } else {
+        dur = "DI"; //Dinner
+    }
+
+    var food = out.foods[i].description + "[" + dur + "]";
     eval("test.update({'dailyData." + today + ".food': firebase.firestore.FieldValue.arrayUnion('" + food + "')});");
 
 

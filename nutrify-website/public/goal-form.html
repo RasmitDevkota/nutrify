@@ -1,0 +1,29 @@
+<h3 id="largeChartTitle0" class="card-title">Add a Goal</h3>
+
+<div class="form-row align-items-center" style="width: 100%; margin-left: 10%;">
+    <div class="col-auto my-1">
+        <select class="custom-select mr-sm-2" id="goalAction" onchange="goalActionChange()">
+            <option selected>Choose...</option>
+            <option value="Eat">Eat</option>
+            <option value="(Nutrients) Consume">(Nutrients) Consume</option>
+            <option value="Drink">Drink</option>
+            <option value="Run">Run</option>
+            <option value="Jog">Jog</option>
+            <option value="Walk">Walk</option>
+            <option value="(Exercise) Do">(Exercise) Do</option>
+            <option value="Weightlift">Weightlift</option>
+        </select>
+    </div>
+
+    <input type="text" class="form-control mb-2 mr-sm-2" id="goalAmount" style="width: 18%;" placeholder="Amount">
+
+    <div class="col-auto my-1">
+        <select class="custom-select mr-sm-2" id="goalUnits">
+            <option selected>Choose...</option>
+        </select>
+    </div>
+    
+    <div class="col-auto my-1">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</div>
