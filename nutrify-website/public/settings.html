@@ -1,15 +1,15 @@
 <html>
-
     <head>
-        <title>Formulas</title>
+      <title>Formulas</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width">
       <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
-        <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
-        <script src="script.js"></script>
+      <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
+      <script src="script.js"></script>
     </head>
     <body>
         <script>
+            var calc = 0;
             var test = db.collection("temporaryCollection").doc("temporaryDocument");
             window.onload = nutritionalSync("10July2020"); //can be changed later
             var RegularDiet = ["150=350", "2.2=7.7"];
@@ -57,7 +57,6 @@
                                 prop += classArray[m];
                             }
                         }
-                        alert(finalValue);
 						if(finalAge != "") {
 							countUp++;
 						}
@@ -68,17 +67,69 @@
 							countUp++;
 						}
 						if(countUp == 0) {
-							//check value
+							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+							if(calc == 1) {
+								alert("You are doing well on Nutrient" + i);
+							}
 						} else if(countUp == 1) {
-							//
+							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+							if(calc == 2) {
+								alert("You are doing well on Nutrient" + i);
+							}
+
 						} else if(countUp == 2) {
-
-						} else {
-
-                        }
+							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+							if(calc == 3) {
+								alert("You are doing well on Nutrient" + i);
+							}
+						} else if(countUp == 3) {
+							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+							if(calc == 4) {
+								alert("You are doing well on Nutrient" + i);
+							}
+						}
+                        calc = 0; //reinitialize variable for the next loop
                     }
                 })
             }
+
+            function predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients) {
+                if(finalValue != "") {
+                    system(finalValue, nutrients, "=");
+                }
+				if(finalAge != "") {
+                    system(finalAge, age, "-");
+                }
+				if(finalWeight != "") {
+                    system(finalWeight, weight, "~");
+                }
+				if(finalGender != "") {
+                    if(finalGender == gender) {
+						calc++;
+					}
+                }
+
+            }
+
+			function system(compute, initital, boy) {
+                var startVal = "", endVal = "", cat = "";
+                for(let k=0; k<compute.length; k++) {
+                    if(compute[k] == boy || k+1 == compute.length) {
+                        if(k+1 == compute.length) {
+                            cat += compute[k];
+                            endVal = parseInt(cat, 10)
+                        } else {
+                            startVal = parseInt(cat, 10)
+                        }
+                        cat = "";
+                    } else {
+                        cat += compute[k];
+                    }
+                }
+                if(initital <= endVal & initital >= startVal) {
+                    calc++;
+                }
+			}
 
 
         </script>
