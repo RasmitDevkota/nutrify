@@ -1,0 +1,35 @@
+
+<html>
+
+    <head>
+        <title>Formulas</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+        <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <script>
+            var test = db.collection('temporaryCollection').doc('temporaryDocument');
+            test.get().then(function(doc) {
+                if (doc.exists) {
+                  nutritionalSync(doc);  
+                } else {
+                    //function saying that no foods were added in order to compute nutritional confidence significance
+                }
+            }).catch(function(error) {
+                console.log("Error getting document:", error);
+            });
+            var mop = new Date();
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            let today = mop.getDate()  + months[mop.getMonth()]  + mop.getFullYear();
+
+            function nutritionalSync(doc) {
+                console.log("hey", 'doc.data() + ".dailyData."" + today');
+            
+               // alert(doc.Data() + ".dailyData." + today + ".food");
+            }
+        </script>
+    </body>
+    </html>
