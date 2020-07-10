@@ -202,12 +202,55 @@ function addMeal() {
     eval("usersUser.update({'dailyData." + today + ".meals." + meal + "': foods });");
 };
 
+var goalTemplates = new Map([
+    ["Eat", [ // Solid Foods
+        "meals per day",
+        "vegetables per meal"
+    ]],
+    ["Consume", [ // Nutrients
+        "calories per meal",
+        "calories per day",
+        "calories per week"
+    ]],
+    ["Drink", [ // Liquids
+        "cups of water per day",
+        "cups of juice per day"
+    ]],
+    ["(Exercise) Do", [ // Miscellaneous Activities (without a standard verb like Run or Job)
+        "pushups per day",
+        "situps per day",
+    ]],
+    ["Run", [
+        "miles per hour",
+        "miles per day",
+        "miles per week",
+        "hours per day"
+    ]],
+    ["Walk", [
+        "miles per hour",
+        "miles per day",
+        "miles per week",
+        "hours per day"
+    ]],
+    ["Jog", [
+        "miles per hour",
+        "miles per day",
+        "miles per week",
+        "hours per day"
+    ]],
+    ["Weightlift", [
+        "pounds",
+        "hours per day",
+        "hours per week"
+    ]]
+]);
+
 function addGoal() {
     var action = inputText('goalAction');
     var amount = inputText('goalAmount');
     var units = inputText('goalUnits');
 
-    // GOAL VALIDATION LMAO
+
 
     var goal = action + " " + amount + " " + units;
     usersUser.update({
