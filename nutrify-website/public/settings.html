@@ -12,25 +12,26 @@
             var calc = 0;
             var test = db.collection("temporaryCollection").doc("temporaryDocument");
             window.onload = nutritionalSync("10July2020"); //can be changed later
-            var RegularDiet = ["150=350", "2.2=7.7"];
+            var RegularDiet = ["150=350", "2.2=7.7", "0~30;0=10.8|31~60;11.16=21.6|61~100;21.96=36|101~150;21=54|150~200;21=72|201~275;21=80|255~500;30=120"];
             function nutritionalSync(enp) {
                 //defining the variables//
                 var age = "13";
-                var weight = "100";
+                var weight = "100"; //this is in pounds [further the calculation from kg if necessary] rounded to whole number within 0 and 500
                 var gender = "M"; //F for female
                 //defining the variables//
 
                 test.get().then(function(doc) {
                     eval("var nutrients = doc.data().dailyData['" + enp + "'].nutrients;"); 
-                    for(let i=0; i<2; i++) { //change i<36 later
+                    for(let i=2; i<3; i++) { //change i<36 later
                         var force = RegularDiet[i];
                         var classArray = [];
-                        var comp ="";
+                        var comp = "";
                         for(let l=0; l<force.length; l++) {
-                            if(force[l] == "😃" || l+1 == force.length) {
+                            if(force[l] = "|" || l+1 == force.length) {
                                 if(l+1 == force.length) {
                                     comp += force[l];
                                 }
+                                alert(force[l]);
                                 classArray.push(comp);
                                 comp = "";
                             } else {
@@ -87,7 +88,7 @@
 							if(calc == 4) {
 								alert("You are doing well on Nutrient" + i);
 							}
-						}
+                        }
                         calc = 0; //reinitialize variable for the next loop
                     }
                 })
