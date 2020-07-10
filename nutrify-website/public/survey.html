@@ -25,10 +25,10 @@
                 <h4 id="dietnavigationsection" class="surveynavigationtext" onclick="changeScreen('diet')">Diet</h4>
             </div>
             <div class="surveynavigationsection">
-                <h4 id="restrictionsnavigationsection" class="surveynavigationtext" onclick="changeScreen('restriction')">Restrictions</h4>
+                <h4 id="restrictionsnavigationsection" class="surveynavigationtext" onclick="changeScreen('restrictions')">Restrictions</h4>
             </div>
             <div class="surveynavigationsection">
-                <h4 class="surveynavigationtext">Submit</h4>
+                <h4 class="surveynavigationtext" onclick="getUserInput()">Submit</h4>
             </div>
         </div>
         <div class="surveycontent">
@@ -38,14 +38,20 @@
                 <input class="inputfield" id="weight" placeholder="Weight">
             </div>
             <div id='diet' style="display:none;" class="surveycontentsection">
-                <input class="inputfield" id="age" placeholder="Age">
-                <input class="inputfield" id="gender" placeholder="Gender">
-                <input class="inputfield" id="weight" placeholder="Weight">
+                <h4 class="inputfield" style="background-color:white; text-align: center; border:none; padding:10px; font-size:15px; width: 50%; opacity: 0.5;">Select how many diets you would like to have</h4>
+                    <div class="custom-select" style="width:200px;">
+                        <select id="dietPlan">
+                          <option value="0">Click to Select Diet:</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+
+                        </select>
+                    </div>
             </div>
             <div id='restrictions' style="display:none;" class="surveycontentsection">
-                <input class="inputfield" id="age" placeholder="Age">
-                <input class="inputfield" id="gender" placeholder="Gender">
-                <input class="inputfield" id="weight" placeholder="Weight">
+                <h4 class="inputfield" style="background-color:yellow; border:none; padding:10px; font-size:12px; width: 50%; opacity: 0.5;">Please separate items with commas in between. For example: red meat, pork, beef</h4>
+                <input class="inputfield" id="allergies" placeholder="Allergies">
+                <input class="inputfield" id="prohibitedFood" placeholder="Prohibited Foods">
             </div>
 
         </div>
@@ -53,6 +59,7 @@
     <script>
 
         var allScreens = [document.getElementById('personalinformation'), document.getElementById('diet'), document.getElementById('restrictions')];
+        var allNavigation = [document.getElementById('personalinformationnavigationsection'), document.getElementById('dietnavigationsection'), document.getElementById('restrictionsnavigationsection')];
         function changeScreen(item){
             for (screen of allScreens){
                 screen.style.display = "none";
@@ -62,14 +69,169 @@
             }
             document.getElementById(item).style.display = "block";
 
-            document.getElementById(item + 'navigationsection').className += "selectedsurveynavigationsection";
+            document.getElementById(item + 'navigationsection').className += " selectedsurveynavigationsection";
+
         }
+    </script>
+
+<script>
+    //this script is soley for the select styling
+    var x, i, j, l, ll, selElmnt, a, b, c;
+    /*look for any elements with the class "custom-select":*/
+    x = document.getElementsByClassName("custom-select");
+    l = x.length;
+    for (i = 0; i < l; i++) {
+      selElmnt = x[i].getElementsByTagName("select")[0];
+      ll = selElmnt.length;
+      /*for each element, create a new DIV that will act as the selected item:*/
+      a = document.createElement("DIV");
+      a.setAttribute("class", "select-selected");
+      a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+      x[i].appendChild(a);
+      /*for each element, create a new DIV that will contain the option list:*/
+      b = document.createElement("DIV");
+      b.setAttribute("class", "select-items select-hide");
+      for (j = 1; j < ll; j++) {
+        /*for each option in the original select element,
+        create a new DIV that will act as an option item:*/
+        c = document.createElement("DIV");
+        c.innerHTML = selElmnt.options[j].innerHTML;
+        c.addEventListener("click", function(e) {
+            /*when an item is clicked, update the original select box,
+            and the selected item:*/
+            var y, i, k, s, h, sl, yl;
+            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            sl = s.length;
+            h = this.parentNode.previousSibling;
+            for (i = 0; i < sl; i++) {
+              if (s.options[i].innerHTML == this.innerHTML) {
+                s.selectedIndex = i;
+                h.innerHTML = this.innerHTML;
+                y = this.parentNode.getElementsByClassName("same-as-selected");
+                yl = y.length;
+                for (k = 0; k < yl; k++) {
+                  y[k].removeAttribute("class");
+                }
+                this.setAttribute("class", "same-as-selected");
+                break;
+              }
+            }
+            h.click();
+        });
+        b.appendChild(c);
+      }
+      x[i].appendChild(b);
+      a.addEventListener("click", function(e) {
+          /*when the select box is clicked, close any other select boxes,
+          and open/close the current select box:*/
+          e.stopPropagation();
+          closeAllSelect(this);
+          this.nextSibling.classList.toggle("select-hide");
+          this.classList.toggle("select-arrow-active");
+        });
+    }
+    function closeAllSelect(elmnt) {
+      /*a function that will close all select boxes in the document,
+      except the current select box:*/
+      var x, y, i, xl, yl, arrNo = [];
+      x = document.getElementsByClassName("select-items");
+      y = document.getElementsByClassName("select-selected");
+      xl = x.length;
+      yl = y.length;
+      for (i = 0; i < yl; i++) {
+        if (elmnt == y[i]) {
+          arrNo.push(i)
+        } else {
+          y[i].classList.remove("select-arrow-active");
+        }
+      }
+      for (i = 0; i < xl; i++) {
+        if (arrNo.indexOf(i)) {
+          x[i].classList.add("select-hide");
+        }
+      }
+    }
+    /*if the user clicks anywhere outside the select box,
+    then close all select boxes:*/
+    document.addEventListener("click", closeAllSelect);
     </script>
 
 
 </body>
 
 <style>
+    .custom-select {
+        position:relative;
+        margin: 10px auto;
+        font-family: Arial;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+    background: linear-gradient(to right, #15C335, #096A1A);
+  border-radius: 20px;
+  color: white !important;
+
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: gray;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: rgb(224, 224, 224);
+  border-radius: 20px;
+  top: 110%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+/*end of select*/
+
+    .select{
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+    }
     .inputfield{
         width: 50%;
         padding: 10px;
