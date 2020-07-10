@@ -12,7 +12,7 @@
             var calc = 0;
             var test = db.collection("temporaryCollection").doc("temporaryDocument");
             window.onload = nutritionalSync("10July2020"); //can be changed later
-            var RegularDiet = ["150=350", "2.2=7.7", "0~30;0=10.8|31~60;11.16=21.6|61~100;21.96=36|101~150;21=54|150~200;21=72|201~275;21=80|255~500;30=120"];
+            var RegularDiet = ["150=350", "2.2=7.7", "0~30;0=10.8|31~60;11.16=21.6|61~100;21.96=36|101~150;21=54|150~200;21=72|201~275;21=80|255~500;30=120", "16=22", "25=30", "M;0=36|F;0=25", "M;2400=2900|F;1800=2300"];
             function nutritionalSync(enp) {
                 //defining the variables//
                 var age = "13";
@@ -22,16 +22,16 @@
 
                 test.get().then(function(doc) {
                     eval("var nutrients = doc.data().dailyData['" + enp + "'].nutrients;"); 
-                    for(let i=2; i<3; i++) { //change i<36 later
+                    for(let i=5; i<6; i++) { //change i<36 later
                         var force = RegularDiet[i];
                         var classArray = [];
                         var comp = "";
                         for(let l=0; l<force.length; l++) {
-                            if(force[l] = "|" || l+1 == force.length) {
+                            if(force[l] == "|" || l+1 == force.length) {
                                 if(l+1 == force.length) {
                                     comp += force[l];
                                 }
-                                alert(force[l]);
+
                                 classArray.push(comp);
                                 comp = "";
                             } else {
@@ -39,57 +39,64 @@
                             }
                         }
                         var finalAge = "", finalWeight="", finalGender="", finalValue="", prop="", countUp=0;
-                        for(let m=0; m<classArray.length; m++) {
-                            if(classArray[m] == ";" || m+1 == classArray.length) {
-                                if(m+1 == classArray.length) {
-                                    prop += classArray[m];
-                                }
-                                if(prop == "M" || prop == "F") {
-                                    finalGender = prop; 
-                                } else if(prop.includes("-") == true) {
-                                    finalAge = prop;
-                                } else if(prop.includes("~") == true) {
-									finalWeight = prop;
-								} else if(prop.includes("=") == true) {
-									finalValue = prop;
-								}
-								prop = "";
-                            } else {
-                                prop += classArray[m];
-                            }
-                        }
-						if(finalAge != "") {
-							countUp++;
-						}
-						if(finalGender != "") {
-							countUp++;
-						}
-						if(finalWeight != "") {
-							countUp++;
-						}
-						if(countUp == 0) {
-							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
-							if(calc == 1) {
-								alert("You are doing well on Nutrient" + i);
-							}
-						} else if(countUp == 1) {
-							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
-							if(calc == 2) {
-								alert("You are doing well on Nutrient" + i);
-							}
 
-						} else if(countUp == 2) {
-							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
-							if(calc == 3) {
-								alert("You are doing well on Nutrient" + i);
-							}
-						} else if(countUp == 3) {
-							predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
-							if(calc == 4) {
-								alert("You are doing well on Nutrient" + i);
-							}
+                        for(let z=0; z<classArray.length; z++) {
+                            var chaste = classArray[z];
+                            for(let m=0; m<chaste.length; m++) {
+                                if(chaste[m] == ";" || m+1 == chaste.length) {
+                                    if(m+1 == chaste.length) {
+                                        prop += chaste[m];
+                                    }
+                                    if(prop == "M" || prop == "F") {
+                                        finalGender = prop; 
+                                    } else if(prop.includes("-") == true) {
+                                        finalAge = prop;
+                                    } else if(prop.includes("~") == true) {
+                                        finalWeight = prop;
+                                    } else if(prop.includes("=") == true) {
+                                        finalValue = prop;
+                                    }
+                                        prop = "";
+                                    } else {
+                                        prop += chaste[m];
+                                    }
+                            }
+
+                            if(finalAge != "") {
+                                countUp++;
+                            }
+
+                            if(finalGender != "") {
+                                countUp++;
+                            }
+                            if(finalWeight != "") {
+                                countUp++;
+                            }
+                            if(countUp == 0) {
+                                predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+                                if(calc == 1) {
+                                    alert("You are doing well on Nutrient" + i);
+                                }
+                            } else if(countUp == 1) {
+                                predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+                                if(calc == 2) {
+                                    alert("You are doing well on Nutrient" + i);
+                                }
+
+                            } else if(countUp == 2) {
+                                predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+                                if(calc == 3) {
+                                    alert("You are doing well on Nutrient" + i);
+                                }
+                            } else if(countUp == 3) {
+                                predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
+                                if(calc == 4) {
+                                    alert("You are doing well on Nutrient" + i);
+                                }
+                            }
+                            calc = 0; //reinitialize variable for the next loop
+                            countUp = 0;
                         }
-                        calc = 0; //reinitialize variable for the next loop
                     }
                 })
             }
