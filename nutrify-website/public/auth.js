@@ -171,10 +171,6 @@ function getUserInput() {
         return console.log("No user found for user health survey");
     }
 
-    function inputText(id) {
-        return document.getElementById(id).value;
-    }
-
     var age = inputText("age");
     var gender = inputText("gender");
     var weight = inputText("weight");

@@ -13,7 +13,7 @@ function graph(elementID, dataID) {
         usersUser.get().then(function (doc) {
             console.log(doc.data());
         });
-    }, 6000)
+    }, 600)
     
     switch (dataID) {
         case "Meals":
@@ -171,6 +171,32 @@ function graph(elementID, dataID) {
     }
 
     document.getElementById(elementID.substr(0, elementID.length-1) + 'Title' + elementID[elementID.length-1]).innerHTML = dataID;
+};
+
+function addMeal() {
+    var meal = inputText('meal');
+    var foods = inputText('foods').replace(/ /g, ",").replace(/,,/g, ",").split(",");
+
+    switch (meal) {
+        case "Breakfast":
+            var mealAbrv = "BR";
+            break;
+        case "Lunch":
+            var mealAbrv = "LU";
+            break;
+        case "Snack":
+            var mealAbrv = "SN";
+            break;
+        case "Dinner":
+            var mealAbrv = "DR";
+            break;
+    }
+
+    var mop = new Date();
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
+
+    eval("usersUser.update({'dailyData['" + today + "'].meals." + mealAbrv + "': [" + foods + "]});");
 }
 
 var test = db.collection('temporaryCollection').doc('temporaryDocument');

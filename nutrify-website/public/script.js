@@ -115,3 +115,7 @@ function redirect(pagePath) {
 function display(elem) {
     $('#' + elem).toggle();
 };
+
+function inputText(id) {
+    return document.getElementById(id).value;
+}
