@@ -206,7 +206,7 @@ var goalTemplates = new Map([
     ["Eat", [ // Solid Foods
         "meals per day"
     ]],
-    ["Consume", [ // Nutrients
+    ["(Nutrients) Consume", [ // Nutrients
         "calories per meal",
         "calories per day",
         "calories per week"
@@ -243,7 +243,7 @@ var goalTemplates = new Map([
         "hours per week"
     ]]
 ]);
-// hi
+
 function goalActionChange() {
     var action = inputText("goalAction");
 
