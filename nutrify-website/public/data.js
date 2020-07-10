@@ -4,7 +4,7 @@ setTimeout(function () {
     graph('overviewChart2', 'Fitness');
     graph('overviewChart3', 'Goals');
     graph('largeChart0', 'Meals');
-}, 100);
+}, 1000);
 
 function graph(elementID, dataID) {
     var context = document.getElementById(elementID).getContext('2d');
@@ -13,7 +13,7 @@ function graph(elementID, dataID) {
         usersUser.get().then(function (doc) {
             console.log(doc.data());
         });
-    }, 600)
+    }, 900);
     
     switch (dataID) {
         case "Meals":
@@ -53,6 +53,10 @@ function graph(elementID, dataID) {
                     }
                 }
             });
+
+            if (elementID.includes("largeChart")) {
+                xhttp('meal-form', elementID.substr(0, elementID.length - 1) + 'Input' + elementID[elementID.length - 1]);
+            }
             break;
         case "Nutrition":
             var chart = new Chart(context, {
@@ -175,28 +179,26 @@ function graph(elementID, dataID) {
 
 function addMeal() {
     var meal = inputText('meal');
-    var foods = inputText('foods').replace(/ /g, ",").replace(/,,/g, ",").split(",");
-
-    switch (meal) {
-        case "Breakfast":
-            var mealAbrv = "BR";
-            break;
-        case "Lunch":
-            var mealAbrv = "LU";
-            break;
-        case "Snack":
-            var mealAbrv = "SN";
-            break;
-        case "Dinner":
-            var mealAbrv = "DR";
-            break;
-    }
+    var foods = inputText('food').replace(/, /g, ",").replace(/ ,/g, ",").split(",");
+    foods = foods.filter(a => a !== "");
 
     var mop = new Date();
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
 
-    eval("usersUser.update({'dailyData['" + today + "'].meals." + mealAbrv + "': [" + foods + "]});");
+    eval("usersUser.update({'dailyData." + today + ".meals." + meal + "': foods });");
+}
+
+function xhttp(source, tag) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(tag).innerHTML = this.responseText;
+        }
+    };
+
+    xhttp.open("GET", `${source}.html`, true);
+    xhttp.send();
 }
 
 var test = db.collection('temporaryCollection').doc('temporaryDocument');

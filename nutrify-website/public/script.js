@@ -27,10 +27,10 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 function pageLoad(u) {
     if (u) {
-            window.user = firebase.auth().currentUser;
-            window.userIcon = (user.photoURL) ? user.photoURL : "nouser.png";
-            window.usersUser = users.doc(user.uid);
-            window.emailsUser = emails.doc(user.displayName);
+        window.user = firebase.auth().currentUser;
+        window.userIcon = (user.photoURL) ? user.photoURL : "nouser.png";
+        window.usersUser = users.doc(user.uid);
+        window.emailsUser = emails.doc(user.displayName);
     } else {
         window.user = null;
     }
@@ -61,7 +61,7 @@ if (window.location.href.includes("dashboard.html")) {
         document.getElementById("toastUsername").innerHTML = user.displayName;
         document.getElementById("toastIcon").src = userIcon;
         document.getElementById("profileIcon").src = userIcon;
-    }, 500);
+    }, 1000);
 
     // Load Graph Data
     xhttp('overview-graphs', 'overview-graphs');
@@ -106,7 +106,7 @@ function xhttp(source, tag) {
 
     xhttp.open("GET", `${source}.html`, true);
     xhttp.send();
-}
+};
 
 function redirect(pagePath) {
     window.location.replace(pagePath);

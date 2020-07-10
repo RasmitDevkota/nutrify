@@ -1,0 +1,16 @@
+<h3 id="largeChartTitle0" class="card-title" style="color: black">Log Meal</h3>
+
+<select id="meal" class="form-control">
+    <option value="BR" style="color: black">Breakfast</option>
+    <option value="LU" style="color: black">Lunch</option>
+    <option value="DR" style="color: black">Dinner</option>
+    <option value="SN" style="color: black">Snack</option>
+</select>
+
+<div class="form-group" style="margin-top: 3%;">
+    <label for="food" style="color: black;">List of Foods</label>
+    <input type="text" class="form-control" id="food" aria-describedby="foodHelp" aria-placeholder="Example: orange, ice cream, bananas, chicken">
+    <small id="foodHelp" class="form-text text-muted">Please separate the list with commas (,)</small>
+</div>
+
+<button type="submit" class="btn btn-primary" onclick="addMeal()">Submit</button>
