@@ -13,27 +13,18 @@
         <script>
             var test = db.collection('temporaryCollection').doc('temporaryDocument');
             test.get().then(function(doc) {
-                if (doc.exists) {
-                  nutritionalSync(doc);  
-                } else {
-                    // function saying that no foods were added in order to compute nutritional confidence significance
-                }
-            }).catch(function(error) {
-                console.log("Error getting document:", error);
+                var mop = new Date();
+                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
+                
+                eval("var food = doc.data().dailyData['" + today + "'].food;"); // you now have a normal js map you can do .get or .set or .has or .foreach or whatever you want
+                eval("var nutrients = doc.data().dailyData['" + today + "'].nutrients;"); // same thing
+
+                console.log(nutrients + "\n" + food);
             });
-            var mop = new Date();
-            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
 
             function nutritionalSync(doc) {
-                console.log("hey", doc.id + ".dailyData." + today);
-            
-               alert(doc.id + ".dailyData." + today + ".food");
-
-               var nutrients = doc.data().nutrients; // you now have a normal js map you can do .get or .set or .has or .foreach or whatever you want
-               var food = doc.data().food; // same thing
-
-               console.log (nutrients + "\n" + food)
+                
             }
         </script>
     </body>
