@@ -228,7 +228,17 @@ function addentFlow(out, i) {
     var mop = new Date();
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
-    var food = out.foods[i].description;
+
+    var curHr = mop.getHours()
+    if (curHr < 12) {
+        dur = "BR"; //Breakfast
+    } else if (curHr < 18) {
+        dur = "LU";  //Lunch
+    } else {
+        dur = "DI"; //Dinner
+    }
+
+    var food = out.foods[i].description + "[" + dur + "]";
     eval("test.update({'dailyData." + today + ".food': firebase.firestore.FieldValue.arrayUnion('" + food + "')});");
 
 
