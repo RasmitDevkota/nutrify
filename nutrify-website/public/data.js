@@ -8,6 +8,12 @@ setTimeout(function () {
 
 function graph(elementID, dataID) {
     var context = document.getElementById(elementID).getContext('2d');
+
+    setTimeout(function () {
+        usersUser.get().then(function (doc) {
+            console.log(doc.data());
+        });
+    }, 6000)
     
     switch (dataID) {
         case "Meals":
