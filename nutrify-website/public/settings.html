@@ -22,7 +22,7 @@
 
                 test.get().then(function(doc) {
                     eval("var nutrients = doc.data().dailyData['" + enp + "'].nutrients;"); 
-                    for(let i=0; i<2; i++) { //change i<36 later
+                    for(let i=0; i<1; i++) { //change i<36 later
                         var force = RegularDiet[i];
                         var classArray = [];
                         var comp ="";
@@ -57,7 +57,6 @@
                                 prop += classArray[m];
                             }
                         }
-                        alert(finalValue);
 						if(finalAge != "") {
 							countUp++;
 						}
@@ -67,18 +66,43 @@
 						if(finalWeight != "") {
 							countUp++;
 						}
-						if(countUp == 0) {
-							//check value
-						} else if(countUp == 1) {
-							//
-						} else if(countUp == 2) {
+                        var startVal = "", endVal = "", cat = "";
+                        var yay = true;
+						while(yay == true) {
+							if(countUp == 0) {
+								for(let k=0; k<finalValue.length; k++) {
+									if(finalValue[k] == "=" || k+1 == finalValue.length) {
+										if(k+1 == finalValue.length) {
+											cat += finalValue[k];
+											endVal = parseInt(cat, 10)
+										} else {
+											startVal = parseInt(cat, 10)
+										}
+										cat = "";
 
-						} else {
+									} else {
+										cat += finalValue[k];
+									}
+								}
+								if(nutrients[i] <= endVal & nutrients[i] >= startVal) {
+                                    alert("We are all good!");
+                                    yay = false;
+								}
+							} else if(countUp == 1) {
+								//
+							} else if(countUp == 2) {
 
-                        }
+							} else if(countUp == 3) {
+
+							}
+						}
                     }
                 })
             }
+
+			function system() {
+
+			}
 
 
         </script>
