@@ -9,7 +9,7 @@
     </head>
     <body>
         <script>
-            var calc;
+            var calc = 0;
             var test = db.collection("temporaryCollection").doc("temporaryDocument");
             window.onload = nutritionalSync("10July2020"); //can be changed later
             var RegularDiet = ["150=350", "2.2=7.7"];
@@ -67,7 +67,7 @@
 							countUp++;
 						}
                         var yay = true;
-						while(yay == true) {
+						//while(yay == true) {
 							if(countUp == 0) {
                                 predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
                                 yay=false;
@@ -95,7 +95,7 @@
                                     yay = false;
                                 }
 							}
-                        }
+                     //   }
                         alert(calc);
                     }
                 })
