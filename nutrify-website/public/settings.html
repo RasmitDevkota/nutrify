@@ -12,7 +12,7 @@
             var calc = 0;
             var test = db.collection("temporaryCollection").doc("temporaryDocument");
             window.onload = nutritionalSync("10July2020"); //can be changed later
-            var RegularDiet = ["150=350", "2.2=7.7", "0~30;0=10.8|31~60;11.16=21.6|61~100;21.96=36|101~150;21=54|150~200;21=72|201~275;21=80|255~500;30=120", "16=22", "25=30", "M;0=36|F;0=25", "M;2400=2900|F;1800=2300"];
+            var RegularDiet = ["150=350", "2.2=7.7", "0~30;0=10.8|31~60;11.16=21.6|61~100;21.96=36|101~150;21=54|150~200;21=72|201~275;21=80|255~500;30=120", "16=22", "25=30", "M;0=36|F;0=25", "M;2400=2900|F;1800=2300", "M;19-50;1=2.5|M;51-70;1=2|M;71-150;1.2=2|W;0-50;1=2.5|W;51-1501.2=2", "0.0018=0.010", "2-11;0.0115=0.0137|12-19;0.014=0.016|M;20-150;0.0163=0.0182|W;20-150;0.0126=0.0135", "1-3;0.07=0.09|4-8;0.11=0.13|9-13;0.24|F;14-18;0.34=0.38|F;19-30;0.29=0.33|F;31-150;0.3=0.34|M;14-150;0.39=0.43", "1-8;0.0010=0.002|M;9-150;0.0019=0.0023|F;9-150;0.0016=0.0018", "0.8=1.2", "3.5=5", "0.000050=0.00007", "1.5=2.3", "F;0.0007=9|M;0.0010=0.0012", "0.003=0.01", "0.008=0.012", "0.008=0.021", "M;.5=.6|F;.375=0.475", "0.0004=0.0008", "0.013=0.02", "0.005=1", "M;0.0010=0.0015|F;0.0009=0.0013", "700=10000", "0.0013=0.0017", "0.0000020=0.0000028", "0.065=2", "600=2000", "0.006=0.014", "0.00007=0.00013", "0=0.04", "0.2=0.4", "0.5=1", "0.1=0.4"];
             function nutritionalSync(enp) {
                 //defining the variables//
                 var age = "13";
@@ -22,7 +22,7 @@
 
                 test.get().then(function(doc) {
                     eval("var nutrients = doc.data().dailyData['" + enp + "'].nutrients;"); 
-                    for(let i=5; i<6; i++) { //change i<36 later
+                    for(let i=0; i<36; i++) { //change i<36 later
                         var force = RegularDiet[i];
                         var classArray = [];
                         var comp = "";
@@ -75,23 +75,23 @@
                             if(countUp == 0) {
                                 predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
                                 if(calc == 1) {
-                                    alert("You are doing well on Nutrient" + i);
+                                    console.log("You are doing well on Nutrient" + i);
                                 }
                             } else if(countUp == 1) {
                                 predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
                                 if(calc == 2) {
-                                    alert("You are doing well on Nutrient" + i);
+                                    console.log("You are doing well on Nutrient" + i);
                                 }
 
                             } else if(countUp == 2) {
                                 predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
                                 if(calc == 3) {
-                                    alert("You are doing well on Nutrient" + i);
+                                    console.log("You are doing well on Nutrient" + i);
                                 }
                             } else if(countUp == 3) {
                                 predetermined(finalAge, finalGender, finalWeight, finalValue, age, gender, weight, nutrients[i]);
                                 if(calc == 4) {
-                                    alert("You are doing well on Nutrient" + i);
+                                    console.log("You are doing well on Nutrient" + i);
                                 }
                             }
                             calc = 0; //reinitialize variable for the next loop
