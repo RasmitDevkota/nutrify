@@ -417,13 +417,14 @@ function logFitnessActivity() {
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
 
-    eval("usersUser.update({'dailyData." + today + ".fitness': firebase.firestore.FieldValue.arrayUnion(" + log + ")});");
+    console.log("usersUser.update({'dailyData." + today + ".fitness': firebase.firestore.FieldValue.arrayUnion(log)});");
+    eval("usersUser.update({'dailyData." + today + ".fitness': firebase.firestore.FieldValue.arrayUnion(log)});");
 };
 
 function validate(action, amount, units) {
     if (amount < 0 || amount.includes("-")) {
         return [false, "Error: amount cannot be a negative number."];
-    } else if ("/* Need more! */") {
+    } else if (!action) {
         
     } else {
         return [true];
