@@ -279,7 +279,7 @@ function addGoal() {
         var validationResult = validate(action, amount, units);
         if (validationResult[0] != true) {
             alert(validationResult[1]);
-            return console.error("Error: Goal form was submitted without a valid amount; rejected submit. " + validationResult[1]);
+            return console.error("Goal form was submitted without a valid amount; rejected submit.\n" + validationResult[1]);
         }
     }
 
@@ -352,6 +352,30 @@ function logFitnessActivity() {
     var amount = inputText('fitnessAmount');
     var units = inputText('fitnessUnits');
 
+    var selection = document.getElementById("fitnessTimeFormat").checked;
+    if (selection) {
+        var startTime = inputText('startTimeInput');
+        var endTime = inputText('endTimeInput');
+
+        var startDate = new Date();
+        startDate.setHours(startTime.substr(0, 2));
+        startDate.setMinutes(startTime.substr(3, 5));
+        startDate.setSeconds(0);
+
+        var endDate = new Date();
+        endDate.setHours(endTime.substr(0, 2));
+        endDate.setMinutes(endTime.substr(3, 5));
+        endDate.setSeconds(0);
+
+        var time = (endDate - startDate) / 60000;
+    } else {
+        var time = parseInt(inputText('fitnessTimeHours')) * 60 + parseInt(inputText('fitnessTimeMinutes'));
+    }
+
+    if (time < 0 || time == "" || time == 0) {
+        alert("Time duration can not be negative or equal to 0! Please try again!");
+        return console.error("Error: Fitness time was submitted without a valid amount; rejected submit.");
+    }
 
     if (action == "Choose...") {
         alert("Please select an action!");
@@ -363,7 +387,7 @@ function logFitnessActivity() {
         var validationResult = validate(action, amount, units);
         if (validationResult[0] != true) {
             alert(validationResult[1]);
-            return console.error("Error: Fitness form was submitted without a valid amount; rejected submit.");
+            return console.error("Fitness form was submitted without a valid amount; rejected submit.\n" + validationResult[1]);
         }
     }
 };
