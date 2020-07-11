@@ -417,7 +417,6 @@ function logFitnessActivity() {
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
 
-    console.log("usersUser.update({'dailyData." + today + ".fitness': firebase.firestore.FieldValue.arrayUnion(log)});");
     eval("usersUser.update({'dailyData." + today + ".fitness': firebase.firestore.FieldValue.arrayUnion(log)});");
 };
 
