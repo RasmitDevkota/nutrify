@@ -352,6 +352,20 @@ function logFitnessActivity() {
     var amount = inputText('fitnessAmount');
     var units = inputText('fitnessUnits');
 
+    if (action == "Choose...") {
+        alert("Please select an action!");
+        return console.error("Error: Fitness form was submitted without an action; rejected submit.");
+    } else if (units == "Choose...") {
+        alert("Please select units!");
+        return console.error("Error: Fitness form was submitted without units; rejected submit.");
+    } else {
+        var validationResult = validate(action, amount, units);
+        if (validationResult[0] != true) {
+            alert(validationResult[1]);
+            return console.error("Fitness form was submitted without a valid amount; rejected submit.\n" + validationResult[1]);
+        }
+    }
+
     var selection = document.getElementById("fitnessTimeFormat").checked;
     if (selection) {
         var startTime = inputText('startTimeInput');
@@ -368,34 +382,48 @@ function logFitnessActivity() {
         endDate.setSeconds(0);
 
         var time = (endDate - startDate) / 60000;
-    } else {
-        var time = parseInt(inputText('fitnessTimeHours')) * 60 + parseInt(inputText('fitnessTimeMinutes'));
-    }
 
-    if (time < 0 || time == "" || time == 0) {
-        alert("Time duration can not be negative or equal to 0! Please try again!");
-        return console.error("Error: Fitness time was submitted without a valid amount; rejected submit.");
-    }
-
-    if (action == "Choose...") {
-        alert("Please select an action!");
-        return console.error("Error: Fitness form was submitted without an action; rejected submit.");
-    } else if (units == "Choose...") {
-        alert("Please select units!");
-        return console.error("Error: Fitness form was submitted without units; rejected submit.");
+        if (time < 1) {
+            alert("Time duration can not be negative or equal to 0! Please try again!");
+            return console.error("Error: Fitness time was submitted without a valid amount; rejected submit.");
+        } else {
+            var log = {
+                timeFormat: "range",
+                startTime: startTime,
+                endTime: endTime,
+                action: action,
+                amount: amount,
+                units: units
+            }
+        }
     } else {
-        var validationResult = validate(action, amount, units);
-        if (validationResult[0] != true) {
-            alert(validationResult[1]);
-            return console.error("Fitness form was submitted without a valid amount; rejected submit.\n" + validationResult[1]);
+        var time = inputText('fitnessRecordTime');
+
+        if (!time) {
+            alert("Please enter a time! Please try again!");
+            return console.error("Error: Fitness time was submitted without a valid amount; rejected submit.");
+        } else {
+            var log = {
+                timeFormat: "specific",
+                recordTime: time,
+                action: action,
+                amount: amount,
+                units: units
+            }
         }
     }
+
+    var mop = new Date();
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
+
+    eval("usersUser.update({'dailyData." + today + ".fitness': firebase.firestore.FieldValue.arrayUnion(" + log + ")});");
 };
 
 function validate(action, amount, units) {
     if (amount < 0 || amount.includes("-")) {
         return [false, "Error: amount cannot be a negative number."];
-    } else if (action) {
+    } else if ("/* Need more! */") {
         
     } else {
         return [true];
