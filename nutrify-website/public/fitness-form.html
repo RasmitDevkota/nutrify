@@ -1,0 +1,52 @@
+<h3 id="largeChartTitle0" class="card-title">Log Fitness Activity</h3>
+
+<div class="form-row">
+    <div id="fitnessTimeDuration" class="form-row align-items-center">
+        <input type="text" class="form-control mb-2 mr-sm-2" id="fitnessAmount" style="width: 45%;" placeholder="Number of Hours">
+        <input type="text" class="form-control mb-2 mr-sm-2" id="fitnessAmount" style="width: 45%;" placeholder="Number of Minutes">
+    </div>
+
+    <div id="fitnessTimeRange" class="form-row align-items-center" style="display: none;">
+        <div id="startTime" class="col">
+            <label id="startTimeLabel" for="startTimeInput">Start Time</label>
+            <input id="startTimeInput" type="time" class="form-control">
+        </div>
+
+        <div id="endTime" class="col">
+            <label id="endTimeLabel" for="startTimeInput">End Time</label>
+            <input id="endTimeInput" type="time" class="form-control">
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="fitnessTimeFormat" onchange="fitnessTimeFormatChange()">
+            <label class="form-check-label" for="fitnessTimeFormat">Enter Time as Range</label>
+        </div>
+    </div>
+</div>
+
+<div class="form-row align-items-center" style="margin-top: 2%;">
+    <div class="col my-1">
+        <select class="custom-select mr-sm-2" id="fitnessAction" onchange="fitnessActionChange()">
+            <option selected>Choose...</option>
+            <option value="Run">Run</option>
+            <option value="Jog">Jog</option>
+            <option value="Walk">Walk</option>
+            <option value="Do">Do</option>
+            <option value="Weightlift">Weightlift</option>
+        </select>
+    </div>
+
+    <input type="text" class="form-control mb-2 mr-sm-2" id="fitnessAmount" style="width: 20%;" placeholder="Amount">
+
+    <div class="col my-1">
+        <select class="custom-select mr-sm-2" id="fitnessUnits" disabled title="Please select an activity first!">
+            <option selected >Choose...</option>
+        </select>
+    </div>
+
+    <div class="col my-1">
+        <button type="submit" class="btn btn-primary" onclick="logFitnessActivity()">Submit</button>
+    </div>
+</div>

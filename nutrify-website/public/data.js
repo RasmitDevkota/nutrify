@@ -142,6 +142,10 @@ function graph(elementID, dataID) {
                     }
                 }
             });
+
+            if (elementID.includes("largeChart")) {
+                xhttp('fitness-form', elementID.substr(0, elementID.length - 1) + 'Input' + elementID[elementID.length - 1]);
+            }
             break;
         case "Goals":
             var chart = new Chart(context, {
@@ -215,7 +219,7 @@ var goalTemplates = new Map([
         "cups of water per day",
         "cups of juice per day"
     ]],
-    ["(Exercise) Do", [ // Miscellaneous Activities (without a standard verb like Run or Job)
+    ["(Exercise) Do", [ // Miscellaneous Activities (without a standard verb like Run or Jog)
         "pushups per day",
         "situps per day",
     ]],
@@ -266,17 +270,112 @@ function addGoal() {
     var units = inputText('goalUnits');
 
     if (action == "Choose...") {
-
-    } else if {
-        
+        alert("Please select an action!");
+        return console.error("Error: Goal form was submitted without an action; rejected submit.");
     } else if (units == "Choose...") {
-
+        alert("Please select units!");
+        return console.error("Error: Goal form was submitted without units; rejected submit.");
+    } else {
+        var validationResult = validate(action, amount, units);
+        if (validationResult[0] != true) {
+            alert(validationResult[1]);
+            return console.error("Error: Goal form was submitted without a valid amount; rejected submit. " + validationResult[1]);
+        }
     }
 
     var goal = action + " " + amount + " " + units;
     usersUser.update({
         goal: goal
     });
+};
+
+var fitnessTemplates = new Map([
+    ["Do", [ // Miscellaneous Activities (without a standard verb like Run or Jog)
+        "pushups",
+        "situps",
+    ]],
+    ["Run", [
+        "miles",
+        "hours"
+    ]],
+    ["Walk", [
+        "miles",
+        "hours"
+    ]],
+    ["Jog", [
+        "miles",
+        "hours"
+    ]],
+    ["Weightlift", [
+        "pounds",
+        "hours"
+    ]]
+]);
+
+function fitnessTimeFormatChange() {
+    var selection = document.getElementById("fitnessTimeFormat").checked;
+
+    if (selection) {
+        display('fitnessTimeDuration');
+        display('fitnessTimeRange');
+    } else {
+        display('fitnessTimeRange');
+        display('fitnessTimeDuration');
+    }
+};
+
+function fitnessActionChange() {
+    var action = inputText("fitnessAction");
+
+    var units = document.getElementById("fitnessUnits");
+    units.innerHTML = "<option selected>Choose...</option>";
+
+    if (action != "Choose...") {
+        units.disabled = false;
+        var options = fitnessTemplates.get(action);
+
+        units.innerHTML = "<option selected>Choose...</option>";
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            var elem = document.createElement("option");
+            elem.textContent = option;
+            elem.value = option;
+            units.appendChild(elem);
+        }
+    } else {
+        units.disabled = true;
+    }
+};
+
+function logFitnessActivity() {
+    var action = inputText('fitnessAction');
+    var amount = inputText('fitnessAmount');
+    var units = inputText('fitnessUnits');
+
+
+    if (action == "Choose...") {
+        alert("Please select an action!");
+        return console.error("Error: Fitness form was submitted without an action; rejected submit.");
+    } else if (units == "Choose...") {
+        alert("Please select units!");
+        return console.error("Error: Fitness form was submitted without units; rejected submit.");
+    } else {
+        var validationResult = validate(action, amount, units);
+        if (validationResult[0] != true) {
+            alert(validationResult[1]);
+            return console.error("Error: Fitness form was submitted without a valid amount; rejected submit.");
+        }
+    }
+};
+
+function validate(action, amount, units) {
+    if (amount < 0 || amount.includes("-")) {
+        return [false, "Error: amount cannot be a negative number."];
+    } else if (action) {
+        
+    } else {
+        return [true];
+    }
 };
 
 function xhttp(source, tag) {
