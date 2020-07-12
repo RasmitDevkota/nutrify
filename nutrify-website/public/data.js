@@ -445,10 +445,6 @@ function xhttp(source, tag) {
 };
 
 class nutritionRating {
-    rating() {
-        return this.rating;
-    }
-
     constructor() {
         var calc = 0;
         var nutrientTotal = [];
