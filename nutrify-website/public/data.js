@@ -1,9 +1,10 @@
+"use strict",
+
 setTimeout(function () {
     graph('overviewChart0', 'Meals');
     graph('overviewChart1', 'Nutrition');
     graph('overviewChart2', 'Fitness');
     graph('overviewChart3', 'Goals');
-
 
     var urlParams = new URLSearchParams(window.location.search);
     var largeChart0Graph = urlParams.get('largeChart0');
@@ -62,50 +63,66 @@ function graph(elementID, dataID) {
             }
             break;
         case "Nutrition":
-            var nutritionDataLabels = ["a", "b", "c", "d", "e", "f", "g", "g", "i", "j"];
-            var nutritionData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-            
-            
-            var chart = new Chart(context, {
-                type: 'line',
-                data: {
-                    labels: nutritionDataLabels,
-                    datasets: [{
-                        label: 'Daily Nutrition Rating',
-                        backgroundColor: "#009c68",
-                        borderColor: "#009c68",
-                        data: nutritionData,
-                        fill: false,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: true
-                    },
-                    scales: {
-                        xAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Date'
-                            }
-                        }],
-                        yAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Rating (Percentage)'
-                            }
-                        }]
-                    }
+            var nutritionDataLabels = [];
+            var nutritionData = [];
+
+            var getNutritionRating = new nutritionRating();
+
+            setTimeout(function () {
+                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                console.log(nutritionRatingMap);
+
+                for (var c = 0; c < 7; c++) {
+                    var d = new Date(new Date() - 86400000 * (6-c));
+                    var date = d.getDate() + months[d.getMonth()] + d.getFullYear();
+                    nutritionData.push(Math.floor(nutritionRatingMap.get(date)));
+
+                    var dateLabel = d.getMonth() + "/" + d.getDate();
+                    nutritionDataLabels.push(dateLabel);
                 }
-            });
+
+                var chart = new Chart(context, {
+                    type: 'line',
+                    data: {
+                        labels: nutritionDataLabels,
+                        datasets: [{
+                            label: 'Daily Nutrition Rating',
+                            backgroundColor: "#009c68",
+                            borderColor: "#009c68",
+                            data: nutritionData,
+                            fill: false,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Date'
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Rating (Percentage)'
+                                }
+                            }]
+                        }
+                    }
+                });
+            }, 500);
             break;
         case "Fitness":
             var chart = new Chart(context, {
@@ -457,14 +474,13 @@ class nutritionRating {
 
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        var result = new Map();
+        window.nutritionRatingMap = new Map();
 
         var test = db.collection('temporaryCollection').doc('temporaryDocument');
         test.get().then(function (doc) {
             for (var c = 0; c < 7; c++) {
                 var d = new Date(new Date() - 86400000 * c);
                 var date = d.getDate() + months[d.getMonth()] + d.getFullYear();
-                console.log(date);
 
                 var dailyData = doc.data().dailyData;
                 var data = (dailyData) ? dailyData[date] : null;
@@ -472,7 +488,7 @@ class nutritionRating {
 
                 if (!data || !nutrients) {
                     console.log("User does not have nutrition data for the date " + date);
-                    result.set(date, 0);
+                    window.nutritionRatingMap.set(date, 0);
                     continue;
                 }
 
@@ -611,13 +627,11 @@ class nutritionRating {
                         }
 
                         var average = sum / 36;
-                        result.set(date, average);
+                        window.nutritionRatingMap.set(date, average);
                         continue;
                     }
                 }
             }
-        }).then(function () {
-            console.log(result);
         }).catch(function (e) {
             console.error(e);
         });
