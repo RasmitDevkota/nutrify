@@ -69,7 +69,7 @@ if (window.location.href.includes("dashboard.html")) {
     // Load News Cards API
     xhttp('news-cards', 'news-cards');
 
-    var url = 'http://newsapi.org/v2/top-headlines?' +
+    var url = 'https://newsapi.org/v2/top-headlines?' +
         'country=US&' + 'category=health&' +
         'sortBy=popularity&' +
         'apiKey=e55f2d04dbae45d4bc5c253924f6d3ed';
