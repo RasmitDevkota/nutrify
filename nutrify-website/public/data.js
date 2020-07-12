@@ -17,12 +17,6 @@ setTimeout(function () {
 
 function graph(elementID, dataID) {
     var context = document.getElementById(elementID).getContext('2d');
-
-    setTimeout(function () {
-        usersUser.get().then(function (doc) {
-            console.log(doc.data());
-        });
-    }, 500);
     
     switch (dataID) {
         case "Meals":
@@ -68,37 +62,44 @@ function graph(elementID, dataID) {
             }
             break;
         case "Nutrition":
+            var nutritionDataLabels = ["a", "b", "c", "d", "e", "f", "g", "g", "i", "j"];
+            var nutritionData = [1,2,3,4,5,6,7,8,9,10];
+            
             var chart = new Chart(context, {
-                type: 'bar',
+                type: 'line',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: nutritionDataLabels,
                     datasets: [{
-                        label: 'Nutrition',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
+                        label: 'Daily Nutrition Rating',
+                        backgroundColor: "#009c68",
+                        borderColor: "#009c68",
+                        data: nutritionData,
+                        fill: false,
                     }]
                 },
                 options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
                     scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Date'
+                            }
+                        }],
                         yAxes: [{
-                            ticks: {
-                                beginAtZero: true
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Rating (Percentage)'
                             }
                         }]
                     }

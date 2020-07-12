@@ -16,7 +16,7 @@ var emails = db.collection("emails");
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        if (!window.location.href.includes("index.html") && window.location.href.includes(".html") && !window.location.href.includes("dashboard.html")) {
+        if (!window.location.href.includes("index.html") && window.location.href.includes(".html") && !window.location.href.includes("dashboard.html") && !window.location.href.includes("nutrientGraphStuff.html")) {
             return redirect('dashboard.html');
         }
         pageLoad(true);
