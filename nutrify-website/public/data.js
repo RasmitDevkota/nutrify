@@ -63,7 +63,8 @@ function graph(elementID, dataID) {
             break;
         case "Nutrition":
             var nutritionDataLabels = ["a", "b", "c", "d", "e", "f", "g", "g", "i", "j"];
-            var nutritionData = [1,2,3,4,5,6,7,8,9,10];
+            var nutritionData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            
             
             var chart = new Chart(context, {
                 type: 'line',
@@ -443,179 +444,186 @@ function xhttp(source, tag) {
     xhttp.send();
 };
 
-var test = db.collection('temporaryCollection').doc('temporaryDocument');
-var nutrientIds = [1005, 1293, 1003, 1258, 1079, 2000, 1062, 1087, 1099, 1089, 1090, 1101, 1091, 1092, 1103, 1093, 1095, 1120, 1123, 1122, 1180, 1177, 1167, 1170, 1166, 1104, 1175, 1178, 1162, 1110, 1109, 1185, 1057, 1253, 1104, 1213];
-var nutrientUnits = ["G", "G", "G", "G", "G", "G", "KCAL", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "G", "IU", "G", "G", "G", "IU", "G", "G", "G", "G", "G", "G"];
-
-function trueA() {
-    var valInput = document.getElementById("food").value;
-    if (typeof valInput !== "undefined") {
-        var entity = "";
-        for (let j = 0; j < valInput.length; j++) {
-            if (valInput[j] == " ") {
-                entity += "%20";
-            } else {
-                entity += valInput[j];
-            }
-        }
-        if (entity == "") {
-            entity = "food";
-        }
-        fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=3gxUJxixMLQ0VcnleWLIzaXbkjU3a7CgwbU34cvM&query=' + entity)
-            .then(res => res.json())
-            .then((out) => {
-                hey(out);
-            }).catch(err => console.error(err));
-    }
-}
-
-function hey(out) {
-    var total;
-    if (out.foods.length != 0) {
-        document.getElementById("list").innerHTML = "";
-    }
-    for (let i = 0; i <= out.foods.length; i++) {
-        var owner = out.foods[i].brandOwner;
-        if (typeof owner === "undefined") {
-            owner = "";
-        } else {
-            owner = " | " + out.foods[i].brandOwner;
-        }
-        var button = document.createElement("button");
-        button.innerHTML = out.foods[i].description + owner;
-        button.className = "inner";
-        total = out.foods[i].description + owner;
-        button.onclick = function() {
-            //grab nutrients and send them to database
-            addentFlow(out, i);
-        };
-        var list = document.getElementById("list");
-        list.appendChild(button);
-    }
-}
-
-function addentFlow(out, i) {
-    var mop = new Date();
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
-
-    var curHr = mop.getHours()
-    if (curHr < 12) {
-        dur = "BR"; //Breakfast
-    } else if (curHr < 18) {
-        dur = "LU";  //Lunch
-    } else {
-        dur = "DI"; //Dinner
+class nutritionRating {
+    rating() {
+        return this.rating;
     }
 
-    var food = out.foods[i].description + "[" + dur + "]";
-    eval("test.update({'dailyData." + today + ".food': firebase.firestore.FieldValue.arrayUnion('" + food + "')});");
+    constructor() {
+        var calc = 0;
+        var nutrientTotal = [];
+        var catastrophe = "";
+        var RegularDiet = ["150=350", "2.2=7.7", "0~30;0=10.8|31~60;11.16=21.6|61~100;21.96=36|101~150;21=54|150~200;21=72|201~275;21=80|255~500;30=120", "16=22", "25=30", "M;0=36|F;0=25", "M;2400=2900|F;1800=2300", "M;19-50;1=2.5|M;51-70;1=2|M;71-150;1.2=2|W;0-50;1=2.5|W;51-1501.2=2", "0.0018=0.010", "2-11;0.0115=0.0137|12-19;0.014=0.016|M;20-150;0.0163=0.0182|W;20-150;0.0126=0.0135", "1-3;0.07=0.09|4-8;0.11=0.13|9-13;0.24|F;14-18;0.34=0.38|F;19-30;0.29=0.33|F;31-150;0.3=0.34|M;14-150;0.39=0.43", "1-8;0.0010=0.002|M;9-150;0.0019=0.0023|F;9-150;0.0016=0.0018", "0.8=1.2", "3.5=5", "0.000050=0.00007", "1.5=2.3", "F;0.0007=9|M;0.0010=0.0012", "0.003=0.01", "0.008=0.012", "0.008=0.021", "M;.5=.6|F;.375=0.475", "0.0004=0.0008", "0.013=0.02", "0.005=1", "M;0.0010=0.0015|F;0.0009=0.0013", "700=10000", "0.0013=0.0017", "0.0000020=0.0000028", "0.065=2", "600=2000", "0.006=0.014", "0.00007=0.00013", "0=0.04", "0.2=0.4", "0.5=1", "0.1=0.4"];
 
+        var age = "13";
+        var weight = "100";
+        var gender = "M";
 
-    var nutrientVal;
-    console.log(out.foods[i].foodNutrients);
-    //grab specific nutrients
-    for (let t = 0; t < out.foods[i].foodNutrients.length; t++) {
-        for (let z = 0; z < nutrientIds.length; z++) {
-            if (out.foods[i].foodNutrients[t].nutrientId == nutrientIds[z]) {
-                //convert units to that in the array of nutrientUnits
-                if (out.foods[i].foodNutrients[t].unitName == nutrientUnits[z]) {
-                    nutrientVal = out.foods[i].foodNutrients[t].value;
-                } else if (out.foods[i].foodNutrients[t].unitName == "MG") { //milligram
-                    nutrientVal = out.foods[i].foodNutrients[t].value / 1000;
-                } else if (out.foods[i].foodNutrients[t].unitName == "UG") { //microgram
-                    nutrientVal = out.foods[i].foodNutrients[t].value / 1000000;
-                } else { //kJ to KCAL converter
-                    nutrientVal = out.foods[i].foodNutrients[t].value / 4.184;
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        var result = new Map();
+
+        var test = db.collection('temporaryCollection').doc('temporaryDocument');
+        test.get().then(function (doc) {
+            for (var c = 0; c < 7; c++) {
+                var d = new Date(new Date() - 86400000 * c);
+                var date = d.getDate() + months[d.getMonth()] + d.getFullYear();
+                console.log(date);
+
+                var dailyData = doc.data().dailyData;
+                var data = (dailyData) ? dailyData[date] : null;
+                var nutrients = (data) ? data.nutrients : null;
+
+                if (!data || !nutrients) {
+                    console.log("User does not have nutrition data for the date " + date);
+                    result.set(date, 0);
+                    continue;
                 }
-                //z is the nutrient we are incrementing
-                eval("test.update({'dailyData." + today + ".nutrients." + z + "': firebase.firestore.FieldValue.increment(" + nutrientVal + ")});");
-            }
-        }
-    }
-    //add food name to database
-    //TBD function
-}
 
+                for (var i = 0; i < 36; i++) {
+                    catastrophe = "";
+                    var force = RegularDiet[i];
+                    var classArray = [];
+                    var comp = "";
 
-const webcamElement = document.getElementById('webcam');
-let net;
-let constant;
-let happy = true;
-let limit;
-async function app() {
-    net = await mobilenet.load();
-    const webcamConfig = {
-        facingMode: 'environment'
-    };
-    const webcam = await tf.data.webcam(webcamElement, webcamConfig);
-    let time = 0;
-    var complete;
-    while (happy) {
-        time++;
-        const img = await webcam.capture();
-        const result = await net.classify(img);
-
-        fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=3gxUJxixMLQ0VcnleWLIzaXbkjU3a7CgwbU34cvM&query=' + `${result[0].className}`)
-            .then(res => res.json())
-            .then((ses) => {
-                limit = ses;
-                happy = false;
-                //remove the top after := only for debugging purposes
-                if (`${result[0].probability}` > 0.4) { //check distinct probability
-                    for (let m = 0; m < ses.foods.length; m++) {
-                        if (ses.foods[m].description.includes(`${result[0].className}`) == true) {
-                            happy = false;
-                            document.getElementById("ml").style.display = "block";
-                            vowels = ["a", "e", "i", "o", "u"];
-                            for (let a = 0; a < 5; a++) {
-                                if (`${result[0].className}` [0] == vowels[a]) {
-                                    complete = "an ";
-                                }
+                    for (var l = 0; l < force.length; l++) {
+                        if (force[l] == "|" || l + 1 == force.length) {
+                            if (l + 1 == force.length) {
+                                comp += force[l];
                             }
-                            if (typeof complete === "undefined") {
-                                complete = "a ";
-                            }
-                            document.getElementById("name").innerHTML = complete + `${result[0].className}`;
+                            classArray.push(comp);
+                            comp = "";
+                        }
+                        else {
+                            comp += force[l];
                         }
                     }
+
+                    var finalAge = "", finalWeight = "", finalGender = "", finalValue = "", prop = "", countUp = 0;
+                    var bunny = true;
+
+                    for (var z = 0; z < classArray.length; z++) {
+                        var chaste = classArray[z];
+
+                        for (var m = 0; m < chaste.length; m++) {
+                            if (chaste[m] == ";" || m + 1 == chaste.length) {
+                                if (m + 1 == chaste.length) {
+                                    prop += chaste[m];
+                                }
+                                if (prop == "M" || prop == "F") {
+                                    finalGender = prop;
+                                }
+                                else if (prop.includes("-") == true) {
+                                    finalAge = prop;
+                                }
+                                else if (prop.includes("~") == true) {
+                                    finalWeight = prop;
+                                }
+                                else if (prop.includes("=") == true) {
+                                    finalValue = prop;
+                                }
+                                prop = "";
+                            }
+                            else {
+                                prop += chaste[m];
+                            }
+                        }
+
+                        if (finalAge != "") {
+                            countUp++;
+                        }
+
+                        if (finalGender != "") {
+                            countUp++;
+                        }
+
+                        if (finalWeight != "") {
+                            countUp++;
+                        }
+
+                        if ([0, 1, 2, 3].includes(countUp)) {
+                            function system(compute, initital, boy) {
+                                var startVal = "", endVal = "", cat = "";
+
+                                for (var k = 0; k < compute.length; k++) {
+                                    if (compute[k] == boy || k + 1 == compute.length) {
+                                        if (k + 1 == compute.length) {
+                                            cat += compute[k];
+                                            endVal = parseFloat(cat, 10);
+                                        } else {
+                                            startVal = parseFloat(cat, 10);
+                                        }
+                                        cat = "";
+                                    } else {
+                                        cat += compute[k];
+                                    }
+                                }
+
+                                if (initital <= endVal && initital >= startVal) {
+                                    calc++;
+                                }
+
+                                if (boy == "=") {
+                                    catastrophe = startVal;
+                                }
+                            }
+
+                            if (finalAge != "") {
+                                system(finalAge, age, "-");
+                            }
+
+                            if (finalWeight != "") {
+                                system(finalWeight, weight, "~");
+                            }
+
+                            if (finalGender != "" && finalGender == gender) {
+                                calc++;
+                            }
+
+                            if (finalValue != "") {
+                                system(finalValue, nutrients[i], "=");
+                            }
+
+                            if (calc == (countUp + 1)) {
+                                bunny = false;
+                            }
+                        }
+
+                        calc = 0; //reinitialize variable for the next loop
+                        countUp = 0;
+                    }
+
+                    if (bunny == true && catastrophe != "") {
+                        //Client doing bad on these nutrients
+                        var criss = (nutrients[i] / catastrophe) * 100;
+                        if (isNaN(criss) == true) {
+                            criss = 0;
+                        }
+                        nutrientTotal.push(criss);
+                    }
+                    else if (bunny = false) {
+                        nutrientTotal.push(100);
+                    }
+
+                    bunny = true;
+
+                    if (i == 35) {
+                        var sum = 0;
+
+                        for (var o = 0; o < nutrientTotal.length; o++) {
+                            sum += nutrientTotal[o];
+                        }
+
+                        var average = sum / 36;
+                        result.set(date, average);
+                        continue;
+                    }
                 }
-
-            }).catch(err => console.error(err));
-        img.dispose();
-        setTimeout(function() {
-            //pause := don't make messy for client
-        }, 2000);
-        await tf.nextFrame();
-    }
-}
-
-app();
-
-function assemble() {
-    document.getElementById("top").innerHTML = "Select Correct Item:";
-    document.getElementById("entOp").style.display = "none";
-    document.getElementById("array").style.display = "block";
-
-    var totalIt;
-    if (limit.foods.length != 0) {
-        document.getElementById("list").innerHTML = "";
-    }
-    for (let i = 0; i <= limit.foods.length; i++) {
-        var ownerB = limit.foods[i].brandOwner;
-        if (typeof ownerB === "undefined") {
-            ownerB = "";
-        } else {
-            ownerB = " | " + limit.foods[i].brandOwner;
-        }
-        var buttonB = document.createElement("button");
-        buttonB.innerHTML = limit.foods[i].description + ownerB;
-        buttonB.className = "inner";
-        totalIt = limit.foods[i].description + ownerB;
-        buttonB.onclick = function() {
-            console.log(limit.foods[i]);
-        };
-        var array = document.getElementById("array");
-        array.appendChild(buttonB);
+            }
+        }).then(function () {
+            console.log(result);
+        }).catch(function (e) {
+            console.error(e);
+        });
     }
 }
