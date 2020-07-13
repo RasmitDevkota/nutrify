@@ -231,8 +231,7 @@ var goalTemplates = new Map([
     ]],
     ["(Nutrients) Consume", [
         "calories per meal", // 6
-        "calories per day",
-        "calories per week"
+        "calories per day"
     ]],
     ["Drink", [
         "cups of water per day", // 7
@@ -245,25 +244,21 @@ var goalTemplates = new Map([
     ["Run", [
         "miles per hour", // 5
         "miles per day",
-        "miles per week",
         "hours per day"
     ]],
     ["Walk", [
         "miles per hour", // 5
         "miles per day",
-        "miles per week",
         "hours per day"
     ]],
     ["Jog", [
         "miles per hour", // 5
         "miles per day",
-        "miles per week",
         "hours per day"
     ]],
     ["Weightlift", [
         "pounds per day",
-        "hours per day",
-        "hours per week"
+        "hours per day"
     ]]
 ]);
 
@@ -643,7 +638,11 @@ class nutritionRating {
 }
 
 function goalRating(doc) {
+    var url = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=3gxUJxixMLQ0VcnleWLIzaXbkjU3a7CgwbU34cvM&query=';
+
     var goals = doc.data().goals;
+    var dailyData = doc.data().dailyData;
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     var scores = new Map(); // Map<Goal,ScoreArray>
     for (var i = 0; i < goals.length; i++) {
@@ -656,7 +655,7 @@ function goalRating(doc) {
             // Goal is "Drink X cups of Y per day"
             var parsedGoal = [goal[0], goal[1], goal[2] + " " + goal[3] + " " + goal[4] + " " + goal[5] + " " + goal[6]];
         } else if (goal.length == 5) {
-            // Goal is "Eat...", "Run...", "Walk...", "Jog...", or "Weightlight X hours per Y"
+            // Goal is "Eat...", "Run...", "Walk...", "Jog...", or "Weightlift X Y per Z"
             var parsedGoal = [goal[0], goal[1], goal[2] + " " + goal[3] + " " + goal[4]];
         } else {
             // Goal is "(Nutrients) Consume" or "(Exercise) Do"
@@ -669,10 +668,6 @@ function goalRating(doc) {
 
         switch (action) {
             case "Eat":
-                var dailyData = doc.data().dailyData;
-
-                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
                 var month = date.slice(2, -4);
 
                 if (!months.includes(month)) {
@@ -703,9 +698,11 @@ function goalRating(doc) {
                         var foodMap = dailyData[currentDate].food;
 
                         var mealCount = 0;
-                        for (var meal in foodMap) {
-                            mealCount++;
-                        }
+                        foodMap.forEach(function (value, key) {
+                            if (key != "DN") {
+                                mealCount++;
+                            }
+                        });
 
                         var difference = Math.abs(amount - mealCount);
 
@@ -754,8 +751,202 @@ function goalRating(doc) {
                         continue;
                     }
                 }
-
                 scores.set(goalString, scoresArray);
+                break;
+            case "Drink":
+                var month = date.slice(2, -4);
+
+                if (!months.includes(month)) {
+                    month = date.slice(1, -4);
+                    var day = date.slice(0, 1);
+                } else {
+                    var day = date.slice(0, 2);
+                }
+
+                var originalDate = new Date()
+                originalDate.setFullYear(date.slice(-4, date.length));
+                originalDate.setMonth(months.indexOf(month));
+                originalDate.setDate(day);
+
+                var dateRange = (new Date() - originalDate) / 86400000;
+
+                // From past to present
+                var scoresArray = [];
+                for (var j = dateRange; j >= 0; j--) {
+                    // Calculate date by subtracting dimensional analysis of j (number of days) in milliseconds
+                    var currentDateObj = new Date(new Date() - j * 86400000);
+                    var currentDate = currentDateObj.getDate() + months[currentDateObj.getMonth()] + currentDateObj.getFullYear();
+
+                    // If data exists for the day, calculate the raw score
+                    // Else, count as 0
+                    if (dailyData[currentDate].food) {
+                        // Calculate raw score
+                        var foodMap = dailyData[currentDate].food;
+
+                        var drinkCount = 0;
+
+                        foodMap.forEach(function (value, key) {
+                            if (value.includes(goal[4])) {
+                                drinkCount++;
+                            }
+                        });
+
+                        var difference = Math.abs(amount - drinkCount);
+
+                        switch (difference) {
+                            case 1:
+                                var rawScore = 90;
+                                break;
+                            case 2:
+                                var rawScore = 70;
+                                break;
+                            case 3:
+                                var rawScore = 60;
+                                break;
+                            default:
+                                if (drinkCount == 0) { // Shouldn't be possible, just here for safety
+                                    var rawScore = 10;
+                                } else { // Drinking 4+ cups more or less than the goal, exponentially decay score
+                                    var rawScore = Math.ceil(60 - 1.4 ** difference);
+                                }
+                        }
+
+                        // Take the average score for j between [dateRange, j]
+                        var sum = scoresArray.reduce(function (a, b) {
+                            return (a + b);
+                        }, 0);
+                        var averageScore = sum / scoresArray.length;
+
+                        // If j >= D-7, then take the difference between score for j and average score for j between [dateRange, j],
+                        // aka growth of score and add (weighted) to the raw score of that day
+                        if (j > 7) {
+                            var growth = currentScore - averageScore;
+                            var growthAdjustedScore = rawScore + growth / 10;
+                        }
+
+                        // Make sure max score is 100 and min score is 0
+                        if (growthAdjustedScore > 100) {
+                            growthAdjustedScore = 100;
+                        } else if (growthAdjustedScore < 0) {
+                            growthAdjustedScore = 0;
+                        }
+
+                        // Add Growth Adjusted Score to array of scores
+                        scoresArray.push(growthAdjustedScore);
+                    } else {
+                        scoresArray.push(0);
+                        continue;
+                    }
+                }
+                scores.set(goalString, scoresArray);
+                break;
+            case "(Nutrients) Consume":
+                var month = date.slice(2, -4);
+
+                if (!months.includes(month)) {
+                    month = date.slice(1, -4);
+                    var day = date.slice(0, 1);
+                } else {
+                    var day = date.slice(0, 2);
+                }
+
+                var originalDate = new Date()
+                originalDate.setFullYear(date.slice(-4, date.length));
+                originalDate.setMonth(months.indexOf(month));
+                originalDate.setDate(day);
+
+                var dateRange = (new Date() - originalDate) / 86400000;
+
+                // From past to present
+                var scoresArray = [];
+                for (var j = dateRange; j >= 0; j--) {
+                    // Calculate date by subtracting dimensional analysis of j (number of days) in milliseconds
+                    var currentDateObj = new Date(new Date() - j * 86400000);
+                    var currentDate = currentDateObj.getDate() + months[currentDateObj.getMonth()] + currentDateObj.getFullYear();
+
+                    // If data exists for the day, calculate the raw score
+                    // Else, count as 0
+                    if (dailyData[currentDate].food) {
+                        // Calculate raw score
+                        var foodMap = dailyData[currentDate].food;
+                        var totalCalories = 0;
+                        var foodList = new Map();
+
+                        switch (units) {
+                            case "calories per meal":
+                                foodMap.forEach(function (value, key) {
+                                    for (var k in value) {
+                                        for (l in value[k]) {
+                                            var item = value[k][l];
+                                            if (foodList.has(item)) {
+                                                totalCalories += foodList.get(item);
+                                            } else if (item != "water") {
+                                                fetch(url + item).then(res => res.json()).then(function (data) {
+                                                    var nutrientData = data.foods[0];
+                                                    var calories = caloriesCalculator(nutrientData);
+                                                    totalCalories += calories;
+                                                    foodList.set(item, calories);
+                                                }).catch(function (err) {
+                                                    console.error(err);
+                                                });
+                                            }
+                                        }
+                                    }
+                                });
+                                break;
+                            case "calories per day":
+                                break;
+                            default:
+                                return console.error("Error occurred: (Nutrients) Consume goal contains invalid units.");
+                        }
+
+                        var difference = Math.abs(amount - totalCalories);
+
+                        switch (difference) {
+                            case 1:
+                                var rawScore = 90;
+                                break;
+                            case 2:
+                                var rawScore = 70;
+                                break;
+                            case 3:
+                                var rawScore = 60;
+                                break;
+                            default:
+                                if (mealCount == 0) { // Shouldn't be possible, just here for safety
+                                    var rawScore = 10;
+                                } else { // Drinking 4+ cups more or less than the goal, exponentially decay score
+                                    var rawScore = Math.ceil(60 - 1.4 ** difference);
+                                }
+                        }
+
+                        // Take the average score for j between [dateRange, j]
+                        var sum = scoresArray.reduce(function (a, b) {
+                            return (a + b);
+                        }, 0);
+                        var averageScore = sum / scoresArray.length;
+
+                        // If j >= D-7, then take the difference between score for j and average score for j between [dateRange, j],
+                        // aka growth of score and add (weighted) to the raw score of that day
+                        if (j > 7) {
+                            var growth = currentScore - averageScore;
+                            var growthAdjustedScore = rawScore + growth / 10;
+                        }
+
+                        // Make sure max score is 100 and min score is 0
+                        if (growthAdjustedScore > 100) {
+                            growthAdjustedScore = 100;
+                        } else if (growthAdjustedScore < 0) {
+                            growthAdjustedScore = 0;
+                        }
+
+                        // Add Growth Adjusted Score to array of scores
+                        scoresArray.push(growthAdjustedScore);
+                    } else {
+                        scoresArray.push(0);
+                        continue;
+                    }
+                }
                 break;
         }
     }

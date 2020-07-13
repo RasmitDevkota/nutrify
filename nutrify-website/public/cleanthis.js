@@ -60,7 +60,7 @@ function addentFlow(out, i) {
     } else if (curHr < 18) {
         dur = "LU";  //Lunch
     } else {
-        dur = "DI"; //Dinner
+        dur = "DR"; //Dinner
     }
 
     var food = out.foods[i].description + "[" + dur + "]";
