@@ -71,8 +71,6 @@ function graph(elementID, dataID) {
             setTimeout(function () {
                 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-                console.log(nutritionRatingMap);
-
                 for (var c = 0; c < 7; c++) {
                     var d = new Date(new Date() - 86400000 * (6-c));
                     var date = d.getDate() + months[d.getMonth()] + d.getFullYear();
@@ -116,7 +114,11 @@ function graph(elementID, dataID) {
                                 display: true,
                                 scaleLabel: {
                                     display: true,
-                                    labelString: 'Rating (Percentage)'
+                                    labelString: 'Rating (Percentage)',
+                                },
+                                ticks: {
+                                    min: 0,
+                                    max: 100
                                 }
                             }]
                         }
@@ -167,45 +169,43 @@ function graph(elementID, dataID) {
             }
             break;
         case "Goals":
+            usersUser.get().then(function (doc) {
+                var goals = doc.data().goals;
+                if (goals && goals.length > 0) {
+                    goalRating(doc);
+                } else {
+                    return console.log("User does not have any goals.");
+                }
+            });
+            
             var chart = new Chart(context, {
-                type: 'bar',
+                type: 'horizontalBar',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: ["January", "February", "March", "April", "May", "June", "July"],
                     datasets: [{
-                        label: 'Goals',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
+                        label: 'Goal Progress',
+                        backgroundColor: "#009c68",
+                        borderColor: "#009c68",
+                        borderWidth: 1,
+                        data: [24,75,26,57,93,84,63]
                     }]
                 },
                 options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2,
+                        }
+                    },
+                    responsive: true,
+                    legend: {
+                        position: 'top',
                     }
                 }
             });
             
             if (elementID.includes("largeChart")) {
                 xhttp('goal-form', elementID.substr(0, elementID.length - 1) + 'Input' + elementID[elementID.length - 1]);
+                xhttp('goal-tracker', elementID.substr(0, elementID.length - 1) + 'Content' + elementID[elementID.length - 1]);
             }
             break;
     }
@@ -227,41 +227,41 @@ function addMeal() {
 
 var goalTemplates = new Map([
     ["Eat", [
-        "meals per day"
+        "meals per day" // 5
     ]],
     ["(Nutrients) Consume", [
-        "calories per meal",
+        "calories per meal", // 6
         "calories per day",
         "calories per week"
     ]],
     ["Drink", [
-        "cups of water per day",
+        "cups of water per day", // 7
         "cups of juice per day"
     ]],
     ["(Exercise) Do", [ // Miscellaneous Activities (without a standard verb like Run or Jog)
-        "pushups per day",
+        "pushups per day",// 6
         "situps per day",
     ]],
     ["Run", [
-        "miles per hour",
+        "miles per hour", // 5
         "miles per day",
         "miles per week",
         "hours per day"
     ]],
     ["Walk", [
-        "miles per hour",
+        "miles per hour", // 5
         "miles per day",
         "miles per week",
         "hours per day"
     ]],
     ["Jog", [
-        "miles per hour",
+        "miles per hour", // 5
         "miles per day",
         "miles per week",
         "hours per day"
     ]],
     ["Weightlift", [
-        "pounds",
+        "pounds per day",
         "hours per day",
         "hours per week"
     ]]
@@ -302,10 +302,14 @@ function addGoal() {
         }
     }
 
+    var mop = new Date();
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
+
     var goal = action + " " + amount + " " + units;
-    usersUser.update({
-        goal: goal
-    });
+    eval(`usersUser.update({
+        goals: firebase.firestore.FieldValue.arrayUnion({"` + goal + `": "` + today + `"})
+    })`);
 };
 
 var fitnessTemplates = new Map([
@@ -637,3 +641,122 @@ class nutritionRating {
         });
     }
 }
+
+function goalRating(doc) {
+    var goals = doc.data().goals;
+
+    var scores = new Map(); // Map<Goal,ScoreArray>
+    for (var i = 0; i < goals.length; i++) {
+        var goalString = Object.keys(goals[i])[0];
+        var date = Object.values(goals[i])[0];
+
+        var goal = goalString.split(" ");
+
+        if (goal.length == 7) {
+            // Goal is "Drink X cups of Y per day"
+            var parsedGoal = [goal[0], goal[1], goal[2] + " " + goal[3] + " " + goal[4] + " " + goal[5] + " " + goal[6]];
+        } else if (goal.length == 5) {
+            // Goal is "Eat...", "Run...", "Walk...", "Jog...", or "Weightlight X hours per Y"
+            var parsedGoal = [goal[0], goal[1], goal[2] + " " + goal[3] + " " + goal[4]];
+        } else {
+            // Goal is "(Nutrients) Consume" or "(Exercise) Do"
+            var parsedGoal = [goal[0] + " " + goal[1], goal[2], goal[3] + " " + goal[4] + " " + goal[5]];
+        }
+
+        var action = parsedGoal[0];
+        var amount = parsedGoal[1];
+        var units = parsedGoal[2];
+
+        switch (action) {
+            case "Eat":
+                var dailyData = doc.data().dailyData;
+
+                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                var month = date.slice(2, -4);
+
+                if (!months.includes(month)) {
+                    month = date.slice(1, -4);
+                    var day = date.slice(0, 1);
+                } else {
+                    var day = date.slice(0, 2);
+                }
+
+                var originalDate = new Date()
+                originalDate.setFullYear(date.slice(-4, date.length));
+                originalDate.setMonth(months.indexOf(month));
+                originalDate.setDate(day);
+
+                var dateRange = (new Date() - originalDate) / 86400000;
+
+                // From past to present
+                var scoresArray = [];
+                for (var j = dateRange; j >= 0; j--) {
+                    // Calculate date by subtracting dimensional analysis of j (number of days) in milliseconds
+                    var currentDateObj = new Date(new Date() - j * 86400000);
+                    var currentDate = currentDateObj.getDate() + months[currentDateObj.getMonth()] + currentDateObj.getFullYear();
+
+                    // If data exists for the day, calculate the raw score
+                    // Else, count as 0
+                    if (dailyData[currentDate].food) {
+                        // Calculate raw score
+                        var foodMap = dailyData[currentDate].food;
+
+                        var mealCount = 0;
+                        for (var meal in foodMap) {
+                            mealCount++;
+                        }
+
+                        var difference = Math.abs(amount - mealCount);
+
+                        switch (difference) {
+                            case 1:
+                                var rawScore = 90;
+                                break;
+                            case 2:
+                                var rawScore = 70;
+                                break;
+                            case 3:
+                                var rawScore = 60;
+                                break;
+                            default:
+                                if (mealCount == 0) { // Shouldn't be possible, just here for safety
+                                    var rawScore = 10;
+                                } else { // Eating 4+ meals more or less than the goal, exponentially decay score
+                                    var rawScore = Math.ceil(60 - 1.4 ** difference);
+                                }
+                        }
+
+                        // Take the average score for j between [dateRange, j]
+                        var sum = scoresArray.reduce(function (a, b) {
+                            return (a + b);
+                        }, 0);
+                        var averageScore = sum / scoresArray.length;
+
+                        // If j >= D-7, then take the difference between score for j and average score for j between [dateRange, j],
+                        // aka growth of score and add (weighted) to the raw score of that day
+                        if (j > 7) {
+                            var growth = currentScore - averageScore;
+                            var growthAdjustedScore = rawScore + growth / 10;
+                        }
+
+                        // Make sure max score is 100 and min score is 0
+                        if (growthAdjustedScore > 100) {
+                            growthAdjustedScore = 100;
+                        } else if (growthAdjustedScore < 0) {
+                            growthAdjustedScore = 0;
+                        }
+
+                        // Add Growth Adjusted Score to array of scores
+                        scoresArray.push(growthAdjustedScore);
+                    } else {
+                        scoresArray.push(0);
+                        continue;
+                    }
+                }
+
+                scores.set(goalString, scoresArray);
+                break;
+        }
+    }
+};
