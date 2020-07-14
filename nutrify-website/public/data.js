@@ -909,13 +909,13 @@ function goalRating(doc) {
                     if (dailyData[currentDate].food) {
                         // Calculate raw score
                         var foodMap = dailyData[currentDate].food;
-                        var foodList = new Map();
 
                         switch (units) {
                             case "calories per meal":
-                                foodMap.forEach(function (value, key) {
+                                foodMap.forEach(async function (value, key) {
                                     for (var k in value) {
                                         var mealTotal = 0;
+                                        var foodList = new Map();
 
                                         for (var l in value[k]) {
                                             const item = value[k][l];
@@ -923,35 +923,38 @@ function goalRating(doc) {
                                             if (foodList.has(item)) {
                                                 mealTotal += foodList.get(item);
                                             } else if (item != "water") {
-                                                fetch(url + item).then(res => res.json()).then(function (data) {
+                                                await fetch(url + item).then(res => res.json()).then(function (data) {
                                                     var nutrientData = data.foods[0].foodNutrients;
 
                                                     for (var t = 0; t < nutrientData.length; t++) {
-                                                        if (nutrientData[t].nutrientId == "1005" || foodNutrients[t].nutrientId == "1003" || foodNutrients[t].nutrientId == "1258") {
+                                                        if (nutrientData[t].nutrientId == "1005" || nutrientData[t].nutrientId == "1003" || nutrientData[t].nutrientId == "1258") {
                                                             if (nutrientData[t].unitName == "G") {
-                                                                nutrientValue = nutrientData[t].value;
-                                                            } else if (nutrientData[t].unitName == "MG") {
-                                                                nutrientValue = nutrientData[t].value / 1000;
-                                                            } else if (nutrientData[t].unitName == "UG") {
-                                                                nutrientValue = nutrientData[t].value / 1000000;
+                                                                nutrientVa = nutrientData[t].value;
+                                                            } else if (nutrientData[t].unitName == "MG") { //milligram
+                                                                nutrientVa = nutrientData[t].value / 1000;
+                                                            } else if (nutrientData[t].unitName == "UG") { //microgram
+                                                                nutrientVa = nutrientData[t].value / 1000000;
                                                             }
+                                                            //carbs, proteins, & fats -> calories
                                                             if (nutrientData[t].nutrientId == "1005" || nutrientData[t].nutrientId == "1003") {
-                                                                calories = 4 * nutrientValue;
+                                                                //4 calories per gram conversion
+                                                                calories = 4 * nutrientVa;
                                                             } else {
-                                                                calories = 9 * nutrientValue;
+                                                                // 9 calories per gram conversion
+                                                                calories = 9 * nutrientVa;
                                                             }
                                                         }
+                                                        //total calories for each food item in parallel index :)
                                                     }
-                                                    
                                                     mealTotal += calories;
-                                                    foodList.set(item, calories);
+                                                    foodList.set(item, calories, item);
                                                 }).catch(function (err) {
                                                     console.error(err);
                                                 });
                                             }
                                         }
 
-                                        console.log(mealTotal);
+                                        // Do more stuff here
                                     }
                                 });
                                 break;
