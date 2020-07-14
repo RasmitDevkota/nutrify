@@ -1,5 +1,3 @@
-"use strict"
-
 setTimeout(function () {
     graph('overviewChart0', 'Meals');
     graph('overviewChart1', 'Nutrition');
@@ -223,46 +221,6 @@ function addMeal() {
     let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
 
     eval("usersUser.update({'dailyData." + today + ".meals." + meal + "': foods });");
-};
-
-function caloriesCalculator(foodList) {
-    var nutrientArray = [];
-    var nutrientVa = "";
-    var calories = 0;
-    var total = 0;
-
-    for (var i = 0; i < foodList.length; i++) {
-        var food = foodList[i].replace(/ g/, "%20");
-        fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=3gxUJxixMLQ0VcnleWLIzaXbkjU3a7CgwbU34cvM&query=' + food).then(res => res.json()).then(function (final) {
-            for (var t = 0; t < final.foods[0].foodNutrients.length; t++) {
-                if (final.foods[0].foodNutrients[t].nutrientId == "1005" || final.foods[0].foodNutrients[t].nutrientId == "1003" || final.foods[0].foodNutrients[t].nutrientId == "1258") {
-                    if (final.foods[0].foodNutrients[t].unitName == "G") {
-                        nutrientVa = final.foods[0].foodNutrients[t].value;
-                    } else if (final.foods[0].foodNutrients[t].unitName == "MG") { //milligram
-                        nutrientVa = final.foods[0].foodNutrients[t].value / 1000;
-                    } else if (final.foods[0].foodNutrients[t].unitName == "UG") { //microgram
-                        nutrientVa = final.foods[0].foodNutrients[t].value / 1000000;
-                    }
-                    //carbs, proteins, & fats -> calories
-                    if (final.foods[0].foodNutrients[t].nutrientId == "1005" || final.foods[0].foodNutrients[t].nutrientId == "1003") {
-                        //4 calories per gram conversion
-                        calories = 4 * nutrientVa;
-                    } else {
-                        // 9 calories per gram conversion
-                        calories = 9 * nutrientVa;
-                    }
-                    total += calories;
-                }
-                //total calories for each food item in parallel index :)
-            }
-            nutrientArray.push(total);
-            total = 0;
-        }).catch(function (err) {
-            console.error(err);
-        });
-    }
-
-    return nutrientArray;
 };
 
 var goalTemplates = new Map([
@@ -760,7 +718,7 @@ function goalRating(doc) {
                                 if (mealCount == 0) { // Shouldn't be possible, just here for safety
                                     var rawScore = 10;
                                 } else { // Eating 4+ meals more or less than the goal, exponentially decay score
-                                    var rawScore = Math.ceil(60 - 1.4 ** difference);
+                                    var rawScore = Math.floor(60 - 1.4 ** difference);
                                 }
                         }
 
@@ -847,7 +805,7 @@ function goalRating(doc) {
                                 if (drinkCount == 0) { // Shouldn't be possible, just here for safety
                                     var rawScore = 10;
                                 } else { // Drinking 4+ cups more or less than the goal, exponentially decay score
-                                    var rawScore = Math.ceil(60 - 1.4 ** difference);
+                                    var rawScore = Math.floor(60 - 1.4 ** difference);
                                 }
                         }
 
@@ -910,12 +868,16 @@ function goalRating(doc) {
                         // Calculate raw score
                         var foodMap = dailyData[currentDate].food;
 
+                        let dailyScores = [];
+
                         switch (units) {
                             case "calories per meal":
                                 foodMap.forEach(async function (value, key) {
                                     for (var k in value) {
-                                        var mealTotal = 0;
-                                        var foodList = new Map();
+                                        let mealTotal = 0;
+                                        let rawScore = 0;
+
+                                        let foodList = new Map();
 
                                         for (var l in value[k]) {
                                             const item = value[k][l];
@@ -930,22 +892,19 @@ function goalRating(doc) {
                                                         if (nutrientData[t].nutrientId == "1005" || nutrientData[t].nutrientId == "1003" || nutrientData[t].nutrientId == "1258") {
                                                             if (nutrientData[t].unitName == "G") {
                                                                 nutrientVa = nutrientData[t].value;
-                                                            } else if (nutrientData[t].unitName == "MG") { //milligram
+                                                            } else if (nutrientData[t].unitName == "MG") {
                                                                 nutrientVa = nutrientData[t].value / 1000;
-                                                            } else if (nutrientData[t].unitName == "UG") { //microgram
+                                                            } else if (nutrientData[t].unitName == "UG") {
                                                                 nutrientVa = nutrientData[t].value / 1000000;
                                                             }
-                                                            //carbs, proteins, & fats -> calories
                                                             if (nutrientData[t].nutrientId == "1005" || nutrientData[t].nutrientId == "1003") {
-                                                                //4 calories per gram conversion
                                                                 calories = 4 * nutrientVa;
                                                             } else {
-                                                                // 9 calories per gram conversion
                                                                 calories = 9 * nutrientVa;
                                                             }
                                                         }
-                                                        //total calories for each food item in parallel index :)
                                                     }
+
                                                     mealTotal += calories;
                                                     foodList.set(item, calories, item);
                                                 }).catch(function (err) {
@@ -954,7 +913,15 @@ function goalRating(doc) {
                                             }
                                         }
 
-                                        // Do more stuff here
+                                        if (amount == 0 && mealTotal != 0) {
+                                            rawScore = 0;
+                                        } else {
+                                            rawScore += Math.floor((mealTotal/amount) * 100);
+                                        }
+
+                                        // if (k == value.length) { // k DOESN"T WORK HERE
+                                        //     dailyScores.push(rawScore);
+                                        // }
                                     }
                                 });
                                 break;
@@ -963,8 +930,6 @@ function goalRating(doc) {
                             default:
                                 return console.error("Error occurred: (Nutrients) Consume goal contains invalid units.");
                         }
-
-                        var difference = Math.abs(amount - totalCalories);
 
                         switch (difference) {
                             case 1:
@@ -980,7 +945,7 @@ function goalRating(doc) {
                                 if (mealCount == 0) { // Shouldn't be possible, just here for safety
                                     var rawScore = 10;
                                 } else { // Drinking 4+ cups more or less than the goal, exponentially decay score
-                                    var rawScore = Math.ceil(60 - 1.4 ** difference);
+                                    var rawScore = Math.floor(60 - 1.4 ** difference);
                                 }
                         }
 
