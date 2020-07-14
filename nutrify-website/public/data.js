@@ -1,4 +1,4 @@
-"use strict",
+"use strict"
 
 setTimeout(function () {
     graph('overviewChart0', 'Meals');
@@ -223,6 +223,46 @@ function addMeal() {
     let today = mop.getDate() + months[mop.getMonth()] + mop.getFullYear();
 
     eval("usersUser.update({'dailyData." + today + ".meals." + meal + "': foods });");
+};
+
+function caloriesCalculator(foodList) {
+    var nutrientArray = [];
+    var nutrientVa = "";
+    var calories = 0;
+    var total = 0;
+
+    for (var i = 0; i < foodList.length; i++) {
+        var food = foodList[i].replace(/ g/, "%20");
+        fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=3gxUJxixMLQ0VcnleWLIzaXbkjU3a7CgwbU34cvM&query=' + food).then(res => res.json()).then(function (final) {
+            for (var t = 0; t < final.foods[0].foodNutrients.length; t++) {
+                if (final.foods[0].foodNutrients[t].nutrientId == "1005" || final.foods[0].foodNutrients[t].nutrientId == "1003" || final.foods[0].foodNutrients[t].nutrientId == "1258") {
+                    if (final.foods[0].foodNutrients[t].unitName == "G") {
+                        nutrientVa = final.foods[0].foodNutrients[t].value;
+                    } else if (final.foods[0].foodNutrients[t].unitName == "MG") { //milligram
+                        nutrientVa = final.foods[0].foodNutrients[t].value / 1000;
+                    } else if (final.foods[0].foodNutrients[t].unitName == "UG") { //microgram
+                        nutrientVa = final.foods[0].foodNutrients[t].value / 1000000;
+                    }
+                    //carbs, proteins, & fats -> calories
+                    if (final.foods[0].foodNutrients[t].nutrientId == "1005" || final.foods[0].foodNutrients[t].nutrientId == "1003") {
+                        //4 calories per gram conversion
+                        calories = 4 * nutrientVa;
+                    } else {
+                        // 9 calories per gram conversion
+                        calories = 9 * nutrientVa;
+                    }
+                    total += calories;
+                }
+                //total calories for each food item in parallel index :)
+            }
+            nutrientArray.push(total);
+            total = 0;
+        }).catch(function (err) {
+            console.error(err);
+        });
+    }
+
+    return nutrientArray;
 };
 
 var goalTemplates = new Map([
@@ -869,28 +909,49 @@ function goalRating(doc) {
                     if (dailyData[currentDate].food) {
                         // Calculate raw score
                         var foodMap = dailyData[currentDate].food;
-                        var totalCalories = 0;
                         var foodList = new Map();
 
                         switch (units) {
                             case "calories per meal":
                                 foodMap.forEach(function (value, key) {
                                     for (var k in value) {
-                                        for (l in value[k]) {
-                                            var item = value[k][l];
+                                        var mealTotal = 0;
+
+                                        for (var l in value[k]) {
+                                            const item = value[k][l];
+
                                             if (foodList.has(item)) {
-                                                totalCalories += foodList.get(item);
+                                                mealTotal += foodList.get(item);
                                             } else if (item != "water") {
                                                 fetch(url + item).then(res => res.json()).then(function (data) {
-                                                    var nutrientData = data.foods[0];
-                                                    var calories = caloriesCalculator(nutrientData);
-                                                    totalCalories += calories;
+                                                    var nutrientData = data.foods[0].foodNutrients;
+
+                                                    for (var t = 0; t < nutrientData.length; t++) {
+                                                        if (nutrientData[t].nutrientId == "1005" || foodNutrients[t].nutrientId == "1003" || foodNutrients[t].nutrientId == "1258") {
+                                                            if (nutrientData[t].unitName == "G") {
+                                                                nutrientValue = nutrientData[t].value;
+                                                            } else if (nutrientData[t].unitName == "MG") {
+                                                                nutrientValue = nutrientData[t].value / 1000;
+                                                            } else if (nutrientData[t].unitName == "UG") {
+                                                                nutrientValue = nutrientData[t].value / 1000000;
+                                                            }
+                                                            if (nutrientData[t].nutrientId == "1005" || nutrientData[t].nutrientId == "1003") {
+                                                                calories = 4 * nutrientValue;
+                                                            } else {
+                                                                calories = 9 * nutrientValue;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    mealTotal += calories;
                                                     foodList.set(item, calories);
                                                 }).catch(function (err) {
                                                     console.error(err);
                                                 });
                                             }
                                         }
+
+                                        console.log(mealTotal);
                                     }
                                 });
                                 break;
