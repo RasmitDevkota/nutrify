@@ -1,188 +1,202 @@
 <html>
+    <head>
+        <title>Nutrify</title>
 
-<head>
-    <title>Nutrify</title>
+        <link rel="stylesheet" href="main.css">
 
-    <link rel="stylesheet" href="main.css">
+        <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
+        
+        <script src="script.js"></script>
+        <script src="auth.js"></script>
 
-    <script src='https://www.gstatic.com/firebasejs/7.15.5/firebase.js'></script>
-    
-    <script src="script.js"></script>
-    <script src="auth.js"></script>
-</head>
+        <style>
+            .signupsection {
+                height: 100%;
+                width: 100%;
+            }
+        
+            #loginSection {
+                left: 50px;
+            }
+        
+            #registerSection {
+                left: 450px;
+            }
+        
+            .formbox {
+                width: 380px;
+                height: 400px;
+                position: relative;
+                margin: 6% auto;
+                background-color: white;
+                border-radius: 30px;
+                padding: 5px;
+                overflow: hidden;
+            }
+        
+            .buttonbox {
+                width: 220px;
+                margin: 35px auto;
+                position: relative;
+                border-radius: 30px;
+            }
+        
+            .togglebtn {
+                padding: 10px 30px;
+                cursor: pointer;
+                background: transparent;
+                border: 0;
+                outline: none;
+                position: relative;
+            }
+        
+            #registerToggleButton {
+                color: black;
+            }
+        
+            #loginToggleButton {
+                color: white;
+            }
+        
+            .googlebutton {
+                border: 0;
+                background: transparent;
+            }
+        
+            #sliderButton {
+                top: 0;
+                left: 0;
+                position: absolute;
+                width: 110px;
+                height: 100%;
+                background: linear-gradient(to right, #15C335, #096A1A);
+                border-radius: 30px;
+                transition: 0.5s;
+            }
+        
+            .socialicons {
+                margin: 30px auto;
+                text-align: center;
+                border: none;
+            }
+        
+            .socialicons img {
+                width: 30px;
+                margin: 0 12px;
+                box-shadow: 0 0 20px 0 gray;
+                cursor: pointer;
+                border-radius: 50%;
+            }
+        
+            .inputgroup {
+                top: 180px;
+                position: absolute;
+                width: 280px;
+                transition: 0.5s;
+            }
+        
+            .inputfield {
+                width: 100%;
+                padding: 10px 0;
+                margin: 5px 0;
+                border-left: 0;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 1px solid gray;
+                outline: none;
+                background: transparent;
+            }
+        
+            .submitbtn {
+                width: 85%;
+                padding: 10px 30px;
+                display: block;
+                margin: auto;
+                margin-top: 5%;
+                background: linear-gradient(to right, #15C335, #096A1A);
+                color: white;
+                border: 0;
+                outline: none;
+                border-radius: 30px;
+                cursor: pointer;
+            }
+        
+            nav {
+                padding: 1%;
+            }
+        
+            .button {
+                cursor: pointer;
+                border-radius: 8px;
+                /* background-color: transparent;  */
+                background-color: green;
+                border: none;
+                padding: 1%;
+                color: white;
+                font-size: 1em;
+                white-space: nowrap;
+            }
+        </style>
+    </head>
 
-<body style="background-color:#002236">
-    <nav style="display: flex; flex-direction: row-reverse; margin-right: 3.5%">
-        <button class="button" style="margin-left: 2%; background-color: transparent; border: 3px solid green;">About</button>
-        <button class="button" id="signin" onclick="signIn()">Sign Up</button>
-    </nav>
+    <body style="background-color:#002236">
+        <nav style="display: flex; flex-direction: row-reverse; margin-right: 3.5%">
+            <button class="button" style="margin-left: 2%; background-color: transparent; border: 3px solid green;">About</button>
+            <button class="button" id="signin" onclick="signIn()">Sign Up</button>
+        </nav>
 
-    <div class="signupsection">
-        <div class="formbox">
-            
-            <div class="buttonbox">
-                <div id="sliderButton"></div>
-                <button id="loginToggleButton" type="button" class="togglebtn" onclick="loginButton()">Login</button>
-                <button id="registerToggleButton" type="button" class="togglebtn" onclick="registerButton()">Register</button>
+        <div class="signupsection">
+            <div class="formbox">
+                
+                <div class="buttonbox">
+                    <div id="sliderButton"></div>
+                    <button id="loginToggleButton" type="button" class="togglebtn" onclick="loginButton()">Login</button>
+                    <button id="registerToggleButton" type="button" class="togglebtn" onclick="registerButton()">Register</button>
+                </div>
+
+                <div class="socialicons">
+                    <button onclick="gToggleSignIn()" class="googlebutton"><img src="googlelogo.jpg"></button>
+                </div>
+
+                <div id="loginSection" class="inputgroup">
+                    <input id="emailemail" type="text" class="inputfield" placeholder="Email" required>
+                    <input id="password" type="password" class="inputfield" placeholder="Password" required>
+                    <a style="font-size: smaller;">Forgot password?</a>
+                    <button onclick="eToggleSignIn()" class="submitbtn">Sign In</button>
+                </div>
+
+                <div id="registerSection" class="inputgroup">
+                    <input id="suusername" type="text" class="inputfield" placeholder="Username" >
+                    <input id="suemail" type="text" class="inputfield" placeholder="Email" >
+                    <input id="supassword" type="password" class="inputfield" placeholder="Password" >
+                    <button onclick="handleSignUp()" class="submitbtn">Sign Up</button>
+                </div>
+
+                <script>
+                    var loginSection = document.getElementById("loginSection");
+                    var registerSection = document.getElementById("registerSection");
+                    var sliderButton = document.getElementById("sliderButton");
+                    var loginToggleButton = document.getElementById("loginToggleButton");
+                    var registerToggleButton = document.getElementById("registerToggleButton");
+
+                    function registerButton() {
+                        loginSection.style.left = "-400px";
+                        loginToggleButton.style.color = "black";
+                        registerSection.style.left = "50px";
+                        registerToggleButton.style.color = "white";
+                        sliderButton.style.left = "110px";
+                    }
+
+                    function loginButton() {
+                        loginSection.style.left = "50px";
+                        loginToggleButton.style.color = "white";
+                        registerSection.style.left = "450px";
+                        registerToggleButton.style.color = "black";
+                        sliderButton.style.left = "0px";
+                    }
+                </script>
+
             </div>
-
-            <div class="socialicons">
-                <button onclick="gToggleSignIn()" class="googlebutton"><img src="googlelogo.jpg"></button>
-            </div>
-
-            <div id="loginSection" class="inputgroup">
-                <input id="emailemail" type="text" class="inputfield" placeholder="Email" required>
-                <input id="password" type="password" class="inputfield" placeholder="Password" required>
-                <a style="font-size: smaller;">Forgot password?</a>
-                <button onclick="eToggleSignIn()" class="submitbtn">Sign In</button>
-            </div>
-
-            <div id="registerSection" class="inputgroup">
-                <input id="suusername" type="text" class="inputfield" placeholder="Username" >
-                <input id="suemail" type="text" class="inputfield" placeholder="Email" >
-                <input id="supassword" type="password" class="inputfield" placeholder="Password" >
-                <button onclick="handleSignUp()" class="submitbtn">Sign Up</button>
-            </div>
-
-            <script>
-                var loginSection = document.getElementById("loginSection");
-                var registerSection = document.getElementById("registerSection");
-                var sliderButton = document.getElementById("sliderButton");
-                var loginToggleButton = document.getElementById("loginToggleButton");
-                var registerToggleButton = document.getElementById("registerToggleButton");
-
-                function registerButton() {
-                    loginSection.style.left = "-400px";
-                    loginToggleButton.style.color = "black";
-                    registerSection.style.left = "50px";
-                    registerToggleButton.style.color = "white";
-                    sliderButton.style.left = "110px";
-                }
-
-                function loginButton() {
-                    loginSection.style.left = "50px";
-                    loginToggleButton.style.color = "white";
-                    registerSection.style.left = "450px";
-                    registerToggleButton.style.color = "black";
-                    sliderButton.style.left = "0px";
-                }
-            </script>
-
         </div>
-    </div>
-</body>
-
-<style>
-    .signupsection{
-        height: 100%;
-        width: 100%;
-    }
-    #loginSection{
-        left: 50px;
-    }
-    #registerSection{
-        left: 450px;
-    }
-    .formbox{
-        width: 380px;
-        height: 400px;
-        position: relative;
-        margin: 6% auto;
-        background-color: white;
-        border-radius: 30px;
-        padding: 5px;
-        overflow: hidden;
-    }
-    .buttonbox{
-        width: 220px;
-        margin: 35px auto;
-        position: relative;
-        border-radius: 30px;
-    }
-    .togglebtn{
-        padding: 10px 30px;
-        cursor: pointer;
-        background: transparent;
-        border: 0;
-        outline: none;
-        position: relative;
-    }
-    #registerToggleButton{
-        color:black;
-    }
-    #loginToggleButton{
-        color: white;
-    }
-    .googlebutton{
-        border:0;
-        background: transparent;
-    }
-    #sliderButton{
-        top: 0;
-        left: 0;
-        position: absolute;
-        width: 110px;
-        height: 100%;
-        background: linear-gradient(to right, #15C335, #096A1A);
-        border-radius: 30px;
-        transition: 0.5s;
-    }
-    .socialicons{
-        margin: 30px auto;
-        text-align: center;
-        border: none;
-    }
-    .socialicons img{
-        width: 30px;
-        margin: 0 12px;
-        box-shadow: 0 0 20px 0 gray;
-        cursor: pointer;
-        border-radius: 50%;
-    }
-    .inputgroup{
-        top: 180px;
-        position: absolute;
-        width: 280px;
-        transition: 0.5s;
-    }
-    .inputfield{
-        width: 100%;
-        padding: 10px 0;
-        margin: 5px 0;
-        border-left: 0;
-        border-top: 0;
-        border-right: 0;
-        border-bottom: 1px solid gray;
-        outline: none;
-        background: transparent;
-    }
-    .submitbtn{
-        width: 85%;
-        padding: 10px 30px;
-        display: block;
-        margin: auto;
-        margin-top: 5%;
-        background: linear-gradient(to right, #15C335, #096A1A);
-        color: white;
-        border: 0;
-        outline: none;
-        border-radius: 30px;
-        cursor: pointer;
-    }
-    nav {
-        padding: 1%;
-    }
-    .button {
-        cursor: pointer;
-        border-radius: 8px;
-        /* background-color: transparent;  */
-        background-color: green;
-        border: none;
-        padding: 1%;
-        color: white;
-        font-size: 1em;
-        white-space: nowrap;
-    }
-</style>
-
+    </body>
 </html>
